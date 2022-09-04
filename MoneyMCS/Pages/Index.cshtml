@@ -2,6 +2,8 @@
 @model MoneyMCS.Pages.Agents.Admin.IndexModel
 @{
     Layout = "_AdminLayout";
+    ViewData["pageName"] = "/";
+
 }
 
 <main x-data="{ open: false }" class="w-full flex-grow p-6">
@@ -32,17 +34,17 @@
         <p class="text-xl pb-3 flex items-center">
             <i class="fa fa-users mr-3"></i> Pending Agents
         </p>
-        <div class="bg-white overflow-auto">
+        <div class="bg-white overflow-auto rounded-md">
             <table class="min-w-full bg-white">
                 <thead class="bg-gray-800 text-white">
                     <tr>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">First Name</th>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Last name</th>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Username</th>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Phone number</th>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Email</th>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Agent Type</th>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Action</th>
+                        <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">First Name</th>
+                        <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Last name</th>
+                        <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Username</th>
+                        <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Phone number</th>
+                        <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Email</th>
+                        <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Agent Type</th>
+                        <!--<th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Action</th>-->
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
@@ -53,9 +55,9 @@
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">+1582512</a></td>
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">jonsmith@mail.com</a></td>
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">VIP</a></td>
-                        <td class="text-left py-3 px-4"><button x-on:click="open = ! open" type="button"
+                        <!--<td class="text-left py-3 px-4"><button x-on:click="open = ! open" type="button"
                                 class="py-2 px-3 bg-green-400 hover:bg-green-500 text-black rounded">Accept</button>
-                        </td>
+                        </td>-->
                     </tr>
                     <tr class="bg-gray-200">
                         <td class="text-left py-3 px-4">Emma</td>
@@ -64,9 +66,10 @@
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">639251223</a></td>
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">emmajohnson@mail.com</a></td>
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">BASIC</a></td>
+                        <!--
                         <td class="text-left py-3 px-4"><button type="button"
                                 class="py-2 px-3 bg-green-400 hover:bg-green-500 text-black rounded">Accept</button>
-                        </td>
+                        </td>-->
 
 
                     </tr>
@@ -77,9 +80,11 @@
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">639211256</a></td>
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">oliver@mail.com</a></td>
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">BASIC</a></td>
-                        <td class="text-left py-3 px-4"><button type="button"
+                        <!--                        <td class="text-left py-3 px-4"><button type="button"
                                 class="py-2 px-3 bg-green-400 hover:bg-green-500 text-black rounded">Accept</button>
                         </td>
+                        -->
+
 
                     </tr>
                     <tr>
@@ -89,9 +94,11 @@
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">+422312232</a></td>
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">james.bronny@mail.com</a></td>
                         <td class="text-left py-3 px-4"><a class="hover:text-blue-500">DIY</a></td>
+                        <!--
                         <td class="text-left py-3 px-4"><button type="button"
                                 class="py-2 px-3 bg-green-400 hover:bg-green-500 text-black rounded">Accept</button>
                         </td>
+                        -->
 
                     </tr>
 
