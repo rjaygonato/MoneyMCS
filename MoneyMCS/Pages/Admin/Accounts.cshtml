@@ -1,14 +1,15 @@
-﻿@page "/member/clients"
-@model MoneyMCS.Pages.ClientsModel
+﻿@page "/member/accounts"
+@model MoneyMCS.Pages.Agents.Admin.AccountsModel
 @{
     Layout = "_AdminLayout";
-    ViewData["pageName"] = "Clients";
+    ViewData["pageName"] = "Accounts";
+  
 }
 
 <main class="w-full flex-grow p-6">
     <div class="w-full mt-12">
         <p class="text-xl pb-3 flex items-center">
-            <i class="fas fa-users mr-3"></i> Clients
+            <i class="fas fa-list mr-3"></i> Agents
         </p>
         <div class="w-full my-6 pr-0">
             <div class="w-100 bg-green-600">
@@ -17,89 +18,44 @@
             <div class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4">
                 <div>
                     <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">Company:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                            aria-label="Name" />
-                    </div>
-                    <div class="flex justify-between my-1">
                         <label class="text-gray-700" for="cus_name">Email:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
                             aria-label="Name" />
                     </div>
                     <div class="flex justify-between my-1">
                         <label class="text-gray-700" for="cus_name">Phone:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
                             aria-label="Name" />
                     </div>
                     <div class="flex justify-between my-1">
                         <label class="text-gray-700" for="cus_name">First Name:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
                             aria-label="Name" />
                     </div>
                     <div class="flex justify-between my-1">
                         <label class="text-gray-700" for="cus_name">Last Name:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
                             aria-label="Name" />
                     </div>
                     <div class="flex justify-between my-1">
                         <label class="text-gray-700" for="cus_name">User ID:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
                             aria-label="Name" />
                     </div>
                 </div>
                 <div>
                     <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">Referral Agent:</label>
+                        <label class="text-gray-700" for="cus_name">User Type:</label>
                         <select id="agentType"
-                            class="bg-gray-50 border py-1 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Choose agent</option>
-                            <option value="US">BRONNY, JAMES</option>
-                            <option value="CA">SCOTT, TRAVIS</option>
-                            <option value="FR">TEST, USER</option>
+                            class="bg-gray-100 border py-1 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 ">
+                            <option selected>Choose account type</option>
+                            <option>Viewer</option>
+                            <option>Administrator</option>
                         </select>
                     </div>
-                    <div class="flex justify-between my-1">
-                        <label class="text-gray-700">Account Status:</label>
-                        <div class="flex">
-                            <div class="flex items-center mr-4">
-                                <input id="inline-radio" type="radio" value="" name="inline-radio-group"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="inline-radio"
-                                    class="ml-1 text-sm font-medium text-gray-900 dark:text-gray-300">Active</label>
-                            </div>
-                            <div class="flex items-center mr-4">
-                                <input id="inline-2-radio" type="radio" value="" name="inline-radio-group"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="inline-2-radio"
-                                    class="ml-1 text-sm font-medium text-gray-900 dark:text-gray-300">Inactive</label>
-                            </div>
-                            <div class="flex items-center mr-4">
-                                <input checked id="inline-checked-radio" type="radio" value="" name="inline-radio-group"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="inline-checked-radio"
-                                    class="ml-1 text-sm font-medium text-gray-900 dark:text-gray-300">Pending</label>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">Status:</label>
-                        <select id="agentType"
-                            class="bg-gray-50 border py-1 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Choose status</option>
-                            <option value="US">BRONNY, JAMES</option>
-                            <option value="CA">SCOTT, TRAVIS</option>
-                            <option value="FR">TEST, USER</option>
-                        </select>
-                    </div>
-                    <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">Paid User:</label>
-                        <select id="agentType"
-                            class="bg-gray-50 border py-1 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>ALL</option>
-                            <option value="US">PAID</option>
-                            <option value="CA">NOT PAID</option>
-                        </select>
-                    </div>
+                    
+                    
+                    
                 </div>
             </div>
             <div class="w-100 flex justify-center p-1">
@@ -112,48 +68,48 @@
             </div>
         </div>
         <div class="flex justify-end my-3 md:my-2">
-            <a asp-page="AddAgent" role="button"
+            <a asp-page="AddAccount" role="button"
                 class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm font-medium"><i
-                    class="fas fa-user-plus"></i> Add new agent</a>
+                    class="fas fa-user-plus"></i> Add new account</a>
         </div>
         <div class="bg-white overflow-auto rounded-md">
             <table id="agentsList" class="text-left w-full border-collapse">
                 <thead>
                     <tr>
                         <th
-                            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
+                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             Username
                         </th>
                         <th
-                            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-                            Agent Type
+                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Account Type
                         </th>
                         <th
-                            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
+                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             First Name
                         </th>
                         <th
-                            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
+                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             Last Name
                         </th>
                         <th
-                            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
+                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             Phone
                         </th>
                         <th
-                            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
+                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             Email
                         </th>
                         <th
-                            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
+                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             Created Date
                         </th>
                         <th
-                            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
+                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             Edit
                         </th>
                         <th
-                            class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
+                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             Delete
                         </th>
                     </tr>
@@ -161,7 +117,7 @@
                 <tbody>
                     <tr class="hover:bg-grey-lighter">
                         <td class="py-4 px-6 border-b border-grey-light">lian123</td>
-                        <td class="py-4 px-6 border-b border-grey-light">BASIC</td>
+                        <td class="py-4 px-6 border-b border-grey-light">Administrator</td>
                         <td class="py-4 px-6 border-b border-grey-light">Lian</td>
                         <td class="py-4 px-6 border-b border-grey-light">Smith</td>
                         <td class="py-4 px-6 border-b border-grey-light">+1 13123123</td>
@@ -170,7 +126,7 @@
                         </td>
                         <td class="py-4 px-6 border-b border-grey-light">05/23/12</td>
                         <td class="p-0 text-center px-6 border-b border-grey-light">
-                            <a asp-page="EditAgent"><i class="fas fa-pencil-alt"></i></a>
+                            <a asp-page="EditAccount"><i class="fas fa-pencil-alt"></i></a>
                         </td>
                         <td class="p-0 text-center py-4 px-6 border-b border-grey-light">
                             <i class="fa fa-trash" aria-hidden="true"></i>
@@ -178,7 +134,7 @@
                     </tr>
                     <tr class="hover:bg-grey-lighter">
                         <td class="py-4 px-6 border-b border-grey-light">james1</td>
-                        <td class="py-4 px-6 border-b border-grey-light">BASIC</td>
+                        <td class="py-4 px-6 border-b border-grey-light">Viewer</td>
 
                         <td class="py-4 px-6 border-b border-grey-light">Carl</td>
                         <td class="py-4 px-6 border-b border-grey-light">James</td>
@@ -196,7 +152,7 @@
                     </tr>
                     <tr class="hover:bg-grey-lighter">
                         <td class="py-4 px-6 border-b border-grey-light">james1</td>
-                        <td class="py-4 px-6 border-b border-grey-light">VIP</td>
+                        <td class="py-4 px-6 border-b border-grey-light">Viewer</td>
 
                         <td class="py-4 px-6 border-b border-grey-light">Carl</td>
                         <td class="py-4 px-6 border-b border-grey-light">James</td>
@@ -301,3 +257,4 @@
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 }
+
