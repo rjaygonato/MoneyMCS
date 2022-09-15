@@ -1,5 +1,14 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using MoneyMCS.Areas.Identity.Data;
 
+
+var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("AffiliateEntitiesConnection");builder.Services.AddDbContext<AffiliateEntities>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<AffiliateUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<AffiliateEntities>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 
@@ -17,7 +26,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
