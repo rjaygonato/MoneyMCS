@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Identity
 @using MoneyMCS.Areas.Identity.Data;
-@inject SignInManager<AffiliateUser> SignInManager
-@inject UserManager<AffiliateUser> UserManager
+@inject SignInManager<MemberUser> SignInManager
+@inject UserManager<MemberUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

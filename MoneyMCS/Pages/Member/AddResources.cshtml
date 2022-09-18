@@ -1,0 +1,44 @@
+﻿@page
+@model MoneyMCS.Pages.Member.AddResourcesModel
+@{
+    Layout = "_AdminLayout";
+}
+<main class="w-full flex-grow p-6">
+    <div class="w-full mt-12">
+        <p class="text-xl pb-3 flex items-center">
+            <i class="fas fa-user-edit"></i> Edit Agent Info
+        </p>
+        <p class="text-gray-500">Account Name: Scott, Lang</p>
+        <div class="w-full mt-6" x-data="{ openTab: 1 }">
+            
+            <div class="bg-gray-200 shadow-md p-6">
+                <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4">
+                    <div>
+                        <div class="flex justify-between my-1">
+                            <label class="text-gray-700" for="cus_name">Resource Name:</label>
+                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                                aria-label="Name" value="scott12" />
+                        </div>
+                        
+                       @* <div class="flex justify-between my-1">
+                            <label class="text-gray-700" for="cus_name">Referrer</label>
+                            <select asp-for="Input.AgentType" asp-items="Model.SelectAgents" class=px-3 py-1">
+                            </select>
+                        </div>*@
+                        <div class="flex justify-end mt-5">
+                            <button type="button"
+                                class="bg-green-500 hover:bg-green-600 rounded-md px-2 py-1 text-sm mr-1">
+                                <i class="fas fa-save"></i> Save
+                            </button>
+                            <button type="button"
+                                class="bg-gray-400 hover:bg-gray-500 rounded-md px-2 py-1 text-sm mr-1">
+                                <i class="fas fa-times-circle"></i> Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</main>

@@ -18,7 +18,6 @@
     </style>
 </head>
     <body class="font-family-karla flex">
-        <partial name="_LoginPartial"/>
         <aside class="relative bg-green-600 h-screen w-64 hidden sm:block shadow-xl">
             <div class="p-6 text-center">
                 <div class="round">
@@ -29,25 +28,25 @@
                 </button>
             </div>
             <nav class="text-white text-base font-semibold pt-3">
-                <a asp-page="/Admin/Index" class="flex items-center @(ViewData["pageName"] == "/" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
+                <a asp-page="/Member/Index" class="flex items-center @(ViewData["pageName"] == "/" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
                     <i class="fas fa-tachometer-alt mr-3"></i>
                     Dashboard
                 </a>
-                <a asp-page="/Admin/Agents" class="flex items-center @(ViewData["pageName"] == "Agents" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6"> 
+                <a asp-page="/Member/Agents" class="flex items-center @(ViewData["pageName"] == "Agents" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6"> 
                     <i class="fas fa-table mr-3"></i>
                     Agents
                 </a>
-            <a href="/Admin/Accounts" class="flex items-center @(ViewData["pageName"] == "Accounts" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
+            <a href="/Member/Accounts" class="flex items-center @(ViewData["pageName"] == "Accounts" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
                     <i class="fas fa-user-friends mr-3"></i>
                     Accounts
                 </a>
                 
-                <a asp-page="/Admin/Resources" class="flex items-center @(ViewData["pageName"] == "Resources" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
+                <a asp-page="/Member/Resources" class="flex items-center @(ViewData["pageName"] == "Resources" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
                     <i class="fas fa-folder-open mr-3"></i>
                     Resources
                 </a>
                 
-                <a asp-page="/Admin/Clients" class="flex items-center @(ViewData["pageName"] == "Clients" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
+                <a asp-page="/Member/Clients" class="flex items-center @(ViewData["pageName"] == "Clients" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
                     <i class="fas fa-users mr-3"></i>
                     Clients
                 </a>
@@ -80,7 +79,7 @@
                 </div>
             <!-- Dropdown Nav -->
                 <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
-                    <a asp-page="/Agents/Admin/Index" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+                    <a asp-page="/Agents/Member/Index" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
                         <i class="fas fa-tachometer-alt mr-3"></i>
                         Dashboard
                     </a>
