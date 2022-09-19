@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Policy;
 
 namespace MoneyMCS.Pages.Member
 {
@@ -27,6 +28,7 @@ namespace MoneyMCS.Pages.Member
             _emailStore = GetEmailStore();
         }
 
+
         [BindProperty]
         public InputModel Input { get; set; }
 
@@ -39,6 +41,8 @@ namespace MoneyMCS.Pages.Member
         public List<SelectListItem> SelectAgents = new List<SelectListItem>();
 
         public string ReturnUrl { get; set; }
+
+        public AgentUser ToEditAgent { get; set; }
 
         public class InputModel
         {
@@ -89,10 +93,39 @@ namespace MoneyMCS.Pages.Member
 
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet([FromRoute] string? id)
         {
+            if (id == null)
+            {
+                return RedirectToPage("/Member/Agents");
+            }
 
+            ToEditAgent = await _userManager.FindByIdAsync(id);
+            if (ToEditAgent == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.Users.ForEachAsync(agent =>
+            {
+                if (agent.Id != ToEditAgent.Id)
+                {
+                    SelectAgents.Add(new SelectListItem()
+                    {
+                        Text = agent.UserName,
+                        Value = agent.Id,
+                        Selected = (ToEditAgent.ReferrerId != null && ToEditAgent.ReferrerId != null) && ToEditAgent.ReferrerId == agent.Id
+                    });
+                }
+                
+            });
+            return Page();
         }
+        //Continue edit
+        //public async Task<IActionResult> OnPostProfile(string Id, string? FirstName, string? LastName, string? returnUrl = null)
+        //{
+        //    returnUrl ??= Url.Content($"~/Member/EditAgent/{}");
+        //}
 
         private IUserEmailStore<AgentUser> GetEmailStore()
         {
@@ -101,6 +134,16 @@ namespace MoneyMCS.Pages.Member
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<AgentUser>)_userStore;
+        }
+
+        private void MapAgentUserToInputModel(AgentUser agentUser)
+        {
+            Input.UserName = agentUser.UserName;
+            Input.FirstName = agentUser.FirstName;
+            Input.LastName = agentUser.LastName;
+            Input.Email = agentUser.Email;
+            Input.PhoneNumber = agentUser.PhoneNumber;
+            Input.AgentType = agentUser.AgentType;
         }
     }
 }

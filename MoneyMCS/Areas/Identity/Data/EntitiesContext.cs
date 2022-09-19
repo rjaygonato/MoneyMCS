@@ -29,7 +29,7 @@ public class EntitiesContext : IdentityDbContext<IdentityUser>
             .HasOne(au => au.Referrer)
             .WithMany(au => au.Referrals)
             .HasForeignKey(au => au.ReferrerId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.SetNull);
 
     }
 }

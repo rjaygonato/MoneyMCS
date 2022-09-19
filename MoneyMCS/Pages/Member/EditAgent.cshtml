@@ -16,14 +16,18 @@
                 <ul class="flex border-b">
                     <li class="-mb-px mr-1" @@click="openTab = 1">
                         <a :class="openTab === 1 ? 'border-l border-t border-r rounded-t text-blue-700 font-semibold' : 'text-blue-500 hover:text-blue-800'"
-                            class="bg-white inline-block py-2 px-4 font-semibold" href="#">User Account Info</a>
+                            class="bg-white inline-block py-2 px-4 font-semibold" href="#">Profile</a>
                     </li>
-                    <li class="mr-1" @@click="openTab = 2">
+                    <li class="-mb-px mr-1" @@click="openTab = 2">
                         <a :class="openTab === 2 ? 'border-l border-t border-r rounded-t text-blue-700 font-semibold' : 'text-blue-500 hover:text-blue-800'"
-                            class="bg-white inline-block py-2 px-4 font-semibold" href="#">Landing Page Settings (not yet working)</a>
+                            class="bg-white inline-block py-2 px-4 font-semibold" href="#">Agent Info</a>
                     </li>
                     <li class="mr-1" @@click="openTab = 3">
                         <a :class="openTab === 3 ? 'border-l border-t border-r rounded-t text-blue-700 font-semibold' : 'text-blue-500 hover:text-blue-800'"
+                            class="bg-white inline-block py-2 px-4 font-semibold" href="#">Landing Page Settings (not yet working)</a>
+                    </li>
+                    <li class="mr-1" @@click="openTab = 4">
+                        <a :class="openTab === 4 ? 'border-l border-t border-r rounded-t text-blue-700 font-semibold' : 'text-blue-500 hover:text-blue-800'"
                             class="bg-white inline-block py-2 px-4 font-semibold" href="#">Reset Password</a>
                     </li>
                 </ul>
@@ -33,38 +37,28 @@
                     <div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Username:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="scott12" />
+                            <input asp-for="ToEditAgent.UserName" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                                aria-label="Name"  />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">First Name:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="Scott" />
+                            <input asp-for="ToEditAgent.FirstName" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                                aria-label="Name"  />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Last Name:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                            <input asp-for="ToEditAgent.LastName" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
                                 aria-label="Name" value="Lang" />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Phone:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="+63 2312312" />
+                            <input asp-for="ToEditAgent.PhoneNumber" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                                aria-label="Name"  />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Email:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="scottlang@gmail.com" />
-                        </div>
-                        <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Agent Type:</label>
-                            <select asp-for="Input.AgentType" asp-items="Model.SelectAgentType" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            </select>
-                        </div>
-                        <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Referrer</label>
-                            <select asp-for="Input.AgentType" asp-items="Model.SelectAgents" class=px-3 py-1">
-                            </select>
+                            <input asp-for="ToEditAgent.Email" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
+                                aria-label="Name" />
                         </div>
                         <div class="flex justify-end mt-5">
                             <button type="button"
@@ -79,6 +73,33 @@
                     </div>
                 </div>
                 <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 2">
+                    <div>
+                        
+                        <div class="flex justify-between my-1">
+                            <label class="text-gray-700" for="cus_name">Agent Type:</label>
+                            <select asp-for="Input.AgentType" asp-items="Model.SelectAgentType" class="block py-1 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </select>
+                        </div>
+                        <div class="flex justify-between my-1">
+                            <label class="text-gray-700" for="cus_name">Referrer</label>
+                            <select asp-for="Input.ReferrerId" asp-items="Model.SelectAgents" class=px-3 py-1">
+                                <option selected>None</option>
+
+                            </select>
+                        </div>
+                        <div class="flex justify-end mt-5">
+                            <button type="button"
+                                    class="bg-green-500 hover:bg-green-600 rounded-md px-2 py-1 text-sm mr-1">
+                                <i class="fas fa-save"></i> Save
+                            </button>
+                            <button type="button"
+                                    class="bg-gray-400 hover:bg-gray-500 rounded-md px-2 py-1 text-sm mr-1">
+                                <i class="fas fa-times-circle"></i> Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 3">
                     <div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Name:</label>
@@ -119,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 3">
+                <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 4">
                     <div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Username:</label>

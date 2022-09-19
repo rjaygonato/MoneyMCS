@@ -27,6 +27,23 @@ namespace MoneyMCS.Pages.Member
             return Page();
         }
 
+
+        public async Task<IActionResult> OnPostDelete([FromForm] string? toDeleteUserId)
+        {
+            if (toDeleteUserId == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await _userManager.FindByIdAsync(toDeleteUserId);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            await _userManager.DeleteAsync(user);
+            return RedirectToPage("/Member/Agents");
+        }
+
         private async Task<List<AgentUser>> GetAgents()
         {
             RegisteredAgents = await _context.AgentUsers
@@ -34,5 +51,6 @@ namespace MoneyMCS.Pages.Member
             return RegisteredAgents;
 
         }
+
     }
 }
