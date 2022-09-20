@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using MoneyMCS.Areas.Identity.Data;
 using MoneyMCS.Services;
 
@@ -10,7 +11,8 @@ var connectionString = builder.Configuration.GetConnectionString("AffiliateEntit
 builder.Services.AddDbContext<EntitiesContext>(options =>
     options.UseSqlServer(connectionString));
 
-
+builder.Services.AddDbContext<ResourceContext>(options =>
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<MemberUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<EntitiesContext>();
@@ -36,6 +38,12 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Resources")),
+    RequestPath = "/Resource"
+});
 
 app.MapRazorPages();
 
