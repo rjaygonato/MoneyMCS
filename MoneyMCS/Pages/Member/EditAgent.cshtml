@@ -33,35 +33,36 @@
                 </ul>
             </div>
             <div class="bg-gray-200 shadow-md p-6">
-                <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 1">
-                    <div>
+                <div class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 1">
+                    <form asp-page-handler="Profile" method="post">
+                        <div asp-validation-summary="All" style="color: red"></div>
+                        <input type="hidden" name="Id" value="@Model.ToEditAgent.Id" />
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Username:</label>
-                            <input asp-for="ToEditAgent.UserName" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name"  />
+                            <input  class="px-3 py-1 text-gray-900" name="Username" type="text" 
+                                aria-label="Name" value="@Model.ToEditAgent.UserName"  />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">First Name:</label>
-                            <input asp-for="ToEditAgent.FirstName" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name"  />
+                            <input class="px-3 py-1 text-gray-900" name="FirstName" type="text" required=""
+                                aria-label="Name" value="@Model.ToEditAgent.FirstName" />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Last Name:</label>
-                            <input asp-for="ToEditAgent.LastName" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="Lang" />
+                            <input class="px-3 py-1 text-gray-900" name="LastName" type="text"
+                                value="@Model.ToEditAgent.LastName" />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Phone:</label>
-                            <input asp-for="ToEditAgent.PhoneNumber" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name"  />
+                            <input class="px-3 py-1 text-gray-900"  name="PhoneNumber" type="text" value="@Model.ToEditAgent.PhoneNumber"
+                                  />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Email:</label>
-                            <input asp-for="ToEditAgent.Email" class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" />
+                            <input class="px-3 py-1 text-gray-900" name="Email" type="email" required="" value="@Model.ToEditAgent.Email"/>
                         </div>
                         <div class="flex justify-end mt-5">
-                            <button type="button"
+                            <button type="submit"
                                 class="bg-green-500 hover:bg-green-600 rounded-md px-2 py-1 text-sm mr-1">
                                 <i class="fas fa-save"></i> Save
                             </button>
@@ -70,7 +71,7 @@
                                 <i class="fas fa-times-circle"></i> Cancel
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 2">
                     <div>

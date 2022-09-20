@@ -29,8 +29,7 @@ namespace MoneyMCS.Pages.Member
         }
 
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+        
 
         public List<SelectListItem> SelectAgentType = new List<SelectListItem>() {
             new SelectListItem() { Value = "BASIC", Text = "BASIC" , Selected = true},
@@ -89,8 +88,33 @@ namespace MoneyMCS.Pages.Member
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+        }
 
+        public InputModel Input { get; set; }
+        public class ProfileInput
+        {
 
+            [Required]
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; } = string.Empty;
+
+            [Phone]
+            [Display(Name = "Phone Number")]
+            public string? PhoneNumber { get; set; }
+
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+        
+            public string? returnURL { get; set; }
         }
 
         public async Task<IActionResult> OnGet([FromRoute] string? id)
@@ -121,11 +145,38 @@ namespace MoneyMCS.Pages.Member
             });
             return Page();
         }
-        //Continue edit
-        //public async Task<IActionResult> OnPostProfile(string Id, string? FirstName, string? LastName, string? returnUrl = null)
-        //{
-        //    returnUrl ??= Url.Content($"~/Member/EditAgent/{}");
-        //}
+        public async Task<IActionResult> OnPostProfile([FromRoute] string? Id, ProfileInput InputModel)
+        {
+            if (Id == null)
+            {
+                return BadRequest();
+            }
+
+            ToEditAgent = await _userManager.FindByIdAsync(Id);
+            if (ToEditAgent == null)
+            {
+                return NotFound($"User with the id: {Id} is not found.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            
+            
+
+            ToEditAgent.UserName = InputModel.UserName;
+            ToEditAgent.FirstName = InputModel.FirstName;
+            ToEditAgent.LastName = InputModel.LastName;
+            ToEditAgent.PhoneNumber = InputModel.PhoneNumber;
+            ToEditAgent.Email = InputModel.Email;
+
+            await _userManager.UpdateAsync(ToEditAgent);
+
+            InputModel.returnURL ??= Url.Content($"~/Member/EditAgent/{Id}");
+            return Redirect(InputModel.returnURL);
+
+        }
 
         private IUserEmailStore<AgentUser> GetEmailStore()
         {
