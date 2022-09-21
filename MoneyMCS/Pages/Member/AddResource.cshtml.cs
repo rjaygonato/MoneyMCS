@@ -41,7 +41,7 @@ namespace MoneyMCS.Pages.Member
 
         public List<SelectListItem> SelectResourceCategory = new List<SelectListItem>()
         {
-            new SelectListItem() { Text = "Sales Resource", Value = "Sales Resource" },
+            new SelectListItem() { Text = "Sales Resources", Value = "Sales Resources" },
             new SelectListItem() { Text = "Contracts and Agreements", Value = "Contracts and Agreements" },
             new SelectListItem() { Text = "Finance Resources", Value = "Finance Resources" },
             new SelectListItem() { Text = "Marketing Emails", Value = "Marketing Emails" },
@@ -63,6 +63,8 @@ namespace MoneyMCS.Pages.Member
             }
             string fileName = $"{Path.GetRandomFileName()}{Path.GetExtension(Input.ResourceFile.FileName)}";
             string filePath = Path.Combine("Resources", fileName);
+            string urlPath = $"\\Resource\\{fileName}";
+            
             var fs = new FileStream(filePath, FileMode.CreateNew);
             await Input.ResourceFile.CopyToAsync(fs);
 
@@ -71,7 +73,7 @@ namespace MoneyMCS.Pages.Member
                 ResourceName = Input.ResourceName,
                 Description = Input.Description,
                 Category = Input.Category,
-                FilePath = filePath
+                FilePath = urlPath
             };
             await _context.Resources.AddAsync(newResource);
             await _context.SaveChangesAsync();

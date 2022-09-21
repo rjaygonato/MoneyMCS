@@ -22,6 +22,11 @@ builder.Services.AddIdentityCore<AgentUser>(options => options.SignIn.RequireCon
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+if (!Directory.Exists(Path.Combine(builder.Environment.ContentRootPath, "Resources")))
+{
+    Directory.CreateDirectory(Path.Combine(builder.Environment.ContentRootPath, "Resources"));
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,70 +1,94 @@
-﻿@page
+﻿@page "{id}"
 @model MoneyMCS.Pages.Member.ResourceModel
 
 @{
+    Layout = "_AdminLayout";
+    ViewData["pageName"] = "Resources";
 }
 
 
 <main class="w-full flex-grow p-6">
     <div class="w-full mt-12">
-        <p class="text-xl pb-3 flex items-center">
-            <i class="fas fa-user-plus"></i> Add New Account
-        </p>
         <div class="w-full my-6 pr-0 lg:pr-2">
-
             <div class="mt-10 sm:mt-0">
-                <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div>
 
                     <div class="mt-5 md:mt-0 md:col-span-2">
-                        <form action="#" method="POST">
+                        <div>
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
-                                    <div class="grid grid-cols-6 gap-2 ">
-                                        <div class="col-span-6 sm:col-span-6">
-                                            <label for="first_name" class="block text-sm font-medium text-gray-700">Username</label>
-                                            <input class="px-3 py-1 mt-1 focus:ring-green-500 focus:border-green-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" id="username" name="username" type="text" required="" aria-label="Name">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-6">
-                                            <label for="first_name" class="block text-sm font-medium text-gray-700">Password</label>
-                                            <input type="password" name="first_name" id="first_name" autocomplete="given-name" class="px-3 py-1 w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="first_name" class="block text-sm font-medium text-gray-700">First name</label>
-                                            <input type="text" name="first_name" id="first_name" autocomplete="given-name" class="px-3 py-1 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md">
-                                        </div>
+                                    <div class="mb-5 text-center">
+                                        <h1 class="text-2xl">@Model.ResourceInfo.ResourceName</h1>
+                                    </div>
+                                    
+                                    <div class="flex justify-center">
+                                        <div>
+                                            <div class="flex mb-2">
+                                                <a href="@Model.ResourceInfo.FilePath" class="py-2 px-3 mr-2 bg-green-500 hover:bg-green-600 rounded"><i class="fa fa-download"></i>  Download</a>
+                                                <button data-id="@Model.ResourceInfo.ResourceId" type="button" class="deleteBtn py-2 px-3 bg-red-500 hover:bg-red-600 rounded"><i class="fa fa-trash"></i> Delete</button>
 
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="last_name" class="block text-sm font-medium text-gray-700">Last name</label>
-                                            <input type="text" name="last_name" id="last_name" autocomplete="family-name" class="px-3 py-1 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md">
-                                        </div>
+                                            </div>
+                                            <embed src="@Model.ResourceInfo.FilePath" width="800px" height="2100px" />
 
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="email_address" class="block text-sm font-medium text-gray-700">Email address</label>
-                                            <input type="text" name="email_address" id="email_address" autocomplete="email" class="px-3 py-1 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="email_address" class="block text-sm font-medium text-gray-700">Phone number</label>
-                                            <input type="text" name="email_address" id="email_address" autocomplete="email" class="px-3 py-1 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="country" class="block text-sm font-medium text-gray-700">User Type</label>
-                                            <select id="country" name="country" autocomplete="country" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                                <option>Viewer</option>
-                                                <option>Administrator</option>
-                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        Save
-                                    </button>
-                                </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+
+<div style=" background-color: rgba(0, 0, 0, 0.8)" x-data="{ open: false }" class="fixed  z-40 top-0 right-0 left-0 bottom-0 h-full w-full"
+     x-show="open" id="deleteModal" transition>
+    <div class="p-4 max-w-xl mx-auto relative absolute left-0 right-0 overflow-hidden mt-24">
+        <div x-on:click="open = ! open"
+             class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer">
+            <svg class="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
+            </svg>
+        </div>
+
+        <div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8">
+
+            <h2 class="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">
+                Are you sure you want to remove this agent?
+            </h2>
+
+
+            <form id="deleteForm" asp-page-handler="Delete" method="post">
+                <button x-on:click="open = ! open" type="button"
+                        class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-lg shadow-sm mr-2">
+                    Cancel
+                </button>
+
+                <input type="hidden" name="toDeleteResourceId" id="toDeleteResourceId" />
+                <button type="submit" id="confirmDeleteBtn" class="bg-gray-800 hover:bg-gray-700 disabled:bg-gray-600 text-white font-semibold py-2 px-4 border border-gray-700 rounded-lg shadow-sm">
+                    Yes, remove this resource
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script>
+        $(".deleteBtn").click(function () {
+            const resourceId = $(this).data("id")
+            console.log(resourceId)
+            $("#deleteForm #toDeleteResourceId").val(resourceId);
+            $("#deleteModal").show();
+
+        })
+        $("#deleteForm").submit(function () {
+            $("#confirmDeleteBtn").prop("disabled", true);
+        })
+    </script>
+}
