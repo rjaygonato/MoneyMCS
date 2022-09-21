@@ -47,7 +47,7 @@
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </a>
-                            <div x-show.transition="show"
+                            <div id="categoryContainer" x-show.transition="show"
                                 class="absolute z-20 mt-1 flex w-64 flex-col px-4 py-8 whitespace-nowrap border border-gray-600 rounded bg-white">
                                 <div>
                                     <input type="checkbox" name="type[]" value="SalesResouces"
@@ -100,6 +100,24 @@
     <script src="~/js/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
     <script>
-
+        $("#categoryContainer input[type='checkbox']").change(function(i) {
+            categories = []
+            $("#categoryContainer input[type='checkbox']:checked").each(function(i) {
+                console.log("Checked: " + $(this).val())
+                categories.push($(this.val()))
+            })
+            console.log(categories)
+            fetch("/Member/Resources/?handler=ResourcesPartial", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+                body: JSON.stringify({ 'category': categories })
+            })
+            .then(response => response.text())
+            .then(data => {
+                $("resourcesContainer").html(data);
+            })
+        })
     </script>
 }

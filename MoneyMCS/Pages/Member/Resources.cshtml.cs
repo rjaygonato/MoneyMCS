@@ -21,7 +21,7 @@ namespace MoneyMCS.Pages.Member
         {
         }
 
-        public async Task<IActionResult> OnGetResourcesPartial(List<string>? category)
+        public async Task<IActionResult> OnPostResourcesPartial([FromBody] List<string>? category)
         {
             if (category == null)
             {
