@@ -100,13 +100,13 @@
     <script src="~/js/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
     <script>
-        let url = "/Member/Resources/?handler=ResourcesPartial";
 
         $("#categoryContainer input[type='checkbox']").change(function(i) {
+            let categoryUrl = "/Member/Resources/?handler=ResourcesPartial"
             $("#categoryContainer input[type='checkbox']:checked").each(function(i) {
-                url += "&category=" + $(this).val()
+                categoryUrl += "&category=" + $(this).val()
             })
-            fetch(url, { method: "GET" })
+            fetch(categoryUrl, { method: "GET" })
             .then(response => response.text())
             .then(data => {
                 $("#resourcesContainer").html(data);
@@ -115,8 +115,8 @@
 
         $("#searchSubmit").click(function() {
             if($("#defaultSearch").val() != "") {
-                url += "&search="+$("#defaultSearch").val()
-                fetch(url, { method: "GET" })
+                let searchUrl = url + "&search="+ $("#defaultSearch").val()
+                fetch(searchUrl, { method: "GET" })
                 .then(response => response.text())
                 .then(data => $("#resourcesContainer").html(data))
             }

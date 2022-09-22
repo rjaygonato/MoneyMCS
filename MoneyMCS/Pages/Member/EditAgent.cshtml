@@ -144,6 +144,7 @@
                 </div>
                 <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 4">
                     <div>
+                        <div asp-validation-summary="All" style="color: red"></div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Username:</label>
                             <input class="px-3 py-1 text-gray-900 bg-gray-300" id="cus_name" name="cus_name" type="text"
@@ -151,13 +152,14 @@
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Password:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="+63 2312312" />
+                            <input asp-for="Input.Password" class="px-3 py-1 text-gray-900" />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Confirm Password:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="scottlang@gmail.com" />
+                            <input asp-for="Input.ConfirmPassword" class="px-3 py-1 text-gray-900" />
+                        </div>
+                        <div>
+                            <input type="submit" />
                         </div>
                         <div class="flex justify-end mt-5">
                             <button type="button"

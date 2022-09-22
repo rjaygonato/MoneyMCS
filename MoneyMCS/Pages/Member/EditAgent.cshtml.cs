@@ -28,9 +28,6 @@ namespace MoneyMCS.Pages.Member
             _emailStore = GetEmailStore();
         }
 
-
-        
-
         public List<SelectListItem> SelectAgentType = new List<SelectListItem>() {
             new SelectListItem() { Value = "BASIC", Text = "BASIC" , Selected = true},
             new SelectListItem() { Value = "VIP", Text = "VIP"},
@@ -43,54 +40,6 @@ namespace MoneyMCS.Pages.Member
 
         public AgentUser ToEditAgent { get; set; }
 
-        public class InputModel
-        {
-
-
-            [Required]
-            [Display(Name = "Username")]
-            public string UserName { get; set; }
-
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
-
-            [Required]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
-
-            [Required]
-            [Display(Name = "Last Name")]
-            public string LastName { get; set; }
-
-            [Phone]
-
-            [Display(Name = "PhoneNumber")]
-            public string? PhoneNumber { get; set; }
-
-            [Display(Name = "Referer")]
-            public string? ReferrerId { get; set; }
-
-            [Required]
-            [Display(Name = "Agent Type")]
-            public string AgentType { get; set; }
-
-
-
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
-
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
-        }
-
-        public InputModel Input { get; set; }
         public class ProfileInput
         {
 
@@ -115,6 +64,22 @@ namespace MoneyMCS.Pages.Member
             public string Email { get; set; }
         
             public string? returnURL { get; set; }
+        }
+
+        public class PasswordChangeInput
+        {
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            [Display(Name = "Password")]
+            public string Password { get; set; }
+
+
+            [DataType(DataType.Password)]
+            [Display(Name = "Confirm password")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
+
         }
 
         public async Task<IActionResult> OnGet([FromRoute] string? id)
@@ -145,7 +110,7 @@ namespace MoneyMCS.Pages.Member
             });
             return Page();
         }
-        public async Task<IActionResult> OnPostProfile([FromRoute] string? Id, ProfileInput InputModel)
+        public async Task<IActionResult> OnPostProfile([FromRoute] string? Id, ProfileInput Input)
         {
             if (Id == null)
             {
@@ -165,16 +130,42 @@ namespace MoneyMCS.Pages.Member
             
             
 
-            ToEditAgent.UserName = InputModel.UserName;
-            ToEditAgent.FirstName = InputModel.FirstName;
-            ToEditAgent.LastName = InputModel.LastName;
-            ToEditAgent.PhoneNumber = InputModel.PhoneNumber;
-            ToEditAgent.Email = InputModel.Email;
+            ToEditAgent.UserName = Input.UserName;
+            ToEditAgent.FirstName = Input.FirstName;
+            ToEditAgent.LastName = Input.LastName;
+            ToEditAgent.PhoneNumber = Input.PhoneNumber;
+            ToEditAgent.Email = Input.Email;
 
             await _userManager.UpdateAsync(ToEditAgent);
 
-            InputModel.returnURL ??= Url.Content($"~/Member/EditAgent/{Id}");
-            return Redirect(InputModel.returnURL);
+            Input.returnURL ??= Url.Content($"~/Member/EditAgent/{Id}");
+            return Redirect(Input.returnURL);
+
+        }
+        //Continue change password
+        public async Task<IActionResult> OnPostChangePassword([FromRoute] string? Id, PasswordChangeInput Input)
+        {
+            if (Id == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            ToEditAgent = await _userManager.FindByIdAsync(Id);
+
+            if (ToEditAgent == null)
+            {
+                return NotFound();
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(ToEditAgent);
+
+
+
 
         }
 
@@ -187,14 +178,6 @@ namespace MoneyMCS.Pages.Member
             return (IUserEmailStore<AgentUser>)_userStore;
         }
 
-        private void MapAgentUserToInputModel(AgentUser agentUser)
-        {
-            Input.UserName = agentUser.UserName;
-            Input.FirstName = agentUser.FirstName;
-            Input.LastName = agentUser.LastName;
-            Input.Email = agentUser.Email;
-            Input.PhoneNumber = agentUser.PhoneNumber;
-            Input.AgentType = agentUser.AgentType;
-        }
+     
     }
 }
