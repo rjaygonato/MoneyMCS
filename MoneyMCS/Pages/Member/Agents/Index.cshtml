@@ -1,5 +1,5 @@
 ﻿@page
-@model AgentsModel
+@model IndexModel
 @{
     Layout = "_AdminLayout";
     ViewData["pageName"] = "Agents";
@@ -113,7 +113,7 @@
             </div>
         </div>
         <div class="flex justify-end my-3 md:my-2">
-            <a asp-page="AddAgent" role="button"
+            <a asp-page="/Member/Agents/Add" role="button"
                 class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm font-medium"><i
                     class="fas fa-user-plus"></i> Add new agent</a>
         </div>
@@ -153,6 +153,9 @@
                             class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             Created Date
                         </th>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Downlines
+                        </th>
                         <th
                             class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
                             Edit
@@ -176,7 +179,10 @@
 
                             <td class="py-4 px-6 border-b border-grey-light">05/23/12</td>
                             <td class="p-0 text-center px-6 border-b border-grey-light">
-                                <a asp-page="/Member/EditAgent" asp-route-id="@user.Id"><i class="fas fa-pencil-alt"></i></a>
+                                <a asp-page="/Member/Agents/Downline" asp-route-id="@user.Id"><i class="fas fa-eye"></i></a>
+                            </td>
+                            <td class="p-0 text-center px-6 border-b border-grey-light">
+                                <a asp-page="/Member/Agents/Edit" asp-route-id="@user.Id"><i class="fas fa-pencil-alt"></i></a>
                             </td>
                             <td class="p-0 text-center py-4 px-6 border-b border-grey-light">
                                 <button data-id="@user.Id" class="deleteBtn" aria-hidden="true"><i class="fa fa-trash"></i></button>
@@ -283,7 +289,7 @@
             </h2>
 
 
-            <form id="deleteForm" asp-page-handler="Delete" method="post">
+            <form id="deleteForm" asp-page="/Member/Agents/Index" asp-page-handler="Delete" method="post">
                 <button x-on:click="open = ! open" type="button"
                         class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-lg shadow-sm mr-2">
                     Cancel

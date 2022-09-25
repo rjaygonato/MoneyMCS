@@ -1,0 +1,74 @@
+﻿@page "{id}"
+@model MoneyMCS.Pages.Member.Agents.DownlineModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["pageName"] = "Agents";
+}
+
+
+
+<main class="w-full flex-grow p-6">
+    <div class="w-full mt-12">
+        <p class="text-xl pb-3 flex items-center">
+            <i class="fas fa-user-edit"></i> Agent Downline
+        </p>
+        <div class="tf-tree tf-custom h-screen flex justify-center">
+            <ul>
+                <li>
+                    <span class="tf-nc">
+                        <img src="~/img/agent.png" />
+                        <p class="text-center">@Model.Agent.UserName</p>
+                    </span>
+                    <ul>
+                        @foreach(var directAgent in Model.DirectAgents) {
+                            <li>
+                                <span class="tf-nc">
+                                    <img src="~/img/agent.png" />
+                                    <p class="text-center">@directAgent.UserName</p>
+                                </span>
+                                @if (Model.LevelTwoAReferredAgents.ContainsKey(directAgent.Id) && Model.LevelTwoAReferredAgents[directAgent.Id].Count > 0)
+                                {
+                                    <ul>
+                                        @foreach (var levelTwoAgent in Model.LevelTwoAReferredAgents[directAgent.Id])
+                                        {
+                                            <li>
+                                                <span class="tf-nc">
+                                                    <img src="~/img/agent.png" />
+                                                    <p class="text-center">@levelTwoAgent.UserName</p>
+                                                </span>
+                                                @if (Model.LevelThreeReferredAgents.ContainsKey(levelTwoAgent.Id) && Model.LevelThreeReferredAgents[levelTwoAgent.Id].Count > 0) {
+                                                    <ul>
+
+                                                        @foreach (var levelThreeAgent in Model.LevelThreeReferredAgents[levelTwoAgent.Id])
+                                                        {
+                                                            <li>
+                                                                <span class="tf-nc">
+                                                                    <img src="~/img/agent.png" />
+                                                                    <p class="text-center">@levelThreeAgent.UserName</p>
+                                                                </span>
+                                                            </li>
+                                                        }
+                                                    </ul>
+
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+
+                                }
+                            </li>
+                            
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+}

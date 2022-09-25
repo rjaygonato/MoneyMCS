@@ -4,17 +4,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
 
-namespace MoneyMCS.Pages.Member
+namespace MoneyMCS.Pages.Member.Agents
 {
-    public class AgentsModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly UserManager<AgentUser> _userManager;
         private readonly EntitiesContext _context;
-        private readonly ILogger<AgentsModel> _logger;
+        private readonly ILogger<IndexModel> _logger;
         public List<AgentUser> RegisteredAgents { get; set; } = new();
 
 
-        public AgentsModel(UserManager<AgentUser> userManager, EntitiesContext context ,ILogger<AgentsModel> logger)
+        public IndexModel(UserManager<AgentUser> userManager, EntitiesContext context, ILogger<IndexModel> logger)
         {
             _userManager = userManager;
             _context = context;
@@ -43,6 +43,7 @@ namespace MoneyMCS.Pages.Member
             await _userManager.DeleteAsync(user);
             return RedirectToPage("/Member/Agents");
         }
+
 
         private async Task<List<AgentUser>> GetAgents()
         {

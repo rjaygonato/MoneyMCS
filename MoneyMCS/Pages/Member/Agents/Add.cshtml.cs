@@ -6,19 +6,19 @@ using MoneyMCS.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace MoneyMCS.Pages.Member
+namespace MoneyMCS.Pages.Member.Agents
 {
-    public class AddAgentModel : PageModel
+    public class AddModel : PageModel
     {
         private readonly UserManager<AgentUser> _userManager;
         private readonly IUserStore<AgentUser> _userStore;
         private readonly IUserEmailStore<AgentUser> _emailStore;
-        private readonly ILogger<AddAgentModel> _logger;
+        private readonly ILogger<AddModel> _logger;
 
-        public AddAgentModel(
+        public AddModel(
             UserManager<AgentUser> userManager,
             IUserStore<AgentUser> userStore,
-            ILogger<AddAgentModel> logger)
+            ILogger<AddModel> logger)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -89,20 +89,14 @@ namespace MoneyMCS.Pages.Member
         }
         public async Task<IActionResult> OnGet()
         {
-            await _userManager.Users.ForEachAsync(agent =>
-            {
-                SelectAgents.Add(new SelectListItem()
-                {
-                    Text = agent.UserName,
-                    Value = agent.Id
-                });
-            });
+            await LoadFormDefaultData();
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/Member/Agents");
+            returnUrl ??= Url.Content("~/Member/Agents/Index");
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -142,8 +136,8 @@ namespace MoneyMCS.Pages.Member
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+            await LoadFormDefaultData();
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
 
@@ -168,6 +162,18 @@ namespace MoneyMCS.Pages.Member
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<AgentUser>)_userStore;
+        }
+
+        private async Task LoadFormDefaultData()
+        {
+            await _userManager.Users.ForEachAsync(agent =>
+            {
+                SelectAgents.Add(new SelectListItem()
+                {
+                    Text = agent.UserName,
+                    Value = agent.Id
+                });
+            });
         }
 
 

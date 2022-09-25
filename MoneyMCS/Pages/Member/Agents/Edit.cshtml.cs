@@ -8,19 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Policy;
 
-namespace MoneyMCS.Pages.Member
+namespace MoneyMCS.Pages.Member.Agents
 {
-    public class EditAgentModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly UserManager<AgentUser> _userManager;
         private readonly IUserStore<AgentUser> _userStore;
         private readonly IUserEmailStore<AgentUser> _emailStore;
-        private readonly ILogger<EditAgentModel> _logger;
+        private readonly ILogger<EditModel> _logger;
 
-        public EditAgentModel(
+        public EditModel(
             UserManager<AgentUser> userManager,
             IUserStore<AgentUser> userStore,
-            ILogger<EditAgentModel> logger)
+            ILogger<EditModel> logger)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -62,7 +62,7 @@ namespace MoneyMCS.Pages.Member
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-        
+
             public string? returnURL { get; set; }
         }
 
@@ -81,6 +81,18 @@ namespace MoneyMCS.Pages.Member
             public string ConfirmPassword { get; set; }
 
         }
+
+        public class AgentTypeInput
+        {
+            [Required]
+            public string AgentType { get; set; }
+
+            [Required]
+            public string ReferrerId { get; set; }
+        }
+
+        public AgentTypeInput AgentInput { get; set; }
+        public PasswordChangeInput PasswordInput { get; set; }
 
         public async Task<IActionResult> OnGet([FromRoute] string? id)
         {
@@ -103,10 +115,10 @@ namespace MoneyMCS.Pages.Member
                     {
                         Text = agent.UserName,
                         Value = agent.Id,
-                        Selected = (ToEditAgent.ReferrerId != null && ToEditAgent.ReferrerId != null) && ToEditAgent.ReferrerId == agent.Id
+                        Selected = ToEditAgent.ReferrerId != null && ToEditAgent.ReferrerId != null && ToEditAgent.ReferrerId == agent.Id
                     });
                 }
-                
+
             });
             return Page();
         }
@@ -127,8 +139,8 @@ namespace MoneyMCS.Pages.Member
             {
                 return Page();
             }
-            
-            
+
+
 
             ToEditAgent.UserName = Input.UserName;
             ToEditAgent.FirstName = Input.FirstName;
@@ -143,31 +155,26 @@ namespace MoneyMCS.Pages.Member
 
         }
         //Continue change password
-        public async Task<IActionResult> OnPostChangePassword([FromRoute] string? Id, PasswordChangeInput Input)
-        {
-            if (Id == null)
-            {
-                return BadRequest();
-            }
+        //public async Task<IActionResult> OnPostChangePassword([FromRoute] string? Id, PasswordChangeInput Input)
+        //{
+        //    if (Id == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
 
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        //    ToEditAgent = await _userManager.FindByIdAsync(Id);
 
-            ToEditAgent = await _userManager.FindByIdAsync(Id);
+        //    if (ToEditAgent == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ToEditAgent == null)
-            {
-                return NotFound();
-            }
-
-            var token = await _userManager.GeneratePasswordResetTokenAsync(ToEditAgent);
-
-
-
-
-        }
+        //    var token = await _userManager.GeneratePasswordResetTokenAsync(ToEditAgent);
+        //}
 
         private IUserEmailStore<AgentUser> GetEmailStore()
         {
@@ -178,6 +185,6 @@ namespace MoneyMCS.Pages.Member
             return (IUserEmailStore<AgentUser>)_userStore;
         }
 
-     
+
     }
 }

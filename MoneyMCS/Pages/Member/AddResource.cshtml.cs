@@ -64,7 +64,6 @@ namespace MoneyMCS.Pages.Member
             string fileName = $"{Path.GetRandomFileName()}{Path.GetExtension(Input.ResourceFile.FileName)}";
             string filePath = Path.Combine("Resources", fileName);
             string urlPath = $"\\Resource\\{fileName}";
-            
             var fs = new FileStream(filePath, FileMode.CreateNew);
             await Input.ResourceFile.CopyToAsync(fs);
 

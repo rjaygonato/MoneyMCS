@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/treeflex/dist/css/treeflex.css">
     <style>
         @@import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
         .font-family-karla { font-family: karla; }
@@ -14,7 +15,27 @@
         .active-nav-link { background: #1947ee; }
         .nav-item:hover { background: #1947ee; }
         .account-link:hover { background: #3d68ff; }
-        .round {width: 200px; height: 170px; border-radius: 100%; background-color: white;} 
+        .round {width: 200px; height: 170px; border-radius: 100%; background-color: white;}
+
+        .tf-custom .tf-nc {
+            height: 6em;
+            width: 4em;
+            padding: 0;
+            border: none;
+        }
+
+            /* make the horizontal and vertical connectors thick and change their color */
+
+            .tf-custom .tf-nc:before,
+            .tf-custom .tf-nc:after {
+                border-left-color: dodgerblue;
+                border-left-width: 2px;
+            }
+
+        .tf-custom li li:before {
+            border-top-color: dodgerblue;
+            border-top-width: 2px;
+        }
     </style>
 </head>
     <body class="font-family-karla flex">
@@ -32,7 +53,7 @@
                     <i class="fas fa-tachometer-alt mr-3"></i>
                     Dashboard
                 </a>
-                <a asp-page="/Member/Agents" class="flex items-center @(ViewData["pageName"] == "Agents" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6"> 
+                <a asp-page="/Member/Agents/Index" class="flex items-center @(ViewData["pageName"] == "Agents" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6"> 
                     <i class="fas fa-table mr-3"></i>
                     Agents
                 </a>
