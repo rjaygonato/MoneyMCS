@@ -67,7 +67,7 @@
                     Resources
                 </a>
                 
-                <a asp-page="/Member/Clients" class="flex items-center @(ViewData["pageName"] == "Clients" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
+                <a asp-page="/Member/Clients/Index" class="flex items-center @(ViewData["pageName"] == "Clients" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
                     <i class="fas fa-users mr-3"></i>
                     Clients
                 </a>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
             </header>-->
-            <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
+            <header x-data="{ isOpen: false }" class="w-full bg-green-600 py-5 px-6 sm:hidden">
                 <div class="flex items-center justify-between">
                     <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
                     <button @@click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
@@ -100,8 +100,8 @@
                 </div>
             <!-- Dropdown Nav -->
                 <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
-                    <a asp-page="/Agents/Member/Index" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
-                        <i class="fas fa-tachometer-alt mr-3"></i>
+                <a asp-page="/Agents/Member/Index" class="flex items-center @(ViewData["pageName"] == "/" ? "bg-green-500" : "") text-white py-2 pl-4 nav-item">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
                         Dashboard
                     </a>
                     <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
@@ -110,24 +110,16 @@
                     </a>
                     <a href="blank.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                         <i class="fas fa-sticky-note mr-3"></i>
-                        Blank Page
+                        Accounts
                     </a>
                     
                     <a href="forms.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                         <i class="fas fa-align-left mr-3"></i>
-                        Forms
+                        Resources
                     </a>
                     <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                         <i class="fas fa-tablet-alt mr-3"></i>
-                        Tabbed Content
-                    </a>
-                    <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                        <i class="fas fa-calendar mr-3"></i>
-                        Calendar
-                    </a>
-                    <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                        <i class="fas fa-cogs mr-3"></i>
-                        Support
+                        Clients
                     </a>
                     <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                         <i class="fas fa-user mr-3"></i>
@@ -138,7 +130,7 @@
                         Sign Out
                     </a>
                     <button class="w-full bg-white cta-btn font-semibold py-2 mt-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                        <i class="fas fa-arrow-circle-up mr-3"></i> Upgrade to Pro!
+                        <i class="fas fa-arrow-circle-up mr-3"></i> Test Button
                     </button>
                 </nav>
             <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">

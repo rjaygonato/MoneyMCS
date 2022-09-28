@@ -115,7 +115,7 @@
 
         $("#searchSubmit").click(function() {
             if($("#defaultSearch").val() != "") {
-                let searchUrl = url + "&search="+ $("#defaultSearch").val()
+                let searchUrl = "/Member/Resources/?handler=ResourcesPartial" + "&search="+ $("#defaultSearch").val()
                 fetch(searchUrl, { method: "GET" })
                 .then(response => response.text())
                 .then(data => $("#resourcesContainer").html(data))

@@ -63,7 +63,7 @@ namespace MoneyMCS.Pages.Member.Agents
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            public string? returnURL { get; set; }
+            public string? returnUrl { get; set; }
         }
 
         public class PasswordChangeInput
@@ -122,17 +122,17 @@ namespace MoneyMCS.Pages.Member.Agents
             });
             return Page();
         }
-        public async Task<IActionResult> OnPostProfile([FromRoute] string? Id, ProfileInput Input)
+        public async Task<IActionResult> OnPostProfile([FromRoute] string? id, ProfileInput Input)
         {
-            if (Id == null)
+            if (id == null)
             {
                 return BadRequest();
             }
 
-            ToEditAgent = await _userManager.FindByIdAsync(Id);
+            ToEditAgent = await _userManager.FindByIdAsync(id);
             if (ToEditAgent == null)
             {
-                return NotFound($"User with the id: {Id} is not found.");
+                return NotFound($"User with the id: {id} is not found.");
             }
 
             if (!ModelState.IsValid)
@@ -150,8 +150,8 @@ namespace MoneyMCS.Pages.Member.Agents
 
             await _userManager.UpdateAsync(ToEditAgent);
 
-            Input.returnURL ??= Url.Content($"~/Member/EditAgent/{Id}");
-            return Redirect(Input.returnURL);
+            Input.returnUrl ??= Url.Content($"~/Member/EditAgent/{id}");
+            return Redirect(Input.returnUrl);
 
         }
         //Continue change password

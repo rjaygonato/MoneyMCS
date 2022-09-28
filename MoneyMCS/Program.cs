@@ -14,9 +14,22 @@ builder.Services.AddDbContext<EntitiesContext>(options =>
 builder.Services.AddDbContext<ResourceContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<MemberUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDbContext<ClientContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+
+builder.Services.AddDefaultIdentity<MemberUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.User.RequireUniqueEmail = true;
+})
     .AddEntityFrameworkStores<EntitiesContext>();
-builder.Services.AddIdentityCore<AgentUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentityCore<AgentUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.User.RequireUniqueEmail = true;
+})
     .AddEntityFrameworkStores<EntitiesContext>();
 
 // Add services to the container.

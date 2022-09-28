@@ -24,22 +24,20 @@ namespace MoneyMCS.Pages.Member
 
         public async Task<IActionResult> OnGetResourcesPartial(List<string>? category, string? search)
         {
-            if (category == null && category.Count == 0 && search == null)
+            if (category == null && search == null)
             {
                 return BadRequest();
             }
+
             var Resources = new List<Resource>();
-            if (category.Count > 0 && !string.IsNullOrWhiteSpace(search))
-            {
-                Resources = await _context.Resources.Where(r => category.Contains(r.Category) && r.ResourceName.ToLower().Contains(search.ToLower())).ToListAsync();
-            }
-            else if (category.Count > 0)
+            if (category != null && category.Count > 0)
             {
                 Resources = await _context.Resources.Where(r => category.Contains(r.Category)).ToListAsync();
             }
+            
             else if (!string.IsNullOrWhiteSpace(search))
             {
-                Resources = await _context.Resources.Where(r => r.ResourceName.ToLower().Contains(search.ToLower())).ToListAsync();
+                Resources = await _context.Resources.Where(r => r.ResourceName.Contains(search)).ToListAsync();
             } 
  
             return Partial("_ResourcesResultPartial", Resources);

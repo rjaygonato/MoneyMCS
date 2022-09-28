@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MoneyMCS.Models;
 
 namespace MoneyMCS.Areas.Identity.Data;
 
@@ -25,6 +26,7 @@ public class AgentUser : IdentityUser
     public string? ReferrerId { get; set; }
     public virtual AgentUser Referrer { get; set; }
     public virtual List<AgentUser> Referrals { get; set; }
+    public virtual List<Client> Clients { get; set; }
 
 
 

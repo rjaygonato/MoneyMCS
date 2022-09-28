@@ -41,7 +41,7 @@ namespace MoneyMCS.Pages.Member.Agents
                 return BadRequest();
             }
             await _userManager.DeleteAsync(user);
-            return RedirectToPage("/Member/Agents");
+            return RedirectToPage("/Member/Agents/Index");
         }
 
 

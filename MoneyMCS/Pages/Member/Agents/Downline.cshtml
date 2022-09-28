@@ -23,8 +23,10 @@
                         @foreach(var directAgent in Model.DirectAgents) {
                             <li>
                                 <span class="tf-nc">
+                                    <a asp-page="/Member/Agents/Downline" asp-route-id="@directAgent.Id">
                                     <img src="~/img/agent.png" />
                                     <p class="text-center">@directAgent.UserName</p>
+                                    </a>
                                 </span>
                                 @if (Model.LevelTwoAReferredAgents.ContainsKey(directAgent.Id) && Model.LevelTwoAReferredAgents[directAgent.Id].Count > 0)
                                 {
@@ -33,8 +35,11 @@
                                         {
                                             <li>
                                                 <span class="tf-nc">
-                                                    <img src="~/img/agent.png" />
-                                                    <p class="text-center">@levelTwoAgent.UserName</p>
+                                                    <a asp-page="/Member/Agents/Downline" asp-route-id="@levelTwoAgent.Id">
+                                                        <img src="~/img/agent.png" />
+                                                        <p class="text-center">@levelTwoAgent.UserName</p>
+                                                    </a>
+                                                    
                                                 </span>
                                                 @if (Model.LevelThreeReferredAgents.ContainsKey(levelTwoAgent.Id) && Model.LevelThreeReferredAgents[levelTwoAgent.Id].Count > 0) {
                                                     <ul>
@@ -43,8 +48,10 @@
                                                         {
                                                             <li>
                                                                 <span class="tf-nc">
-                                                                    <img src="~/img/agent.png" />
-                                                                    <p class="text-center">@levelThreeAgent.UserName</p>
+                                                                    <a asp-page="/Member/Agents/Downline" asp-route-id="@levelThreeAgent.Id">
+                                                                        <img src="~/img/agent.png" />
+                                                                        <p class="text-center">@levelThreeAgent.UserName</p>
+                                                                    </a>
                                                                 </span>
                                                             </li>
                                                         }

@@ -26,8 +26,6 @@ namespace MoneyMCS.Pages.Member
             [Display(Name = "Resource Name")]
             public string ResourceName { get; set; }
             [Required]
-            public string Description { get; set; }
-            [Required]
             public string Category { get; set; }
             [Required]
             [Display(Name = "Resource File")]
@@ -64,13 +62,16 @@ namespace MoneyMCS.Pages.Member
             string fileName = $"{Path.GetRandomFileName()}{Path.GetExtension(Input.ResourceFile.FileName)}";
             string filePath = Path.Combine("Resources", fileName);
             string urlPath = $"\\Resource\\{fileName}";
-            var fs = new FileStream(filePath, FileMode.CreateNew);
-            await Input.ResourceFile.CopyToAsync(fs);
+
+            using(Stream fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await Input.ResourceFile.CopyToAsync(fileStream);
+
+            }
 
             var newResource = new Resource()
             {
                 ResourceName = Input.ResourceName,
-                Description = Input.Description,
                 Category = Input.Category,
                 FilePath = urlPath
             };

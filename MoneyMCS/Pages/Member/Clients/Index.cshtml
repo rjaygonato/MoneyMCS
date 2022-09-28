@@ -1,0 +1,281 @@
+﻿@page
+@model IndexModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["pageName"] = "Clients";
+    ViewData["Title"] = "Clients";
+}
+<main class="w-full flex-grow p-6">
+    <div class="w-full mt-12">
+        <p class="text-xl pb-3 flex items-center">
+            <i class="fas fa-list mr-3"></i> Agents
+        </p>
+        <div class="w-full my-6 pr-0">
+            <div class="w-100 bg-green-600">
+                <p class="text-white text-center font-bold">Search Filter</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4">
+                <div>
+                    <div class="flex justify-between my-1">
+                        <label class="text-gray-700" for="cus_name">Company:</label>
+                        <input class="px-3 py-1 text-gray-900 bg-gray-200 rounded-md" id="cus_name" name="cus_name" type="text" required="" />
+                    </div>
+                    <div class="flex justify-between my-1">
+                        <label class="text-gray-700" for="cus_name">Email:</label>
+                        <input class="px-3 py-1 text-gray-900 bg-gray-200 rounded-md" id="cus_name" name="cus_name" type="text" required="" />
+                    </div>
+                    <div class="flex justify-between my-1">
+                        <label class="text-gray-700" for="cus_name">Phone:</label>
+                        <input class="px-3 py-1 text-gray-900 bg-gray-200 rounded-md" id="cus_name" name="cus_name" type="text" required="" />
+                    </div>
+                    <div class="flex justify-between my-1">
+                        <label class="text-gray-700" for="cus_name">First Name:</label>
+                        <input class="px-3 py-1 text-gray-900 bg-gray-200 rounded-md" id="cus_name" name="cus_name" type="text" required="" />
+                    </div>
+                    <div class="flex justify-between my-1">
+                        <label class="text-gray-700" for="cus_name">Last Name:</label>
+                        <input class="px-3 py-1 text-gray-900 bg-gray-200 rounded-md" id="cus_name" name="cus_name" type="text" required="" />
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between my-1">
+                        <label class="text-gray-700" for="cus_name">Referral Agent:</label>
+                        <select id="agentType"
+                                class="bg-gray-100 border py-1 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 ">
+                            <option selected>Choose agent</option>
+                            <option value="US">BRONNY, JAMES</option>
+                            <option value="CA">SCOTT, TRAVIS</option>
+                            <option value="FR">TEST, USER</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-between my-1">
+                        <label class="text-gray-700">Account Status:</label>
+                        <div class="flex">
+                            <div class="flex items-center mr-4">
+                                <input id="inline-radio" type="radio" value="" name="inline-radio-group"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="inline-radio"
+                                       class="ml-1 text-sm font-medium text-gray-600">Active</label>
+                            </div>
+                            <div class="flex items-center mr-4">
+                                <input id="inline-2-radio" type="radio" value="" name="inline-radio-group"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="inline-2-radio"
+                                       class="ml-1 text-sm font-medium text-gray-600">Inactive</label>
+                            </div>
+                            <div class="flex items-center mr-4">
+                                <input id="inline-2-radio" type="radio" value="" name="inline-radio-group"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="inline-2-radio"
+                                       class="ml-1 text-sm font-medium text-gray-600">Disabled</label>
+                            </div>
+                            <div class="flex items-center mr-4">
+                                <input checked id="inline-checked-radio" type="radio" value="" name="inline-radio-group"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="inline-checked-radio"
+                                       class="ml-1 text-sm font-medium text-gray-600">Pending</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 flex justify-center p-1">
+                <button type="button" class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm mr-1">
+                    <i class="fas fa-search"></i> Search
+                </button>
+                <button type="button" class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+            </div>
+        </div>
+        <div class="flex justify-end my-3 md:my-2">
+            <a asp-page="/Member/Clients/Add" role="button"
+               class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm font-medium">
+                <i class="fas fa-user-plus"></i> Add new client
+            </a>
+        </div>
+        <div class="bg-white overflow-auto rounded-md">
+            <table id="clientsList" class="text-left w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Company
+                        </th>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            First Name
+                        </th>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Last Name
+                        </th>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Phone
+                        </th>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Email
+                        </th>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Referrer
+                        </th>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Date added
+                        </th>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Edit
+                        </th>
+                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                            Delete
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var client in Model.Clients)
+                    {
+                        <tr class="hover:bg-grey-lighter">
+                            <td class="py-4 px-6 border-b border-grey-light">@client.Company</td>
+                            <td class="py-4 px-6 border-b border-grey-light">@client.FirstName</td>
+                            <td class="py-4 px-6 border-b border-grey-light">@client.LastName</td>
+                            <td class="py-4 px-6 border-b border-grey-light">@client.PhoneNumber</td>
+                            <td class="py-4 px-6 border-b border-grey-light">@client.Email</td>
+                            <td class="py-4 px-6 border-b border-grey-light">@(client.Referrer != null ? client.Referrer.UserName : "") </td>
+
+                            <td class="py-4 px-6 border-b border-grey-light">@client.DateAdded.ToShortDateString()</td>
+                            <td class="p-0 text-center px-6 border-b border-grey-light">
+                                <a asp-page="/Member/Clients/Edit" asp-route-id="@client.ClientId"><i class="fas fa-pencil-alt"></i></a>
+                            </td>
+                            <td class="p-0 text-center py-4 px-6 border-b border-grey-light">
+                                <button data-id="@client.ClientId" class="deleteBtn" aria-hidden="true"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="bg-white px-4 py-3 flex items-center justify-between sm:px-6">
+                <div class="flex-1 flex justify-between sm:hidden">
+                    <a href="#"
+                       class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Previous
+                    </a>
+                    <a href="#"
+                       class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Next
+                    </a>
+                </div>
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700">
+                            Showing
+                            <span class="font-medium">1</span>
+                            to
+                            <span class="font-medium">10</span>
+                            of
+                            <span class="font-medium">97</span>
+                            results
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            <a href="#"
+                               class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Previous</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                     fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                          clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                            <a href="#" aria-current="page"
+                               class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                1
+                            </a>
+                            <a href="#"
+                               class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                2
+                            </a>
+                            <a href="#"
+                               class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
+                                3
+                            </a>
+                            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                ...
+                            </span>
+                            <a href="#"
+                               class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
+                                8
+                            </a>
+                            <a href="#"
+                               class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                9
+                            </a>
+                            <a href="#"
+                               class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                10
+                            </a>
+                            <a href="#"
+                               class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Next</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                     fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                          clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div style=" background-color: rgba(0, 0, 0, 0.8)" x-data="{ open: false }" class="fixed  z-40 top-0 right-0 left-0 bottom-0 h-full w-full"
+     x-show="open" id="deleteModal" transition>
+    <div class="p-4 max-w-xl mx-auto relative absolute left-0 right-0 overflow-hidden mt-24">
+        <div x-on:click="open = ! open"
+             class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer">
+            <svg class="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
+            </svg>
+        </div>
+
+        <div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8">
+
+            <h2 class="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">
+                Are you sure you want to remove this client?
+            </h2>
+
+
+            <form id="deleteForm" asp-page="/Member/Clients/Index" asp-page-handler="Delete" method="post">
+                <button x-on:click="open = ! open" type="button"
+                        class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-lg shadow-sm mr-2">
+                    Cancel
+                </button>
+
+                <input type="hidden" name="toDeleteClientId" id="toDeleteClientId" />
+                <button type="submit" id="confirmDeleteBtn" class="bg-gray-800 hover:bg-gray-700 disabled:bg-gray-600 text-white font-semibold py-2 px-4 border border-gray-700 rounded-lg shadow-sm">
+                    Yes, remove this client
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script>
+        $(".deleteBtn").click(function () {
+            const userId = $(this).data("id")
+            $("#deleteForm #toDeleteClientId").val(userId);
+            $("#deleteModal").show();
+
+        })
+        $("#deleteForm").submit(function () {
+            $("#confirmDeleteBtn").prop("disabled", true);
+        })
+    </script>
+}
+
