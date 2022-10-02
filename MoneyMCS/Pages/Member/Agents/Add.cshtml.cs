@@ -1,10 +1,11 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MoneyMCS.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MoneyMCS.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace MoneyMCS.Pages.Member.Agents
 {
@@ -61,7 +62,7 @@ namespace MoneyMCS.Pages.Member.Agents
             public string LastName { get; set; }
 
             [Phone]
-            
+
             [Display(Name = "PhoneNumber")]
             public string? PhoneNumber { get; set; }
 
@@ -90,7 +91,7 @@ namespace MoneyMCS.Pages.Member.Agents
         public async Task<IActionResult> OnGet()
         {
             await LoadFormDefaultData();
-            
+
             return Page();
         }
 
@@ -118,17 +119,19 @@ namespace MoneyMCS.Pages.Member.Agents
                 {
                     user.PhoneNumber = Input.PhoneNumber;
                 }
-                
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
+                    var claim = new Claim("UserType", "Agent");
+                    await _userManager.AddClaimAsync(user, claim);
                     _logger.LogInformation("User created a new account with password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    
+
+
+
                     return RedirectToPage(returnUrl);
                 }
                 foreach (var error in result.Errors)

@@ -1,0 +1,64 @@
+﻿@page
+@model MoneyMCS.Pages.CA.LinkStatsModel
+@{
+    Layout = "_CALayout";
+    ViewData["caPageName"] = "LinkStats";
+    ViewData["caPageTitle"] = "Link Tracking Stats";
+    ViewData["Title"] = "Link Stats";
+}
+
+<div class="flex flex-row w-max">
+    <h3 class="font-medium m-3 ml-0">Date Range:</h3>
+    <input type="date" name="date-start" id="start" required class="ml-3 my-2">
+    <p class="text-center m-3"> - </p>
+    <input type="date" name="date-end" id="end" required class="mr-3 my-2">
+    <button class="rounded-lg m-3 ml-0 md:ml-5 text-sm px-2 w-max text-blue-700  border-solid border-2 border-sky-900 place-self-end hover:bg-sky-800 hover:text-[#ececec] active:bg-sky-900" id="refresh">Search</button>
+</div>
+<div class="grid grid-flow-row grid-cols-2 w-full">
+    <div class="flex flex-row">
+        <h1 class="text-2xl font-medium resultCount">0</h1>
+        <h2 class="text-sm font-medium mt-2">result(s)</h2>
+    </div>
+    <div class="flex flex-row place-content-end">
+        <select name="displayount" id="displayCount" class="rounded-md border-2 border-green-600">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50" selected>50</option>
+            <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+        </select>
+        <h2 class="text-sm font-medium mt-2">per page</h2>
+    </div>
+</div>
+<div class="w-full text-[0.600rem] overflow-x-auto">
+    <table class="w-full table-auto">
+        <thead>
+        <th>Redirect</th>
+        <th>Ad</th>
+        <th>Hits</th>
+        <th>Opt-ins</th>
+        <th>Orders</th>
+        <th>Subscriptions</th>
+        <th>Hits/orders</th>
+        <th>Hits/subscriptions</th>
+        <th>Clickdate</th>
+        </thead>
+        <tr>
+            <td><hr></td>
+            <td><hr></td>
+            <td><hr></td>
+            <td><hr></td>
+            <td><hr></td>
+            <td><hr></td>
+            <td><hr></td>
+            <td><hr></td>
+            <td><hr></td>
+            <td><hr></td>
+        </tr>
+        <tr>
+            <td>No Results to Show</td>
+        </tr>
+    </table>
+</div>

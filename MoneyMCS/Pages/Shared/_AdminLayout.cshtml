@@ -57,7 +57,7 @@
                     <i class="fas fa-table mr-3"></i>
                     Agents
                 </a>
-            <a href="/Member/Accounts" class="flex items-center @(ViewData["pageName"] == "Accounts" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
+            <a href="/Member/Accounts/Index" class="flex items-center @(ViewData["pageName"] == "Accounts" ? "bg-green-500" : "") text-white hover:bg-green-500 py-4 pl-6">
                     <i class="fas fa-user-friends mr-3"></i>
                     Accounts
                 </a>
@@ -141,6 +141,9 @@
                 @RenderBody()
             </div>
         </div>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
     @RenderSection("Scripts", false)
 
     </body>

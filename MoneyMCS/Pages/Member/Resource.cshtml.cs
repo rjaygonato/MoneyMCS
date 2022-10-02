@@ -32,10 +32,10 @@ namespace MoneyMCS.Pages.Member
                 return NotFound();
             }
             return Page();
-            
+
         }
 
-        public async Task<IActionResult> OnPostDelete(int? toDeleteResourceId) 
+        public async Task<IActionResult> OnPostDelete(int? toDeleteResourceId)
         {
             if (toDeleteResourceId == null)
             {

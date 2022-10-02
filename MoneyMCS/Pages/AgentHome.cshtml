@@ -1,0 +1,8 @@
+﻿@page
+@model MoneyMCS.Pages.AgentHomeModel
+@{
+}
+
+
+<h1>@HttpContext.User.IsInRole("Agent")</h1>
+<h1>@HttpContext.User.Claims.FirstOrDefault(x => x.Type == "AgentId")</h1>

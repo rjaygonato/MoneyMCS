@@ -3,13 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using MoneyMCS.Areas.Identity.Data;
 using MoneyMCS.Services;
-
+using MoneyMCS.Policies;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AffiliateEntitiesConnection");
-
-builder.Services.AddDbContext<EntitiesContext>(options =>
-    options.UseSqlServer(connectionString));
 
 builder.Services.AddDbContext<ResourceContext>(options =>
     options.UseSqlServer(connectionString));
@@ -19,18 +17,38 @@ builder.Services.AddDbContext<ClientContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
-builder.Services.AddDefaultIdentity<MemberUser>(options =>
+builder.Services.AddDbContext<EntitiesContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+
+builder.Services.AddIdentity<MemberUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
     options.User.RequireUniqueEmail = true;
 })
-    .AddEntityFrameworkStores<EntitiesContext>();
+    .AddEntityFrameworkStores<EntitiesContext>()
+    .AddDefaultUI();
+
 builder.Services.AddIdentityCore<AgentUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = false; //enable in production
     options.User.RequireUniqueEmail = true;
 })
-    .AddEntityFrameworkStores<EntitiesContext>();
+    .AddEntityFrameworkStores<EntitiesContext>()
+    .AddDefaultUI();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AgentAccessPolicy", policyBuilder =>
+    {
+        policyBuilder.AddRequirements(new UserTypeRequirement("Agent"));
+    });
+});
+
+builder.Services.AddSingleton<IAuthorizationHandler, AgentTypeHandler>();
+
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();

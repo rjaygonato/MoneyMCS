@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoneyMCS.Areas.Identity.Data;
 using MoneyMCS.Models;
 
 namespace MoneyMCS.Services

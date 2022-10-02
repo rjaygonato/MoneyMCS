@@ -9,7 +9,6 @@ namespace MoneyMCS.Pages.Member.Agents
     public class IndexModel : PageModel
     {
         private readonly UserManager<AgentUser> _userManager;
-        private readonly EntitiesContext _context;
         private readonly ILogger<IndexModel> _logger;
         public List<AgentUser> RegisteredAgents { get; set; } = new();
 
@@ -17,7 +16,6 @@ namespace MoneyMCS.Pages.Member.Agents
         public IndexModel(UserManager<AgentUser> userManager, EntitiesContext context, ILogger<IndexModel> logger)
         {
             _userManager = userManager;
-            _context = context;
             _logger = logger;
         }
 
@@ -47,8 +45,7 @@ namespace MoneyMCS.Pages.Member.Agents
 
         private async Task<List<AgentUser>> GetAgents()
         {
-            RegisteredAgents = await _context.AgentUsers
-                .ToListAsync();
+            RegisteredAgents = await _userManager.Users.ToListAsync();
             return RegisteredAgents;
 
         }

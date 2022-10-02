@@ -164,7 +164,7 @@ namespace MoneyMCS.Migrations.Client
             modelBuilder.Entity("MoneyMCS.Models.Client", b =>
                 {
                     b.HasOne("MoneyMCS.Areas.Identity.Data.AgentUser", "Referrer")
-                        .WithMany()
+                        .WithMany("Clients")
                         .HasForeignKey("ReferrerId");
 
                     b.Navigation("Referrer");
@@ -172,6 +172,8 @@ namespace MoneyMCS.Migrations.Client
 
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.AgentUser", b =>
                 {
+                    b.Navigation("Clients");
+
                     b.Navigation("Referrals");
                 });
 #pragma warning restore 612, 618

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Models;
 using MoneyMCS.Services;
-using System.ComponentModel.DataAnnotations;
 
 namespace MoneyMCS.Pages.Member
 {
@@ -34,12 +33,12 @@ namespace MoneyMCS.Pages.Member
             {
                 Resources = await _context.Resources.Where(r => category.Contains(r.Category)).ToListAsync();
             }
-            
+
             else if (!string.IsNullOrWhiteSpace(search))
             {
                 Resources = await _context.Resources.Where(r => r.ResourceName.Contains(search)).ToListAsync();
-            } 
- 
+            }
+
             return Partial("_ResourcesResultPartial", Resources);
         }
     }

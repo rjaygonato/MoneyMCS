@@ -28,7 +28,7 @@ namespace MoneyMCS.Pages.Member.Agents
         {
             if (id == null)
             {
-                
+
                 return BadRequest();
             }
 
@@ -47,7 +47,7 @@ namespace MoneyMCS.Pages.Member.Agents
                 {
                     LevelThreeReferredAgents[levelTwoAgent.Id] = await _userManager.Users.Where(au => au.ReferrerId == levelTwoAgent.Id).ToListAsync();
                 }
-                
+
             }
 
             return Page();

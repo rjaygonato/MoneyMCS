@@ -54,7 +54,7 @@ namespace MoneyMCS.Pages.Member.Clients
             public string? PhoneNumber { get; set; }
 
             public string? Address { get; set; }
-            
+
             public string? City { get; set; }
             public string? State { get; set; }
 
@@ -90,7 +90,7 @@ namespace MoneyMCS.Pages.Member.Clients
                     DateAdded = DateTime.UtcNow.Date
                 };
 
-               
+
 
                 await _context.Clients.AddAsync(newClient);
                 await _context.SaveChangesAsync();
@@ -123,6 +123,6 @@ namespace MoneyMCS.Pages.Member.Clients
             });
         }
 
-        
+
     }
 }

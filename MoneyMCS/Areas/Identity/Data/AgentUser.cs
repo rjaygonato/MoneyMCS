@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using MoneyMCS.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoneyMCS.Areas.Identity.Data;
 
 public class AgentUser : IdentityUser
 {
+
+    public string ReferralCode { get; set; }
+
     [Required]
     [MaxLength(100)]
     public string FirstName { get; set; } = string.Empty;

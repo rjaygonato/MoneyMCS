@@ -1,12 +1,10 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MoneyMCS.Areas.Identity.Data;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Policy;
+using MoneyMCS.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoneyMCS.Pages.Member.Agents
 {

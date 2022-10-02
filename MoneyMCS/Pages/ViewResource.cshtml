@@ -1,0 +1,17 @@
+﻿@page "{id}"
+@model MoneyMCS.Pages.ViewResourceModel
+@{
+    Layout = "_AgentLayout";
+    ViewData["pageName"] = "Resources";
+    ViewData["Title"] = "View Resource";
+}
+
+<div>
+    <div class="banner flex flex-col w-full max-w-fit min-w-full grow p-10 justify-center items-center opacity-100  to-gray-700 h-1/4 bg-gray-400" style="background-color: rgba(20, 20, 20, 0.75); background: url(./img/2h-media-3q4V539j_bw-unsplash.jpg), linear-gradient(rgba(22, 22, 22, 0.5),rgba(0,0,0,0.75)); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
+        <h6 class="text-4xl text-white">@Model.ResourceInfo.ResourceName</h6>
+    </div>
+
+    <div class="m-2 flex justify-center  grow  block rounded-md ">
+        <embed src="@Model.ResourceInfo.FilePath" width="800px" height="800px" />
+    </div>
+</div>

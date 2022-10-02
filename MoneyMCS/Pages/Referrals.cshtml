@@ -1,0 +1,49 @@
+﻿@page
+@model MoneyMCS.Pages.ReferralsModel
+@{
+    Layout = "_AgentLayout";
+    ViewData["pageName"] = "Commissions and Referrals";
+}
+
+<div>
+    <div class="banner flex flex-col w-full max-w-fit min-w-full grow p-10 justify-center items-center opacity-100  to-gray-700 h-1/4 bg-gray-400" style="background-color: rgba(20, 20, 20, 0.75); background: url(img/2h-media-3q4V539j_bw-unsplash.jpg), linear-gradient(rgba(22, 22, 22, 0.5),rgba(0,0,0,0.75)); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
+        <h6 class="text-4xl text-white">Commissions/Referrals</h6>
+    </div>
+    <!--sub content-->
+    <div class="flex md:flex-row flex-col h-max min-h-full min-w-full">
+        <div class="top-0 flex md:flex-col flex-row p-0 pb-5 m-0 h-full md:h-fit w-full md:w-1/4 mt-5 md:ml-5 items-start text-gray-800 bg-gray-200 rounded-lg">
+            <div class="text-left w-full">
+                <h2 class="bg-brandcolor4 w-full p-3 text-lg rounded-tl-lg md:rounded-t-lg">Home</h2>
+                <div class="grid grid-cols-1 gap-2 w-full mt-3 text-sm md:text-xl ">
+                    <a href="#" class="bg-lime-600 w-full pl-6 text-white"><h3 id="items">Welcome</h3></a>
+                    <a href="" class="ml-6"><h3 id="items">My Programs</h3></a>
+                </div>
+            </div>
+            <div class="text-left w-full md:mt-2">
+                <h2 class="bg-brandcolor4 w-full p-3 text-lg">Resources</h2>
+                <div class="grid grid-cols-1 gap-2 w-full pl-6 mt-3 text-sm md:text-xl ">
+                    <a href="tracking.html"><h3 id="items">Link Generator    </h3></a>
+                    <a href="email-templates.html"><h3 id="items">E-mail Templates</h3></a>
+                    <a href="banner.html"><h3 id="items">Banners</h3></a>
+                    <a href="marketing-resource.html"><h3 id="items">Resource Pages</h3></a>
+                </div>
+            </div>
+            <div class="text-left w-full md:mt-2">
+                <h2 class="bg-brandcolor4 w-full p-3 text-lg rounded-tr-lg md:rounded-none">Reports</h2>
+                <div class="grid grid-cols-1 gap-2 w-full pl-6 mt-3 text-sm md:text-xl ">
+                    <a href="ledger.html"><h3 id="items">My Ledger</h3></a>
+                    <a href="revenue.html"><h3 id="items">Commissions Generated</h3></a>
+                    <a href="linkstats.html"><h3 id="items">Link Tracking Stats</h3></a>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col md:w-3/4 h-max min-h-max min-w-screen w-full bg-gray-100 mt-5 ml-0 md:ml-3 rounded-md items-start p-8 mb-10">
+            <h2 class="mb-10 text-xl">Welcome to Affiliate Tracking Center!</h2>
+            <p>This is where you'll find all the tools you need to successfully promote our products. You can use the Tracking Tools links on the left menu to check your stats and view your commissions.</p>
+            <br>
+            <p>The Marketing Tools give you ad copy, buttons, banners and other promotional materials so you don't have to do any thinking. Just copy and paste... and start watching the commissions pile up.</p>
+            <br>
+            <p>If you have questions about our Referral Partner Program or if you run into a snag, please don't hesitate to contact us.</p>
+        </div>
+    </div>
+</div>

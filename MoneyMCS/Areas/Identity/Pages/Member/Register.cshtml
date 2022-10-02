@@ -16,6 +16,7 @@
             </div>
             <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                 <form id="registerForm" class="w-full" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="All"></div>
                     <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
                         Referral Agent Registration
                     </h1>
@@ -42,8 +43,8 @@
                     </div>
 
                     <div class="block mt-4 text-sm">
-                        <label asp-for"Input.Password" class="text-gray-700 dark:text-gray-400">Password</label>
-                        <input asp-for"Input.Password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        <label asp-for="Input.Password" class="text-gray-700 dark:text-gray-400">Password</label>
+                        <input asp-for="Input.Password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                type="password" />
                     </div>
                     <div class="block mt-4 text-sm">

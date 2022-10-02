@@ -11,6 +11,6 @@ namespace MoneyMCS.Services
         }
         public DbSet<Client> Clients { get; set; }
 
-   
+
     }
 }

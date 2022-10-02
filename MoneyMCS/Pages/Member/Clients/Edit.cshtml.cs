@@ -88,19 +88,19 @@ namespace MoneyMCS.Pages.Member.Clients
         public async Task<IActionResult> OnPostAsync([FromForm] int? Id)
         {
 
-           if (Id == null)
-           {
+            if (Id == null)
+            {
                 return BadRequest();
-           }
+            }
 
-           Client toEditClient = await _context.Clients.FindAsync(Id);
-           if (toEditClient == null)
-           {
+            Client toEditClient = await _context.Clients.FindAsync(Id);
+            if (toEditClient == null)
+            {
                 return NotFound();
-           }
+            }
 
-           if (ModelState.IsValid)
-           {
+            if (ModelState.IsValid)
+            {
                 toEditClient.Company = Input.Company;
                 toEditClient.FirstName = Input.FirstName;
                 toEditClient.LastName = Input.LastName;
@@ -128,13 +128,13 @@ namespace MoneyMCS.Pages.Member.Clients
                 }
 
 
-                
+
                 Input.returnUrl ??= Url.Content($"~/Member/Clients/{Id}");
                 return RedirectToPage("/Member/Clients/Index");
-           }
+            }
 
             return Page();
-           
+
         }
 
         private async Task LoadFormDefaultData()

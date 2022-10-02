@@ -1,4 +1,24 @@
 ﻿@page
 @model MoneyMCS.Pages.IndexModel
 @{
+    Layout = "_AgentLayout";
+    ViewData["pageName"] = "/";
+    ViewData["Title"] = "Home";
 }
+<div>
+    <div class="banner flex flex-col w-full max-w-fit min-w-full grow p-10 justify-center items-center opacity-100  to-gray-700 h-1/4 bg-gray-400" style="background-color: rgba(20, 20, 20, 0.75); background: url(img/2h-media-3q4V539j_bw-unsplash.jpg), linear-gradient(rgba(22, 22, 22, 0.5),rgba(0,0,0,0.75)); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
+        <h6 class="text-4xl text-white">Welcome!</h6>
+    </div>
+    <div class="flex flex-row justify-center min-h-full ">
+
+        <!--left side content-->
+        <div class="left-content h-fit pb-20 p-10 w-full md:w-3/4 grid md:grid-cols-4 gap-5 grid-flow-row auto-rows-min grid-cols-1 rounded-b-lg" style="background-color: #D9D9D9">
+            <p id="resource-welcome" class="col-span-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas quod veniam hic officiis ut nulla, consectetur, deserunt tenetur accusamus excepturi error explicabo aut distinctio quaerat commodi reiciendis soluta officia suscipit? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid perferendis doloribus officia nihil ad explicabo autem, magnam asperiores fuga laboriosam tempora blanditiis corporis veniam voluptas possimus fugiat adipisci deleniti nulla! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat quae quis obcaecati voluptas expedita ab vel quidem temporibus porro, debitis recusandae reprehenderit est delectus, explicabo molestias harum dignissimos totam minima.
+            </p>
+
+            <h5 id="results-notif" class="col-span-4 text-center hidden">All Results Loaded</h5>
+        </div><!--end left side content-->
+    </div>
+
+</div>
