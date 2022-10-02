@@ -1,0 +1,99 @@
+﻿@page
+@model MoneyMCS.Pages.AddClientModel
+@{
+    Layout = "_AgentLayout";
+    ViewData["pageName"] = "AddClient";
+    ViewData["Title"] = "Add Client";
+}
+
+<div>
+    <div class="banner flex flex-col w-full max-w-fit min-w-full grow p-10 justify-center items-center opacity-100  to-gray-700 h-1/4 " style="background-color: rgba(20, 20, 20, 0.75); background: url(img/2h-media-3q4V539j_bw-unsplash.jpg), linear-gradient(rgba(22, 22, 22, 0.5),rgba(0,0,0,0.75)); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
+        <h6 class="text-4xl text-white">Add Client</h6>
+    </div>
+    <!-- component -->
+    <!-- component -->
+    <form method="post" class="bg-white shadow-md rounded-md px-8 pt-6 pb-8  flex flex-col m-7">
+        <div class="-mx-3 md:flex mb-6">
+            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                <label asp-for="Input.Company" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
+                </label>
+                <input asp-for="Input.Company" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3">
+                <span class="text-red-500 text-sm" asp-validation-for="Input.Company"></span>
+            </div>
+        </div>
+        <div class="-mx-3 md:flex mb-6">
+            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                <label asp-for="Input.FirstName" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
+                </label>
+                <input asp-for="Input.FirstName" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3">
+                <span class="text-red-500 text-sm" asp-validation-for="Input.FirstName"></span>
+
+            </div>
+            <div class="md:w-1/2 px-3">
+                <label asp-for="Input.LastName" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
+                </label>
+                <input asp-for="Input.LastName" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" >
+                <span class="text-red-500 text-sm" asp-validation-for="Input.LastName"></span>
+            </div>
+
+        </div>
+        <div class="-mx-3 md:flex mb-6">
+            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                <label asp-for="Input.Email" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
+                </label>
+                <input asp-for="Input.Email" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3" >
+                <span class="text-red-500 text-sm" asp-validation-for="Input.Email"></span>
+            </div>
+            <div class="md:w-1/2 px-3">
+                <label asp-for="Input.PhoneNumber" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
+                </label>
+                <input asp-for="Input.PhoneNumber" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" >
+                <span class="text-red-500 text-sm" asp-validation-for="Input.PhoneNumber"></span>
+            </div>
+
+        </div>
+        <div class="-mx-3 md:flex mb-6">
+            <div class="md:w-full px-3">
+                <label asp-for="Input.Address" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-password">
+                </label>
+                <input asp-for="Input.Address" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3">
+                <span class="text-red-500 text-sm" asp-validation-for="Input.Address"></span>
+
+            </div>
+        </div>
+        <div class="-mx-3 md:flex mb-2">
+            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                <label asp-for="Input.City" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-city">
+                </label>
+                <input asp-for="Input.City" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+                <span class="text-red-500 text-sm" asp-validation-for="Input.City"></span>
+
+            </div>
+            <div class="md:w-1/2 px-3">
+                <label asp-for="Input.State" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
+                </label>
+                <div  class="relative">
+                    <select asp-for="Input.State" asp-items="Model.StateSelect" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded">
+                        <option selected disabled></option>
+                    </select>
+                </div>
+                <span class="text-red-500 text-sm" asp-validation-for="Input.State"></span>
+
+            </div>
+            <div class="md:w-1/2 px-3">
+                <label asp-for="Input.ZipCode" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                </label>
+                <input asp-for="Input.ZipCode" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+                <span class="text-red-500 text-sm" asp-validation-for="Input.ZipCode"></span>
+
+            </div>
+        </div>
+        <div class="-mx-3 md:flex justify-end my-2">
+            <div class="px-3 mb-6 md:mb-0">
+                <input type="submit" class="bg-green-600 hover:bg-green-500 px-3 py-3 rounded-md" value="ADD CLIENT" />
+            </div>
+            
+        </div>
+    </form>
+
+</div>

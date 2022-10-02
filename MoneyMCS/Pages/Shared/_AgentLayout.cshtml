@@ -174,12 +174,12 @@
                 <span class="hidden md:block text-center">Comissions/Referrals</span>
             </a>
 
-            <a asp-page="/ClientDashboard" class="flex flex-col menuItem rounded-full items-center space-x-1 px-2 py-3 text-white hover:bg-slate-200  w-full transition">
+            <a asp-page="/ClientDashboard" class="flex flex-col menuItem rounded-full items-center space-x-1 px-2 py-3 text-white hover:bg-slate-200 @(ViewData["pageName"] == "ClientDashboard" ? "selectedMenu" : "")  w-full transition">
                 <span class="text-2xl"><i class="fas fa-users"></i></span>
                 <span class="hidden md:block text-center">Client Dashboard</span>
             </a>
 
-            <a href="#" class="flex flex-col menuItem rounded-full items-center space-x-1 px-2 py-3 text-white hover:bg-slate-200  w-full transition">
+            <a asp-page="AddClient" class="flex flex-col menuItem rounded-full items-center space-x-1 px-2 py-3 text-white hover:bg-slate-200 @(ViewData["pageName"] == "AddClient" ? "selectedMenu" : "")  w-full transition">
                 <span class="text-2xl"><i class="fas fa-user-plus"></i></span>
                 <span class="hidden md:block text-center">Add clients</span>
             </a>
