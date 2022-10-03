@@ -25,6 +25,7 @@ public class AgentUser : IdentityUser
     public virtual AgentUser Referrer { get; set; }
     public virtual List<AgentUser> Referrals { get; set; }
     public virtual List<Client> Clients { get; set; }
+    public virtual DateTime? CreationDate { get; set; }
 
 
 

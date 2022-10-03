@@ -4,40 +4,45 @@ using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Models;
 using MoneyMCS.Services;
 
-namespace MoneyMCS.Pages.Member
+namespace MoneyMCS.Pages.Member.Resources
 {
-    public class ResourcesModel : PageModel
+    public class IndexModel : PageModel
     {
-        public ResourcesModel(ResourceContext context, ILogger<ResourceModel> logger)
+        public IndexModel(ResourceContext context, ILogger<IndexModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
         private readonly ResourceContext _context;
-        private readonly ILogger<ResourceModel> _logger;
+        private readonly ILogger<IndexModel> _logger;
 
-        public async Task OnGet()
+        public List<Resource> Resources { get; set; } = new();
+
+        public async Task OnGet(bool? all)
         {
+            if (all != null && all == true)
+            {
+                Resources = await _context.Resources.ToListAsync();
+            }
         }
 
         public async Task<IActionResult> OnGetResourcesPartial(List<string>? category, string? search)
         {
+
+            
+
             if (category == null && search == null)
             {
                 return BadRequest();
             }
+            search ??= "";
 
-            var Resources = new List<Resource>();
             if (category != null && category.Count > 0)
             {
-                Resources = await _context.Resources.Where(r => category.Contains(r.Category)).ToListAsync();
+                Resources = await _context.Resources.Where(r => category.Contains(r.Category) && r.ResourceName.Contains(search)).ToListAsync();
             }
 
-            else if (!string.IsNullOrWhiteSpace(search))
-            {
-                Resources = await _context.Resources.Where(r => r.ResourceName.Contains(search)).ToListAsync();
-            }
 
             return Partial("_ResourcesResultPartial", Resources);
         }

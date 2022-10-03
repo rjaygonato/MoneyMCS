@@ -3,20 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MoneyMCS.Models;
 using MoneyMCS.Services;
 
-namespace MoneyMCS.Pages.Member
+namespace MoneyMCS.Pages.Member.Resources
 {
-    public class ResourceModel : PageModel
+    public class ViewModel : PageModel
     {
 
 
-        public ResourceModel(ResourceContext context, ILogger<ResourceModel> logger)
+        public ViewModel(ResourceContext context, ILogger<ViewModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
         private readonly ResourceContext _context;
-        private readonly ILogger<ResourceModel> _logger;
+        private readonly ILogger<ViewModel> _logger;
 
         public Resource ResourceInfo { get; set; }
         public async Task<IActionResult> OnGet(int? id)

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MoneyMCS.Pages.Member
+namespace MoneyMCS.Pages.Member.Accounts
 {
-    public class AddAccountModel : PageModel
+    public class EditModel : PageModel
     {
         public void OnGet()
         {

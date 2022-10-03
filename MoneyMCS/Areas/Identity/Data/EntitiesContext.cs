@@ -23,7 +23,6 @@ public class EntitiesContext : IdentityDbContext<IdentityUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
 
-        base.OnModelCreating(builder);
         //Default
         //builder.Entity<MemberUser>()
         //    .HasOne(mu => mu.Referrer)

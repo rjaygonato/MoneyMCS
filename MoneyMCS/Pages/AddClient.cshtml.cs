@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using MoneyMCS.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace MoneyMCS.Pages
 {
@@ -85,20 +86,22 @@ namespace MoneyMCS.Pages
                 newClient.City = Input.City;
                 newClient.State = Input.State;
                 newClient.ZipCode = Input.ZipCode;
+                newClient.DateAdded = DateTime.Now;
 
                 string agentId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "AgentId")?.Value;
                 if (agentId == null)
                 {
                     return NotFound();
                 }
+
                 AgentUser referrer = await _userManager.FindByIdAsync(agentId);
-                if (referrer == null)
+                if (referrer != null)
                 {
-                    return NotFound();
+                    newClient.ReferrerId = referrer.Id;
                 }
-                newClient.Referrer = referrer;
                 await _context.Clients.AddAsync(newClient);
                 await _context.SaveChangesAsync();
+
                 return RedirectToPage("/ClientDashboard");
             }
             return Page();

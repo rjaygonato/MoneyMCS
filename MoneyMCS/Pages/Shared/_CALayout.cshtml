@@ -6,12 +6,12 @@
 <div class="banner flex flex-col w-full max-w-fit min-w-full grow p-10 justify-center items-center opacity-100  to-gray-700 h-1/4 bg-gray-400" style="background-color: rgba(20, 20, 20, 0.75); background: url(img/2h-media-3q4V539j_bw-unsplash.jpg), linear-gradient(rgba(22, 22, 22, 0.5),rgba(0,0,0,0.75)); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
     <h6 class="text-4xl text-white">@ViewData["caPageTitle"]</h6>
 </div>
-<div class="flex md:flex-row flex-col h-max  min-w-full overflow-y-scroll">
+<div class="flex md:flex-row flex-col h-max  min-w-full">
     <div class="top-0 flex md:flex-col flex-row p-0 pb-5 m-0 h-full md:h-fit w-full md:w-1/4 mt-5 md:ml-5 items-start text-gray-800 bg-gray-200 rounded-lg">
         <div class="text-left w-full">
             <h2 class="containerHeader w-full p-3 text-lg rounded-tl-lg md:rounded-t-lg">Home</h2>
             <div class="grid grid-cols-1 gap-2 w-full mt-3 text-sm md:text-xl ">
-                <a href="/CA/Index" class="w-full pl-6 hover:bg-lime-600 hover:text-white  @(ViewData["caPageName"] == "/" ? "bg-lime-600 text-white": "")"><h3 id="items">Welcome</h3></a>
+                <a href="/CA/Index" class="w-full pl-6 hover:bg-lime-600 hover:text-white @(ViewData["caPageName"] == "/" ? "bg-lime-600 text-white": "")"><h3 id="items">Welcome</h3></a>
                 <a class="w-full pl-6 hover:bg-lime-600 hover:text-white"><h3 id="items">My Programs</h3></a>
             </div>
         </div>
@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col md:w-3/4 h-max  min-w-screen w-full bg-gray-100 mt-5 ml-0 md:ml-3 rounded-md items-start p-8 mb-10">
+    <div class="flex flex-col md:w-3/4 h-max  min-w-screen w-full bg-gray-100 mt-5 ml-0  md:mx-3 rounded-md items-start p-8 mb-10">
        
         @RenderBody()
     </div>

@@ -1,5 +1,5 @@
 ﻿@page
-@model ResourcesModel
+@model IndexModel
 @{
     Layout = "_AdminLayout";
     ViewData["pageName"] = "Resources";
@@ -9,9 +9,9 @@
 
 <main class="w-full flex-grow p-6">
     <div class="w-full mt-12">
-        <p class="text-xl pb-3 flex items-center">
+        <a asp-page="/Member/Resources/Index" asp-route-all="true" class="text-xl pb-3 flex items-center hover:text-indigo-500">
             <i class="fas fa-book mr-2"></i> Resources Library
-        </p>
+        </a>
         <!--Contents Here-->
         <div>
             <div class="md:flex md:justify-center">
@@ -26,7 +26,7 @@
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
-                        <input type="search" id="defaultSearch"
+                        <input type="search" id="search"
                             class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Search resources" required="" />
                         <button type="submit" id="searchSubmit"
@@ -84,11 +84,14 @@
             </div>
             <div class="mt-5 p-5">
                 <div class="flex justify-end my-3 md:my-2">
-                    <a asp-page="AddResource" role="button"
+                    <a asp-page="/Member/Resources/Add" role="button"
                         class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm font-medium"><i
                             class="fas fa-book"></i> Add new resource</a>
                 </div>
                 <div id="resourcesContainer" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mb-4 m-10 gap-2 rounded mx-auto">
+                    @if(Model.Resources.Count > 0) {
+                        <partial name="_ResourcesResultPartial" model="@Model.Resources" />
+                    }
                 </div>
             </div>
         </div>
@@ -100,24 +103,29 @@
     <script>
 
         $("#categoryContainer input[type='checkbox']").change(function(i) {
-            let categoryUrl = "/Member/Resources/?handler=ResourcesPartial"
+            let searchUrl = "/Member/Resources/?handler=ResourcesPartial"
             $("#categoryContainer input[type='checkbox']:checked").each(function(i) {
-                categoryUrl += "&category=" + $(this).val()
+                searchUrl += "&category=" + $(this).val()
             })
-            fetch(categoryUrl, { method: "GET" })
+            searchUrl += "&search=" + $("#search").val();
+            
+            fetch(searchUrl, { method: "GET" })
             .then(response => response.text())
             .then(data => {
                 $("#resourcesContainer").html(data);
             })
         })
 
-        $("#searchSubmit").click(function() {
-            if($("#defaultSearch").val() != "") {
-                let searchUrl = "/Member/Resources/?handler=ResourcesPartial" + "&search="+ $("#defaultSearch").val()
-                fetch(searchUrl, { method: "GET" })
+        $("#search").change(function() {
+            let searchUrl = "/Member/Resources/?handler=ResourcesPartial&search=" + $(this).val();
+            $("#categoryContainer input[type='checkbox']:checked").each(function (i) {
+                searchUrl += "&category=" + $(this).val()
+            })
+            fetch(searchUrl, { method: "GET" })
                 .then(response => response.text())
-                .then(data => $("#resourcesContainer").html(data))
-            }
+                .then(data => {
+                    $("#resourcesContainer").html(data);
+                })
         })
     </script>
 }

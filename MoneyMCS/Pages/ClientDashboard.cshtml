@@ -30,13 +30,15 @@
 					<input type="text" id="table-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5 " placeholder="Search for items">
 				</div>
 				<div>
-					<button type="button" class="py-3 px-3 bg-green-600 hover:bg-green-500 rounded-md shadow-lg">Add Client</button>
+					<a asp-page="/AddClient" type="button" class="py-3 px-3 bg-green-600 hover:bg-green-500 rounded-md shadow-lg">Add Client</a>
 				</div>
 			</div>
 			<table class="w-full text-sm text-left text-gray-500">
 				<thead class="text-xs text-gray-700 uppercase" style="background-color: #D9D9D9">
 					<tr>
-						
+						<th scope="col" class="px-6 py-3">
+							Company
+						</th>
 						<th scope="col" class="px-6 py-3">
 							First Name
 						</th>
@@ -47,6 +49,9 @@
 							Email
 						</th>
 						<th scope="col" class="px-6 py-3">
+							Phone
+						</th>
+						<th scope="col" class="px-6 py-3">
 							Date added
 						</th>
 						<th scope="col" class="px-6 py-3">
@@ -55,24 +60,31 @@
 					</tr>
 				</thead>
 				<tbody class="text-black">
-					<tr class="bg-white border-b" style="background-color: #38B56A">
+					@foreach(var client in Model.Clients) {
+						<tr class="bg-white border-b" style="background-color: #38B56A">
 						
 						<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-							Ziegfred
+							@client.Company
 						</th>
 						<td class="px-6 py-4">
-							Zorrilla
+							@client.FirstName
 						</td>
 						<td class="px-6 py-4">
-							ziegfredzorrilla23@gmail.com
+							@client.LastName
 						</td>
 						<td class="px-6 py-4">
-							02/23/2001
+							@client.Email
 						</td>
+						<td class="px-6 py-4">
+								@client.PhoneNumber
+						</td>
+						<td>@client.DateAdded</td>
 						<td class="px-6 py-4 text-right">
-							<a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+								<a href="#" class="font-medium hover:bg-gray-200 rounded-full p-1"><i class="fas fa-eye"></i></a>
 						</td>
 					</tr>
+					}
+					
 					
 					
 				</tbody>

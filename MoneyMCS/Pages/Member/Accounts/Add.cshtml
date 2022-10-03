@@ -1,9 +1,78 @@
 ﻿@page
-@model MoneyMCS.Pages.Member.Accounts.AddModel
+@model AddModel
 @{
-    ViewData["pageName"] = "Accounts";
     Layout = "_AdminLayout";
+    ViewData["pageName"] = "Accounts";
+    ViewData["Title"] = "Add account";
 }
 
+<main class="w-full flex-grow p-6">
+          <div class="w-full mt-12">
+            <p class="text-xl pb-3 flex items-center">
+                <i class="fas fa-user-plus"></i> Add New Account
+            </p>
+            <div class="w-full my-6 pr-0 lg:pr-2">
+                
+              <div class="mt-10 sm:mt-0">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                  
+                  <div class="mt-5 md:mt-0 md:col-span-2">
+                    <form method="post">
+                            <div asp-validation-summary="All" style="color: red"></div>
+                      <div class="shadow overflow-hidden sm:rounded-md">
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                          <div class="grid grid-cols-6 gap-2 ">
+                            <div class="col-span-6 sm:col-span-6">
+                              <label asp-for="Input.UserName" class="block text-sm font-medium text-gray-700"></label>
+                              <input asp-for="Input.UserName" class="px-3 py-1 mt-1 focus:ring-green-500 focus:border-green-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" />
+                            </div>
+                            <div class="col-span-6 sm:col-span-6">
+                              <label asp-for="Input.FirstName" class="block text-sm font-medium text-gray-700">Password</label>
+                              <input asp-for="Input.FirstName" class="px-3 py-1 w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md">
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                              <label asp-for="Input.LastName" class="block text-sm font-medium text-gray-700">First name</label>
+                              <input asp-for="Input.LastName" class="px-3 py-1 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md">
+                            </div>
+              
+                            <div class="col-span-6 sm:col-span-3">
+                              <label asp-for="Input.Password"  class="block text-sm font-medium text-gray-700">Last name</label>
+                              <input asp-for="Input.Password" class="px-3 py-1 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md">
+                            </div>
+              
+                            <div class="col-span-6 sm:col-span-3">
+                              <label asp-for="Input.Email" class="block text-sm font-medium text-gray-700"></label>
+                              <input asp-for="Input.Email" class="px-3 py-1 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md">
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                              <label asp-for="Input.PhoneNumber" class="block text-sm font-medium text-gray-700"></label>
+                              <input asp-for="Input.PhoneNumber" class="px-3 py-1 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md">
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                              <label asp-for="Input.UserType" class="block text-sm font-medium text-gray-700"></label>
+                              <select asp-for="Input.UserType" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="Viewer">Viewer</option>
+                                <option value="Administrator">Administrator</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                          <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
 
-
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+}

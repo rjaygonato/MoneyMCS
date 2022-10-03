@@ -4,51 +4,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
 
-namespace MoneyMCS.Pages.Member.Accounts
+namespace MoneyMCS.Pages.Member.Accounts;
+
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+
+    public IndexModel(UserManager<MemberUser> userManager, ILogger<IndexModel> logger)
     {
-        private readonly UserManager<MemberUser> _userManager;
-        private readonly EntitiesContext _context;
-        private readonly ILogger<IndexModel> _logger;
-        public List<MemberUser> Accounts { get; set; } = new();
+        _userManager = userManager;
+        _logger = logger;
+    }
 
+    private readonly UserManager<MemberUser> _userManager;
+    private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(UserManager<MemberUser> userManager, EntitiesContext context, ILogger<IndexModel> logger)
-        {
-            _userManager = userManager;
-            _context = context;
-            _logger = logger;
-        }
+    public List<MemberUser> Accounts { get; set; } = new();
 
-        public async Task<IActionResult> OnGet()
-        {
-            Accounts = await GetAccounts();
-            return Page();
-        }
-
-
-        public async Task<IActionResult> OnPostDelete([FromForm] string? toDeleteAccountId)
-        {
-            if (toDeleteAccountId == null)
-            {
-                return BadRequest();
-            }
-
-            var user = await _userManager.FindByIdAsync(toDeleteAccountId);
-            if (user == null)
-            {
-                return BadRequest();
-            }
-            await _userManager.DeleteAsync(user);
-            return RedirectToPage("/Member/Accounts/Index");
-        }
-
-
-        private async Task<List<MemberUser>> GetAccounts()
-        {
-            return await _userManager.Users.ToListAsync();
-        }
-
+    public async Task<IActionResult> OnGet()
+    {
+        Accounts = await _userManager.Users.ToListAsync();
+        return Page();
     }
 }

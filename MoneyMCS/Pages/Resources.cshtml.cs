@@ -29,18 +29,15 @@ namespace MoneyMCS.Pages
             {
                 return BadRequest();
             }
+            search ??= "";
 
             var Resources = new List<Resource>();
             if (category != null && category.Count > 0)
             {
-                Resources = await _context.Resources.Where(r => category.Contains(r.Category)).ToListAsync();
+                Resources = await _context.Resources.Where(r => category.Contains(r.Category) && r.ResourceName.Contains(search)).ToListAsync();
             }
 
-            else if (!string.IsNullOrWhiteSpace(search))
-            {
-                Resources = await _context.Resources.Where(r => r.ResourceName.Contains(search)).ToListAsync();
-            }
-
+            
             return Partial("_ResourcesResultPartial2", Resources);
         }
     }

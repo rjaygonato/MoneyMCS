@@ -42,11 +42,17 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AgentAccessPolicy", policyBuilder =>
     {
-        policyBuilder.AddRequirements(new UserTypeRequirement("Agent"));
+        policyBuilder.AddRequirements(new UserTypeRequirement(new List<string> { "Agent" }));
     });
+    options.AddPolicy("MemberAccessPolicy", policyBuilder =>
+    {
+        policyBuilder.AddRequirements(new UserTypeRequirement(new List<string> { "Viewer", "Administrator" }));
+    });
+
 });
 
 builder.Services.AddSingleton<IAuthorizationHandler, AgentTypeHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, MemberTypeHandler>();
 
 
 

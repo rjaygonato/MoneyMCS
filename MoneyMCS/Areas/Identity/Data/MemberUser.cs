@@ -13,6 +13,8 @@ public class MemberUser : IdentityUser
     [MaxLength(100)]
     public string LastName { get; set; } = string.Empty;
 
+    public virtual DateTime? CreationDate { get; set; }
+
 
 
 }

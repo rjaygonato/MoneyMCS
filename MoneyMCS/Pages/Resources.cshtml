@@ -16,7 +16,7 @@
                 <h1 class="mb-2 text-sm md:text-xl w-full text-center p-2" style="background-color: #2D2D2D">Search</h1>
                 <div class="flex items-center px-2">
                     <form class="flex justify-center">
-                        <input type="search" name="SearchPartnerResources" placeholder="Search resources" class="w-5/6 sm:w-1/2 sm:min-w-fit py-1 px-1 rounded-md text-black" style="background-color: #B0B0B0">
+                        <input type="text" id="search" placeholder="Search resources" class="w-5/6 sm:w-1/2 sm:min-w-fit py-1 px-1 rounded-md text-black" style="background-color: #B0B0B0">
                     </form>
                 </div>
             </div>
@@ -75,17 +75,30 @@
     <script>
 
         $("#categoryContainer input[type='checkbox']").change(function (i) {
-            let categoryUrl = "Resources/?handler=ResourcesPartial"
+            let searchUrl = "Resources/?handler=ResourcesPartial"
             $("#categoryContainer input[type='checkbox']:checked").each(function (i) {
-                categoryUrl += "&category=" + $(this).val()
+                searchUrl += "&category=" + $(this).val()
             })
-            fetch(categoryUrl, { method: "GET" })
+            searchUrl += "&search=" + $("#search").val();
+            fetch(searchUrl, { method: "GET" })
                 .then(response => response.text())
                 .then(data => {
                     $("#resourcesWelcome").hide();
                     $("#resourcesContainer").html(data);
                 })
         })
+        $("#search").change(function() {
+            let searchUrl = "Resources/?handler=ResourcesPartial&search=" + $(this).val();
+            $("#categoryContainer input[type='checkbox']:checked").each(function (i) {
+                searchUrl += "&category=" + $(this).val()
+            })
+            fetch(searchUrl, { method: "GET" })
+                .then(response => response.text())
+                .then(data => {
+                    $("#resourcesWelcome").hide();
+                    $("#resourcesContainer").html(data);
+                })
+        }) 
     </script>
    
 }

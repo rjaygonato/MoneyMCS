@@ -6,19 +6,19 @@ using MoneyMCS.Models;
 using MoneyMCS.Services;
 using System.ComponentModel.DataAnnotations;
 
-namespace MoneyMCS.Pages.Member
+namespace MoneyMCS.Pages.Member.Resources
 {
-    public class AddResourceModel : PageModel
+    public class AddModel : PageModel
     {
 
-        public AddResourceModel(ResourceContext context, ILogger<AddResourceModel> logger)
+        public AddModel(ResourceContext context, ILogger<AddModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
         private readonly ResourceContext _context;
-        private readonly ILogger<AddResourceModel> _logger;
+        private readonly ILogger<AddModel> _logger;
 
         public class InputModel
         {

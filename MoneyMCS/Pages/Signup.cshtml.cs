@@ -170,7 +170,7 @@ namespace MoneyMCS.Pages
                     //    return RedirectToPage("AgentHome");
                     //}
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToPage("AgentHome");
+                    return RedirectToPage("/Index");
                 }
                 foreach (var error in result.Errors)
                 {
