@@ -108,6 +108,7 @@ namespace MoneyMCS.Pages.Member.Agents
                 user.LastName = Input.LastName;
                 user.AgentType = Input.AgentType;
                 user.CreationDate = DateTime.Now;
+                user.UserType = "Agent";
 
                 if (Input.ReferrerId != null)
                 {
@@ -129,8 +130,15 @@ namespace MoneyMCS.Pages.Member.Agents
 
                 if (result.Succeeded)
                 {
-                    var claim = new Claim("UserType", "Agent");
-                    await _userManager.AddClaimAsync(user, claim);
+                    List<Claim> claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Role, "Agent"),
+                    new Claim("AgentId", user.Id),
+                    new Claim("FullName", $"{user.FirstName} {user.LastName}"),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim("Username", user.UserName)
+                };
+                    await _userManager.AddClaimsAsync(user, claims);
                     _logger.LogInformation("User created a new account with password.");
 
 
