@@ -30,11 +30,11 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AgentAccessPolicy", policyBuilder =>
     {
-        policyBuilder.AddRequirements(new UserTypeRequirement(new List<string> { "Agent" }));
+        policyBuilder.AddRequirements(new AgentTypeRequirement("Agent"));
     });
     options.AddPolicy("MemberAccessPolicy", policyBuilder =>
     {
-        policyBuilder.AddRequirements(new UserTypeRequirement(new List<string> { "Viewer", "Administrator" }));
+        policyBuilder.AddRequirements(new MemberTypeRequirement(new List<string> { "Viewer", "Administrator" }));
     });
 
 });

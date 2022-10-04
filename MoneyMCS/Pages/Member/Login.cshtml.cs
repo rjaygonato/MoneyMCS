@@ -43,7 +43,7 @@ namespace MoneyMCS.Pages.Member
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                return RedirectToPage("/Index");
+                return RedirectToPage("/Member/Index");
             }
             return Page();
         }
