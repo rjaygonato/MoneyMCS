@@ -49,7 +49,7 @@ namespace MoneyMCS.Pages.Member.Resources
 
             _context.Resources.Remove(resource);
             await _context.SaveChangesAsync();
-            return RedirectToPage("/Member/Resources");
+            return RedirectToPage("/Member/Resources/Index");
         }
     }
 }

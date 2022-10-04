@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace MoneyMCS.Pages.Member.Accounts
 {
-    [Authorize(Policy = "MemberAccessPolicy")]
+    //[Authorize(Policy = "MemberAccessPolicy")]
     public class AddModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
