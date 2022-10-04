@@ -107,6 +107,8 @@ namespace MoneyMCS.Pages.Member.Agents
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.AgentType = Input.AgentType;
+                user.CreationDate = DateTime.Now;
+
                 if (Input.ReferrerId != null)
                 {
                     ApplicationUser referrerUser = await _userManager.FindByIdAsync(Input.ReferrerId);

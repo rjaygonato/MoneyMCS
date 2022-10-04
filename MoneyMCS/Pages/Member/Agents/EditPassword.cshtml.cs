@@ -8,23 +8,23 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Xml.Linq;
 
-namespace MoneyMCS.Pages.Member.Accounts
+namespace MoneyMCS.Pages.Member.Agents
 {
     [Authorize(Policy = "MemberAccessPolicy")]
-    public class EditModel : PageModel
+    public class EditPassword : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
-        private readonly ILogger<EditModel> _logger;
+        private readonly ILogger<EditPassword> _logger;
         private readonly IEmailSender _emailSender;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public EditModel(
+        public EditPassword(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<EditModel> logger,
+            ILogger<EditPassword> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -40,30 +40,20 @@ namespace MoneyMCS.Pages.Member.Accounts
         public class InputModel
         {
             [Required]
-            [Display(Name = "Username")]
-            public string UserName { get; set; }
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            [Display(Name = "Password")]
+            public string Password { get; set; }
 
             [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
-
-            [Required]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
-
-            [Required]
-            [Display(Name = "Last Name")]
-            public string LastName { get; set; }
-
-            [Phone]
-
-            [Display(Name = "PhoneNumber")]
-            public string? PhoneNumber { get; set; }
+            [DataType(DataType.Password)]
+            [Display(Name = "Confirm password")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
         }
 
        
-        public ApplicationUser ToEditAccount { get; set; }
+        public ApplicationUser ToEditAgent { get; set; }
 
         public async Task<IActionResult> OnGet([FromRoute] string? id)
         {
@@ -72,8 +62,8 @@ namespace MoneyMCS.Pages.Member.Accounts
                 return RedirectToPage("/Member/Accounts");
             }
 
-            ToEditAccount = await _userManager.FindByIdAsync(id);
-            if (ToEditAccount == null)
+            ToEditAgent = await _userManager.FindByIdAsync(id);
+            if (ToEditAgent == null)
             {
                 return RedirectToPage("/Member/Accounts");
             }
@@ -89,35 +79,29 @@ namespace MoneyMCS.Pages.Member.Accounts
             }
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByIdAsync(id);
 
-                if (user == null)
+                ToEditAgent = await _userManager.FindByIdAsync(id);
+
+                if (ToEditAgent == null)
                 {
                     return NotFound();
                 }
 
-                user.FirstName = Input.FirstName;
-                user.LastName = Input.LastName;
-                user.PhoneNumber = Input.PhoneNumber;
-
-                
-                if (user.UserName != Input.UserName)
+                if (Input.Password != Input.ConfirmPassword)
                 {
-                    await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
-                }
-                if (user.Email != Input.Email)
-                {
-                    await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                    ModelState.AddModelError(string.Empty, "Password and confirm password must be the same.");
                 }
 
-                var result = await _userManager.UpdateAsync(user);
+                var token = await _userManager.GeneratePasswordResetTokenAsync(ToEditAgent);
+                var result = await _userManager.ResetPasswordAsync(ToEditAgent, token, Input.Password);
                 if (result.Succeeded)
                 {
-                    return RedirectToPage("/Member/Accounts/Edit", new { id = user.Id });
+                    return RedirectToPage("/Member/Accounts/EditPassword", new { id = ToEditAgent.Id });
                 }
-                foreach (var error in result.Errors)
+
+                foreach(var error in result.Errors)
                 {
-                    ModelState.AddModelError(String.Empty, error.Description);
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
 
             }

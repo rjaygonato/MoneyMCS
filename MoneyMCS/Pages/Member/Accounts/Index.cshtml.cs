@@ -26,7 +26,12 @@ public class IndexModel : PageModel
     public async Task<IActionResult> OnGet()
     {
 
-        Accounts = await _userManager.Users.ToListAsync();
+        IList<ApplicationUser> Administrators = await _userManager.GetUsersForClaimAsync(new Claim(ClaimTypes.Role, "Administrator"));
+        IList<ApplicationUser> Viewers = await _userManager.GetUsersForClaimAsync(new Claim(ClaimTypes.Role, "Viewer"));
+        Accounts = new List<ApplicationUser>();
+        Accounts.AddRange(Administrators);
+        Accounts.AddRange(Viewers);
+
         return Page();
     }
 

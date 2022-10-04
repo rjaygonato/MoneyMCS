@@ -13,7 +13,6 @@ builder.Services.AddDbContext<ResourceContext>(options =>
     options.UseSqlServer(connectionString));
 
 
-
 builder.Services.AddDbContext<EntitiesContext>(options =>
 {
     options.UseSqlServer(connectionString);
@@ -25,8 +24,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 })
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<EntitiesContext>();
-
-
 
 
 builder.Services.AddAuthorization(options =>
@@ -47,7 +44,6 @@ builder.Services.AddSingleton<IAuthorizationHandler, MemberTypeHandler>();
 
 
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 
 if (!Directory.Exists(Path.Combine(builder.Environment.ContentRootPath, "Resources")))

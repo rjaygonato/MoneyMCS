@@ -37,7 +37,6 @@ namespace MoneyMCS.Pages.Member.Resources
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public string? ReturnUrl { get; set; }
 
         public List<SelectListItem> SelectResourceCategory = new List<SelectListItem>()
         {
@@ -54,9 +53,8 @@ namespace MoneyMCS.Pages.Member.Resources
         {
         }
 
-        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
+        public async Task<IActionResult> OnPostAsync()
         {
-            returnUrl ??= Url.Content("~/Member/Resources");
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -80,7 +78,7 @@ namespace MoneyMCS.Pages.Member.Resources
             await _context.Resources.AddAsync(newResource);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Member/Resources");
+            return RedirectToPage("/Member/Resources/Index");
 
         }
     }

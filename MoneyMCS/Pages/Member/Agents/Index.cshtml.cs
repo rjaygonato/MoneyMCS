@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
+using System.Security.Claims;
 
 namespace MoneyMCS.Pages.Member.Agents
 {
@@ -23,7 +24,8 @@ namespace MoneyMCS.Pages.Member.Agents
 
         public async Task<IActionResult> OnGet()
         {
-            RegisteredAgents = await GetAgents();
+            IList<ApplicationUser> Agents = await _userManager.GetUsersForClaimAsync(new Claim(ClaimTypes.Role, "Agent"));
+            RegisteredAgents.AddRange(Agents);
             return Page();
         }
 

@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model EditModel
+@model EditProfile
 @{
     Layout = "_AdminLayout";
     ViewData["pageName"] = "Accounts";
@@ -16,20 +16,21 @@
         <div class="w-full mt-6" x-data="{ openTab: 1 }">
             <div>
                 <ul class="flex border-b">
-                    <li class="-mb-px mr-1" @@click="openTab = 1">
-                        <a :class="openTab === 1 ? 'border-l border-t border-r rounded-t text-blue-700 font-semibold' : 'text-blue-500 hover:text-blue-800'"
-                            class="bg-white inline-block py-2 px-4 font-semibold" href="#">User Account Info</a>
+                    <li class="-mb-px mr-1">
+                        <a asp-page="/Member/Accounts/EditProfile" asp-route-id="@Model.ToEditAccount.Id" class="border-l border-t border-r rounded-t text-blue-700 font-semibold bg-white inline-block py-2 px-4 font-semibold">User Account Info</a>
                     </li>
        
-                    <li class="mr-1" @@click="openTab = 2">
-                        <a :class="openTab === 3 ? 'border-l border-t border-r rounded-t text-blue-700 font-semibold' : 'text-blue-500 hover:text-blue-800'"
-                            class="bg-white inline-block py-2 px-4 font-semibold" href="#">Reset Password</a>
+                    <li class="mr-1">
+                        <a asp-page="/Member/Accounts/EditPassword" asp-route-id="@Model.ToEditAccount.Id"
+                           class="text-blue-500 hover:text-blue-800 bg-white inline-block py-2 px-4 font-semibold">Reset Password</a>
                     </li>
                 </ul>
             </div>
             <div class="bg-gray-200 shadow-md p-6">
-                <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 1">
+                <div  class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 1">
+                    
                     <form method="post">
+                        <div asp-validation-summary="All" class="text-red-500"></div>
                         <div class="flex justify-between my-1">
                             <label asp-for="Input.UserName" class="text-gray-700" for="cus_name"></label>
                             <input asp-for="Input.UserName" class="px-3 py-1 text-gray-900"
@@ -64,36 +65,6 @@
                                 class="bg-gray-400 hover:bg-gray-500 rounded-md px-2 py-1 text-sm mr-1">
                                 <i class="fas fa-times-circle"></i> Cancel
                             </a>
-                        </div>
-                    </form>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 2">
-                    <form>
-                        <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Username:</label>
-                            <input class="px-3 py-1 text-gray-900 bg-gray-300" type="text"
-                                value="@Model.ToEditAccount.UserName" disabled />
-                        </div>
-                        <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Password:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="+63 2312312" />
-                        </div>
-                        <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Confirm Password:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="scottlang@gmail.com" />
-                        </div>
-                        <div class="flex justify-end mt-5">
-                            <button type="button"
-                                class="bg-green-500 hover:bg-green-600 rounded-md px-2 py-1 text-sm mr-1">
-                                <i class="fas fa-save"></i> Save
-                            </button>
-                            <button type="button"
-                                class="bg-gray-400 hover:bg-gray-500 rounded-md px-2 py-1 text-sm mr-1">
-                                <i class="fas fa-times-circle"></i> Cancel
-                            </button>
                         </div>
                     </form>
                 </div>

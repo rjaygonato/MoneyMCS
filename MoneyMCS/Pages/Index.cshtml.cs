@@ -9,11 +9,15 @@ namespace MoneyMCS.Pages
     [Authorize(Policy = "AgentAccessPolicy")]
     public class IndexModel : PageModel
     {
-        public IndexModel(UserManager<ApplicationUser> userManager)
+        public IndexModel(IWebHostEnvironment webHostEnvironment, ILogger<IndexModel> logger, IConfiguration configuration)
         {
-            _userManager = userManager;
+            _configuration = configuration;
+            _logger = logger;
         }
-        private readonly UserManager<ApplicationUser> _userManager;
+
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<IndexModel> _logger;
+
         public void OnGet()
         {
 
