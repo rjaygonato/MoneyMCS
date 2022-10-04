@@ -10,12 +10,12 @@
         <p class="text-xl pb-3 flex items-center">
             <i class="fas fa-user-edit"></i> Agent Downline
         </p>
-        <div class="tf-tree tf-custom h-screen flex justify-center">
+        <div class="tf-tree tf-gap-lg tf-custom flex justify-center">
             <ul>
                 <li>
                     <span class="tf-nc">
-                        <img src="~/img/agent.png" />
-                        <p class="text-center">@Model.Agent.UserName</p>
+                        <img class="downlineImagePos" src="~/img/agent.png" />
+                        <p class="text-center mx-auto">@Model.Agent.UserName</p>
                     </span>
                     @if(Model.DirectAgents.Count > 0) {
                         <ul>
@@ -24,8 +24,11 @@
                                 <li>
                                     <span class="tf-nc">
                                         <a asp-page="/Member/Agents/Downline" asp-route-id="@directAgent.Id">
-                                            <img src="~/img/agent.png" />
-                                            <p class="text-center">@directAgent.UserName</p>
+
+                                            <div style="flex flex-col justify-center">
+                                                <img class="downlineImagePos" src="~/img/agent.png" />
+                                            <span class="display:block">@directAgent.UserName</span>
+                                            
                                         </a>
                                     </span>
                                     @if (Model.LevelTwoAReferredAgents.ContainsKey(directAgent.Id) && Model.LevelTwoAReferredAgents[directAgent.Id].Count > 0)
@@ -35,9 +38,12 @@
                                             {
                                                 <li>
                                                     <span class="tf-nc">
-                                                        <a asp-page="/Member/Agents/Downline" asp-route-id="@levelTwoAgent.Id">
-                                                            <img src="~/img/agent.png" />
-                                                            <p class="text-center">@levelTwoAgent.UserName</p>
+                                                        <a asp-page="/Member/Agents/Downline" asp-route-id="@directAgent.Id">
+
+                                                            <div style="flex flex-col justify-center">
+                                                                <img class="downlineImagePos" src="~/img/agent.png" />
+                                                                <span class="display:block">@levelTwoAgent.UserName</span>
+
                                                         </a>
 
                                                     </span>
@@ -48,12 +54,13 @@
                                                             @foreach (var levelThreeAgent in Model.LevelThreeReferredAgents[levelTwoAgent.Id])
                                                             {
                                                                 <li>
-                                                                    <span class="tf-nc">
-                                                                        <a asp-page="/Member/Agents/Downline" asp-route-id="@levelThreeAgent.Id">
-                                                                            <img src="~/img/agent.png" />
-                                                                            <p class="text-center">@levelThreeAgent.UserName</p>
-                                                                        </a>
-                                                                    </span>
+                                                                    <a asp-page="/Member/Agents/Downline" asp-route-id="@directAgent.Id">
+
+                                                                        <div style="flex flex-col justify-center">
+                                                                            <img class="downlineImagePos" src="~/img/agent.png" />
+                                                                            <span class="display:block">@levelThreeAgent.UserName</span>
+
+                                                                    </a>
                                                                 </li>
                                                             }
                                                         </ul>

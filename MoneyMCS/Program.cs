@@ -12,31 +12,22 @@ var connectionString = builder.Configuration.GetConnectionString("AffiliateEntit
 builder.Services.AddDbContext<ResourceContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDbContext<ClientContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-});
+
 
 builder.Services.AddDbContext<EntitiesContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
 
-builder.Services.AddIdentity<MemberUser, IdentityRole>(options =>
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
-    options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedEmail = false;
 })
-    .AddEntityFrameworkStores<EntitiesContext>()
-    .AddDefaultUI();
+    .AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<EntitiesContext>();
 
-builder.Services.AddIdentityCore<AgentUser>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = false; //enable in production
-    options.User.RequireUniqueEmail = true;
-})
-    .AddEntityFrameworkStores<EntitiesContext>()
-    .AddDefaultUI();
+
+
 
 builder.Services.AddAuthorization(options =>
 {

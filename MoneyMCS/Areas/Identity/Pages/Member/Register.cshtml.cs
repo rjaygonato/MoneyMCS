@@ -13,17 +13,17 @@ namespace MoneyMCS.Areas.Identity.Pages.Member
 {
     public class RegisterModel : PageModel
     {
-        private readonly UserManager<AgentUser> _userManager;
-        private readonly IUserStore<AgentUser> _userStore;
-        private readonly IUserEmailStore<AgentUser> _emailStore;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly SignInManager<AgentUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public RegisterModel(
-            UserManager<AgentUser> userManager,
-            SignInManager<AgentUser> signInManager,
-            IUserStore<AgentUser> userStore,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IUserStore<ApplicationUser> userStore,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -125,27 +125,27 @@ namespace MoneyMCS.Areas.Identity.Pages.Member
             return Page();
         }
 
-        private AgentUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<AgentUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(AgentUser)}'. " +
-                    $"Ensure that '{nameof(AgentUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<AgentUser> GetEmailStore()
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<AgentUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
 }

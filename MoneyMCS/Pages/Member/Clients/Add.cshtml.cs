@@ -1,26 +1,27 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
-using MoneyMCS.Models;
 using MoneyMCS.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace MoneyMCS.Pages.Member.Clients
 {
+    [Authorize(Policy = "MemberAccessPolicy")]
     public class AddModel : PageModel
     {
-        public AddModel(ClientContext context, UserManager<AgentUser> userManager, ILogger<AddModel> logger)
+        public AddModel(EntitiesContext context, UserManager<ApplicationUser> userManager, ILogger<AddModel> logger)
         {
             _context = context;
             _userManager = userManager;
             _logger = logger;
         }
 
-        private readonly ClientContext _context;
-        private readonly UserManager<AgentUser> _userManager;
+        private readonly EntitiesContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<AddModel> _logger;
 
         public List<SelectListItem> SelectAgents = new List<SelectListItem>();
@@ -96,7 +97,7 @@ namespace MoneyMCS.Pages.Member.Clients
                 await _context.SaveChangesAsync();
                 if (Input.ReferrerId != null)
                 {
-                    AgentUser referrer = await _userManager.FindByIdAsync(Input.ReferrerId);
+                    ApplicationUser referrer = await _userManager.FindByIdAsync(Input.ReferrerId);
                     if (referrer == null)
                     {
                         ModelState.AddModelError(string.Empty, $"There is no agent with the id: {Input.ReferrerId}");

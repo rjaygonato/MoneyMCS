@@ -15,17 +15,17 @@ namespace MoneyMCS.Pages
     public class SignupModel : PageModel
     {
 
-        private readonly UserManager<AgentUser> _userManager;
-        private readonly IUserStore<AgentUser> _userStore;
-        private readonly IUserEmailStore<AgentUser> _emailStore;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<SignupModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly SignInManager<AgentUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public SignupModel(
-            UserManager<AgentUser> userManager,
-            IUserStore<AgentUser> userStore,
-            SignInManager<AgentUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<SignupModel> logger,
             IEmailSender emailSender)
         {
@@ -96,20 +96,19 @@ namespace MoneyMCS.Pages
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.AgentType = "BASIC";
-                user.ReferralCode = GenerateReferralCode(6);
+                user.UserType = "Agent";
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 if (Input.ReferrerCode != null)
                 {
-                    var referrer = await _userManager.FindByIdAsync(Input.ReferrerCode);
+                    var referrer = await _userManager.Users.FirstOrDefaultAsync(au => au.ReferralCode == Input.ReferrerCode);
                     if (referrer != null)
                     {
                         user.Referrer = referrer;
                     }
                 }
-                var roleClaim = new Claim(ClaimTypes.Role, "Agent");
-                var idClaim = new Claim("AgentId", user.Id);
+
                 List<Claim> claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Role, "Agent"),
@@ -184,27 +183,27 @@ namespace MoneyMCS.Pages
             return Page();
         }
 
-        private AgentUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<AgentUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(AgentUser)}'. " +
-                    $"Ensure that '{nameof(AgentUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<AgentUser> GetEmailStore()
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<AgentUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
 
 

@@ -11,13 +11,13 @@ namespace MoneyMCS.Pages.CA
     {
 
 
-        public LinkGeneratorModel(UserManager<AgentUser> userManager, ILogger<LinkGeneratorModel> logger)
+        public LinkGeneratorModel(UserManager<ApplicationUser> userManager, ILogger<LinkGeneratorModel> logger)
         {
             _userManager = userManager;
             _logger = logger;
         }
 
-        private readonly UserManager<AgentUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LinkGeneratorModel> _logger;
 
         public string ReferralCode { get; set; } = string.Empty;

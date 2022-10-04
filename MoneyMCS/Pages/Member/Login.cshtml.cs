@@ -11,7 +11,7 @@ namespace MoneyMCS.Pages.Member
     public class LoginModel : PageModel
     {
 
-        public LoginModel(UserManager<MemberUser> userManager, SignInManager<MemberUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -19,8 +19,8 @@ namespace MoneyMCS.Pages.Member
 
         }
 
-        private readonly UserManager<MemberUser> _userManager;
-        private readonly SignInManager<MemberUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
         [BindProperty]
@@ -55,7 +55,7 @@ namespace MoneyMCS.Pages.Member
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToPage("/Index");
+                    return RedirectToPage("/Member/Index");
                 }
 
                 ModelState.AddModelError(String.Empty, "Invalid username or password");

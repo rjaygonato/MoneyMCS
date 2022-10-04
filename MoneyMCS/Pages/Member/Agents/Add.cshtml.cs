@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,16 +10,17 @@ using System.Security.Claims;
 
 namespace MoneyMCS.Pages.Member.Agents
 {
+    [Authorize(Policy = "MemberAccessPolicy")]
     public class AddModel : PageModel
     {
-        private readonly UserManager<AgentUser> _userManager;
-        private readonly IUserStore<AgentUser> _userStore;
-        private readonly IUserEmailStore<AgentUser> _emailStore;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<AddModel> _logger;
 
         public AddModel(
-            UserManager<AgentUser> userManager,
-            IUserStore<AgentUser> userStore,
+            UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
             ILogger<AddModel> logger)
         {
             _userManager = userManager;
@@ -107,7 +109,7 @@ namespace MoneyMCS.Pages.Member.Agents
                 user.AgentType = Input.AgentType;
                 if (Input.ReferrerId != null)
                 {
-                    AgentUser referrerUser = await _userManager.FindByIdAsync(Input.ReferrerId);
+                    ApplicationUser referrerUser = await _userManager.FindByIdAsync(Input.ReferrerId);
                     if (referrerUser == null)
                     {
                         return NotFound($"Agent with id: {Input.ReferrerId}");
@@ -144,27 +146,27 @@ namespace MoneyMCS.Pages.Member.Agents
             return Page();
         }
 
-        private AgentUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<AgentUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(AgentUser)}'. " +
-                    $"Ensure that '{nameof(AgentUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<AgentUser> GetEmailStore()
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<AgentUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
 
         private async Task LoadFormDefaultData()

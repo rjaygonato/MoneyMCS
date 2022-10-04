@@ -1,26 +1,27 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
-using MoneyMCS.Models;
 using MoneyMCS.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace MoneyMCS.Pages.Member.Clients
 {
+    [Authorize(Policy = "MemberAccessPolicy")]
     public class EditModel : PageModel
     {
-        public EditModel(ClientContext context, UserManager<AgentUser> userManager, ILogger<EditModel> logger)
+        public EditModel(EntitiesContext context, UserManager<ApplicationUser> userManager, ILogger<EditModel> logger)
         {
             _context = context;
             _userManager = userManager;
             _logger = logger;
         }
 
-        private readonly ClientContext _context;
-        private readonly UserManager<AgentUser> _userManager;
+        private readonly EntitiesContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<EditModel> _logger;
 
         public List<SelectListItem> SelectAgents = new List<SelectListItem>();
@@ -114,7 +115,7 @@ namespace MoneyMCS.Pages.Member.Clients
                 await _context.SaveChangesAsync();
                 if (Input.ReferrerId != null)
                 {
-                    AgentUser referrer = await _userManager.FindByIdAsync(Input.ReferrerId);
+                    ApplicationUser referrer = await _userManager.FindByIdAsync(Input.ReferrerId);
                     if (referrer == null)
                     {
                         ModelState.AddModelError(String.Empty, $"Agent with the id: {Input.ReferrerId} is not found.");

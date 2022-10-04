@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MoneyMCS.Areas.Identity.Data;
@@ -8,22 +10,32 @@ using System.Xml.Linq;
 
 namespace MoneyMCS.Pages.Member.Accounts
 {
+    [Authorize(Policy = "MemberAccessPolicy")]
     public class AddModel : PageModel
     {
-        private readonly UserManager<MemberUser> _userManager;
-        private readonly IUserStore<MemberUser> _userStore;
-        private readonly IUserEmailStore<MemberUser> _emailStore;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<AddModel> _logger;
+        private readonly IEmailSender _emailSender;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AddModel(UserManager<MemberUser> userManager, IUserStore<MemberUser> userStore, IUserEmailStore<MemberUser> emailStore ,ILogger<AddModel> logger)
+        public AddModel(
+            UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
+            SignInManager<ApplicationUser> signInManager,
+            ILogger<AddModel> logger,
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
-            _emailStore = emailStore;
+            _emailStore = GetEmailStore();
+            _signInManager = signInManager;
             _logger = logger;
+            _emailSender = emailSender;
         }
 
-        
+
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -76,10 +88,12 @@ namespace MoneyMCS.Pages.Member.Accounts
                     return Page();
                 }
 
-                MemberUser newUser = CreateUser();
+                ApplicationUser newUser = CreateUser();
                 newUser.FirstName = Input.FirstName;
                 newUser.LastName = Input.LastName;
                 newUser.PhoneNumber = Input.PhoneNumber;
+                newUser.CreationDate = DateTime.Now;
+                newUser.UserType = Input.UserType;
 
                 await _userStore.SetUserNameAsync(newUser, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(newUser, Input.Email, CancellationToken.None);
@@ -109,18 +123,26 @@ namespace MoneyMCS.Pages.Member.Accounts
 
         }
 
-        private MemberUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<MemberUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(AgentUser)}'. " +
-                    $"Ensure that '{nameof(AgentUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
+        }
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
+        {
+            if (!_userManager.SupportsUserEmail)
+            {
+                throw new NotSupportedException("The default UI requires a user store with email support.");
+            }
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
 }

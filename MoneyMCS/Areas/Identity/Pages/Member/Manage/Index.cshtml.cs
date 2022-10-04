@@ -12,12 +12,12 @@ namespace MoneyMCS.Areas.Identity.Pages.Member.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<MemberUser> _userManager;
-        private readonly SignInManager<MemberUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public IndexModel(
-            UserManager<MemberUser> userManager,
-            SignInManager<MemberUser> signInManager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -58,7 +58,7 @@ namespace MoneyMCS.Areas.Identity.Pages.Member.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(MemberUser user)
+        private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);

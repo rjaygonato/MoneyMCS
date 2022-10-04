@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,16 +9,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MoneyMCS.Pages.Member.Agents
 {
+    [Authorize(Policy = "MemberAccessPolicy")]
     public class EditModel : PageModel
     {
-        private readonly UserManager<AgentUser> _userManager;
-        private readonly IUserStore<AgentUser> _userStore;
-        private readonly IUserEmailStore<AgentUser> _emailStore;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<EditModel> _logger;
 
         public EditModel(
-            UserManager<AgentUser> userManager,
-            IUserStore<AgentUser> userStore,
+            UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
             ILogger<EditModel> logger)
         {
             _userManager = userManager;
@@ -36,7 +38,7 @@ namespace MoneyMCS.Pages.Member.Agents
 
         public string ReturnUrl { get; set; }
 
-        public AgentUser ToEditAgent { get; set; }
+        public ApplicationUser ToEditAgent { get; set; }
 
         public class ProfileInput
         {
@@ -174,13 +176,13 @@ namespace MoneyMCS.Pages.Member.Agents
         //    var token = await _userManager.GeneratePasswordResetTokenAsync(ToEditAgent);
         //}
 
-        private IUserEmailStore<AgentUser> GetEmailStore()
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<AgentUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
 
 

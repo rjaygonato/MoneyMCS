@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id}"
 @model EditModel
 @{
     Layout = "_AdminLayout";
@@ -29,51 +29,51 @@
             </div>
             <div class="bg-gray-200 shadow-md p-6">
                 <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 1">
-                    <div>
+                    <form method="post">
                         <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Username:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="scott12" />
+                            <label asp-for="Input.UserName" class="text-gray-700" for="cus_name"></label>
+                            <input asp-for="Input.UserName" class="px-3 py-1 text-gray-900"
+                                 value="@Model.ToEditAccount.UserName" />
                         </div>
                         <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">First Name:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="Scott" />
+                            <label asp-for="Input.FirstName" class="text-gray-700" for="cus_name">First Name:</label>
+                            <input asp-for="Input.FirstName" class="px-3 py-1 text-gray-900" 
+                                 value="@Model.ToEditAccount.FirstName" />
                         </div>
                         <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Last Name:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="Lang" />
+                            <label asp-for="Input.LastName" class="text-gray-700" for="cus_name"></label>
+                            <input asp-for="Input.LastName" class="px-3 py-1 text-gray-900"
+                                value="@Model.ToEditAccount.LastName" />
                         </div>
                         <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Phone:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="+63 2312312" />
+                            <label asp-for="Input.Email" class="text-gray-700" for="cus_name"></label>
+                            <input asp-for="Input.Email" class="px-3 py-1 text-gray-900"
+                                   value="@Model.ToEditAccount.Email" />
                         </div>
                         <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Email:</label>
-                            <input class="px-3 py-1 text-gray-900" id="cus_name" name="cus_name" type="text" required=""
-                                aria-label="Name" value="scottlang@gmail.com" />
+                            <label asp-for="Input.PhoneNumber" class="text-gray-700" for="cus_name"></label>
+                            <input asp-for="Input.PhoneNumber" class="px-3 py-1 text-gray-900"
+                                   value="@Model.ToEditAccount.PhoneNumber" />
                         </div>
                         <div class="flex justify-end mt-5">
-                            <button type="button"
+                            <button type="submit"
                                 class="bg-green-500 hover:bg-green-600 rounded-md px-2 py-1 text-sm mr-1">
                                 <i class="fas fa-save"></i> Save
                             </button>
-                            <button type="button"
+                            <a asp-page="/Member/Accounts/Index"
                                 class="bg-gray-400 hover:bg-gray-500 rounded-md px-2 py-1 text-sm mr-1">
                                 <i class="fas fa-times-circle"></i> Cancel
-                            </button>
+                            </a>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 
-                <div id="" class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 2">
-                    <div>
+                <div class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 2">
+                    <form>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Username:</label>
-                            <input class="px-3 py-1 text-gray-900 bg-gray-300" id="cus_name" name="cus_name" type="text"
-                                required="" aria-label="Name" value="Scott Lang" disabled />
+                            <input class="px-3 py-1 text-gray-900 bg-gray-300" type="text"
+                                value="@Model.ToEditAccount.UserName" disabled />
                         </div>
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Password:</label>
@@ -95,7 +95,7 @@
                                 <i class="fas fa-times-circle"></i> Cancel
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

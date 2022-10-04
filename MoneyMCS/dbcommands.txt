@@ -1,0 +1,8 @@
+﻿dotnet-ef migrations add InitialCreateIdentity --context EntitiesContext
+dotnet-ef database update --context EntitiesContext
+
+dotnet-ef migrations add InitialCreateClient --context ClientContext
+dotnet-ef database update --context ClientContext
+
+dotnet-ef migrations add InitialCreateResourceContext --context ResourceContext
+dotnet-ef database update --context ResourceContext

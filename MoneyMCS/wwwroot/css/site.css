@@ -9,3 +9,14 @@
 #clientsList td {
     padding: 4px 6px 4px 6px !important;
 }
+
+.downlineImagePos {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 50px;
+    height: 60px;
+}
+
+.tf-tree .tf-nc, .tf-tree .tf-node-content {
+    border: none !important;
+}

@@ -7,13 +7,13 @@ namespace MoneyMCS.Pages
 {
     public class LogoutModel : PageModel
     {
-        public LogoutModel(SignInManager<AgentUser> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<ApplicationUser> signInManager, ILogger<LogoutModel> logger)
         {
             _signInManager = signInManager;
             _logger = logger;
         }
 
-        private readonly SignInManager<AgentUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
 
 

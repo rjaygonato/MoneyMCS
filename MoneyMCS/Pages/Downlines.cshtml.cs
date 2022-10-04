@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
 
-namespace MoneyMCS.Pages.Member.Agents
+namespace MoneyMCS.Pages
 {
-    [Authorize(Policy = "MemberAccessPolicy")]
-    public class DownlineModel : PageModel
+    [Authorize(Policy = "AgentAccessPolicy")]
+    public class DownlinesModel : PageModel
     {
-        public DownlineModel(UserManager<ApplicationUser> userManager, ILogger<DownlineModel> logger)
+        public DownlinesModel(UserManager<ApplicationUser> userManager, ILogger<DownlinesModel> logger)
         {
             _userManager = userManager;
             _logger = logger;
@@ -24,15 +24,11 @@ namespace MoneyMCS.Pages.Member.Agents
         public Dictionary<string, List<ApplicationUser>> LevelThreeReferredAgents { get; set; } = new();
 
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger<DownlineModel> _logger;
+        private readonly ILogger<DownlinesModel> _logger;
 
-        public async Task<IActionResult> OnGet([FromRoute] string? id)
+        public async Task<IActionResult> OnGet()
         {
-            if (id == null)
-            {
-
-                return BadRequest();
-            }
+            string id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "AgentId").Value;
 
             Agent = await _userManager.FindByIdAsync(id);
 

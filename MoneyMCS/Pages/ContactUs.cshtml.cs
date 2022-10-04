@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MoneyMCS.Pages.Member
+namespace MoneyMCS.Pages
 {
-
-    [Authorize(Policy = "MemberAccessPolicy")]
-    public class IndexModel : PageModel
+    [Authorize(Policy = "AgentAccessPolicy")]
+    public class ContactUsModel : PageModel
     {
         public void OnGet()
         {

@@ -13,9 +13,9 @@ namespace MoneyMCS.Areas.Identity.Pages.Member
 {
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<MemberUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ConfirmEmailModel(UserManager<MemberUser> userManager)
+        public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }

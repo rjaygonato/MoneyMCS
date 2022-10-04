@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,14 +7,15 @@ using MoneyMCS.Areas.Identity.Data;
 
 namespace MoneyMCS.Pages.Member.Agents
 {
+    [Authorize(Policy = "MemberAccessPolicy")]
     public class IndexModel : PageModel
     {
-        private readonly UserManager<AgentUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<IndexModel> _logger;
-        public List<AgentUser> RegisteredAgents { get; set; } = new();
+        public List<ApplicationUser> RegisteredAgents { get; set; } = new();
 
 
-        public IndexModel(UserManager<AgentUser> userManager, EntitiesContext context, ILogger<IndexModel> logger)
+        public IndexModel(UserManager<ApplicationUser> userManager, EntitiesContext context, ILogger<IndexModel> logger)
         {
             _userManager = userManager;
             _logger = logger;
@@ -43,7 +45,7 @@ namespace MoneyMCS.Pages.Member.Agents
         }
 
 
-        private async Task<List<AgentUser>> GetAgents()
+        private async Task<List<ApplicationUser>> GetAgents()
         {
             RegisteredAgents = await _userManager.Users.ToListAsync();
             return RegisteredAgents;

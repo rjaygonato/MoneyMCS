@@ -1,0 +1,82 @@
+﻿@page
+@model MoneyMCS.Pages.DownlinesModel
+@{
+    Layout = "_AgentLayout";
+    ViewData["pageName"] = "Downlines";
+}
+
+<div class="h-screen">
+    <div class="banner flex flex-col w-full max-w-fit min-w-full grow p-10 justify-center items-center opacity-100  to-gray-700 h-1/4 bg-gray-400" style="background-color: rgba(20, 20, 20, 0.75); background: url(img/2h-media-3q4V539j_bw-unsplash.jpg), linear-gradient(rgba(22, 22, 22, 0.5),rgba(0,0,0,0.75)); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
+        <h6 class="text-4xl text-white">Downline</h6>
+    </div>
+    <main class="w-full flex-grow p-6 ">
+        <div class="w-full p-12 bg-white rounded-lg ">
+            <div class="tf-tree tf-gap-lg tf-custom flex justify-center">
+                <ul>
+                    <li>
+                        <span class="tf-nc">
+                            <img class="downlineImagePos" src="~/img/agent.png" />
+                            <p class="text-center mx-auto">@Model.Agent.UserName</p>
+                        </span>
+                        @if (Model.DirectAgents.Count > 0)
+                        {
+                            <ul>
+                                @foreach (var directAgent in Model.DirectAgents)
+                                {
+                                    <li>
+                                        <span class="tf-nc">
+
+                                                <div style="flex flex-col justify-center">
+                                                    <img class="downlineImagePos" src="~/img/agent.png" />
+                                                    <span class="display:block">@directAgent.UserName</span>
+
+                                        </span>
+                                        @if (Model.LevelTwoAReferredAgents.ContainsKey(directAgent.Id) && Model.LevelTwoAReferredAgents[directAgent.Id].Count > 0)
+                                        {
+                                            <ul>
+                                                @foreach (var levelTwoAgent in Model.LevelTwoAReferredAgents[directAgent.Id])
+                                                {
+                                                    <li>
+                                                        <span class="tf-nc">
+
+                                                                <div style="flex flex-col justify-center">
+                                                                    <img class="downlineImagePos" src="~/img/agent.png" />
+                                                                    <span class="display:block">@levelTwoAgent.UserName</span>
+
+
+                                                        </span>
+                                                        @if (Model.LevelThreeReferredAgents.ContainsKey(levelTwoAgent.Id) && Model.LevelThreeReferredAgents[levelTwoAgent.Id].Count > 0)
+                                                        {
+                                                            <ul>
+
+                                                                @foreach (var levelThreeAgent in Model.LevelThreeReferredAgents[levelTwoAgent.Id])
+                                                                {
+                                                                    <li>
+
+                                                                            <div style="flex flex-col justify-center">
+                                                                                <img class="downlineImagePos" src="~/img/agent.png" />
+                                                                                <span class="display:block">@levelThreeAgent.UserName</span>
+
+                                                                    </li>
+                                                                }
+                                                            </ul>
+
+                                                        }
+                                                    </li>
+                                                }
+                                            </ul>
+
+                                        }
+                                    </li>
+
+                                }
+                            </ul>
+                        }
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+</div>

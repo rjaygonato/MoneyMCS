@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using MoneyMCS.Models;
+using MoneyMCS.Areas.Identity.Data;
 using MoneyMCS.Services;
 
 namespace MoneyMCS.Pages
@@ -10,13 +10,13 @@ namespace MoneyMCS.Pages
     [Authorize(Policy = "AgentAccessPolicy")]
     public class ClientDashboardModel : PageModel
     {
-        public ClientDashboardModel(ClientContext context, ILogger<ClientDashboardModel> logger)
+        public ClientDashboardModel(EntitiesContext context, ILogger<ClientDashboardModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        private readonly ClientContext _context;
+        private readonly EntitiesContext _context;
         private readonly ILogger<ClientDashboardModel> _logger;
 
         public List<Client> Clients { get; set; } = new();

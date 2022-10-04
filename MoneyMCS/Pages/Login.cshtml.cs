@@ -13,7 +13,7 @@ namespace MoneyMCS.Pages
     public class LoginModel : PageModel
     {
 
-        public LoginModel(UserManager<AgentUser> userManager, SignInManager<AgentUser> signInManager ,ILogger<LoginModel> logger)
+        public LoginModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager ,ILogger<LoginModel> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -21,8 +21,8 @@ namespace MoneyMCS.Pages
 
         }
 
-        private readonly UserManager<AgentUser> _userManager;
-        private readonly SignInManager<AgentUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
         [BindProperty]

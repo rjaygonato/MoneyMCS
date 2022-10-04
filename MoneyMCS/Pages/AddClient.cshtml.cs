@@ -5,16 +5,16 @@ using MoneyMCS.Services;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
-using MoneyMCS.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SqlTypes;
 
 namespace MoneyMCS.Pages
 {
     [Authorize(Policy = "AgentAccessPolicy")]
     public class AddClientModel : PageModel
     {
-        public AddClientModel(ClientContext context, UserManager<AgentUser> userManager, ILogger<AddClientModel> logger)
+        public AddClientModel(EntitiesContext context, UserManager<ApplicationUser> userManager, ILogger<AddClientModel> logger)
         {
             _context = context;
             _userManager = userManager;
@@ -23,8 +23,8 @@ namespace MoneyMCS.Pages
         }
 
 
-        private readonly ClientContext _context;
-        private readonly UserManager<AgentUser> _userManager;
+        private readonly EntitiesContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<AddClientModel> _logger;
         public List<SelectListItem> StateSelect { get; set; } = new();
 
@@ -94,11 +94,7 @@ namespace MoneyMCS.Pages
                     return NotFound();
                 }
 
-                AgentUser referrer = await _userManager.FindByIdAsync(agentId);
-                if (referrer != null)
-                {
-                    newClient.ReferrerId = referrer.Id;
-                }
+                newClient.ReferrerId = agentId;
                 await _context.Clients.AddAsync(newClient);
                 await _context.SaveChangesAsync();
 

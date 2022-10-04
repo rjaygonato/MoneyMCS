@@ -1,45 +1,41 @@
-﻿using MoneyMCS.Areas.Identity.Data;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace MoneyMCS.Models
+namespace MoneyMCS.Areas.Identity.Data
 {
     public class Client
     {
         public int ClientId { get; set; }
 
-        [Required]
         [MaxLength(100)]
         public string Company { get; set; }
 
-        [Required]
         [MaxLength(100)]
         public string FirstName { get; set; }
 
-        [Required]
         [MaxLength(100)]
         public string LastName { get; set; }
 
         [DataType(DataType.EmailAddress)]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Phone]
-        public string? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [MaxLength(100)]
-        public string? Address { get; set; }
+        public string Address { get; set; }
 
         [MaxLength(100)]
-        public string? City { get; set; }
+        public string City { get; set; }
 
         [MaxLength(100)]
-        public string? State { get; set; }
+        public string State { get; set; }
 
         [MaxLength(6)]
-        public string? ZipCode { get; set; }
+        public string ZipCode { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime DateAdded { get; set; }
-        public string? ReferrerId { get; set; }
-        public virtual AgentUser Referrer { get; set; }
+        public string ReferrerId { get; set; }
+        public ApplicationUser Referrer { get; set; }
     }
 }
