@@ -5,6 +5,8 @@ using MoneyMCS.Areas.Identity.Data;
 using MoneyMCS.Services;
 using MoneyMCS.Policies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Build.Execution;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AffiliateEntitiesConnection");
@@ -25,6 +27,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<EntitiesContext>();
 
+builder.Services.AddDataProtection()
+        .PersistKeysToFileSystem(new DirectoryInfo(@"Keys"));
 
 builder.Services.AddAuthorization(options =>
 {
