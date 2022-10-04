@@ -29,6 +29,7 @@
                                                 <div style="flex flex-col justify-center">
                                                     <img class="downlineImagePos" src="~/img/agent.png" />
                                                     <span class="display:block">@directAgent.UserName</span>
+                                                </div>
 
                                         </span>
                                         @if (Model.LevelTwoAReferredAgents.ContainsKey(directAgent.Id) && Model.LevelTwoAReferredAgents[directAgent.Id].Count > 0)
@@ -42,6 +43,7 @@
                                                                 <div style="flex flex-col justify-center">
                                                                     <img class="downlineImagePos" src="~/img/agent.png" />
                                                                     <span class="display:block">@levelTwoAgent.UserName</span>
+                                                                </div>
 
 
                                                         </span>
@@ -56,6 +58,7 @@
                                                                             <div style="flex flex-col justify-center">
                                                                                 <img class="downlineImagePos" src="~/img/agent.png" />
                                                                                 <span class="display:block">@levelThreeAgent.UserName</span>
+                                                                               </div>
 
                                                                     </li>
                                                                 }
