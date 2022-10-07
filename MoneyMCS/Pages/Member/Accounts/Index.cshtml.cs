@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace MoneyMCS.Pages.Member.Accounts;
@@ -21,16 +22,39 @@ public class IndexModel : PageModel
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<IndexModel> _logger;
 
+    [BindProperty(SupportsGet = true)]
+    public InputModel Input { get; set; }
+
+    public class InputModel
+    {
+        public string? Username { get; set; } = string.Empty;
+        [Display(Name = "First Name")]
+        public string? FirstName { get; set; } = string.Empty;
+        [Display(Name = "Last Name")]
+        public string? LastName { get; set; } = string.Empty;
+        [Display(Name = "Email")]
+        public string? Email { get; set; } = string.Empty;
+        [Display(Name = "Phone number")]
+        public string? PhoneNumber { get; set; } = string.Empty;
+        [Display(Name = "User Type")]
+        public string? AccountType { get; set; } = string.Empty;
+    }
+
     public List<ApplicationUser> Accounts { get; set; } = new();
 
     public async Task<IActionResult> OnGet()
     {
 
-        IList<ApplicationUser> Administrators = await _userManager.GetUsersForClaimAsync(new Claim(ClaimTypes.Role, "Administrator"));
-        IList<ApplicationUser> Viewers = await _userManager.GetUsersForClaimAsync(new Claim(ClaimTypes.Role, "Viewer"));
-        Accounts = new List<ApplicationUser>();
-        Accounts.AddRange(Administrators);
-        Accounts.AddRange(Viewers);
+        cleanModel();
+
+        Accounts = await _userManager.Users.Where(u => 
+        u.UserName.Contains(Input.Username) &&
+        u.FirstName.Contains(Input.FirstName) &&
+        u.LastName.Contains(Input.LastName) &&
+        u.Email.Contains(Input.Email) &&
+        u.PhoneNumber.Contains(Input.PhoneNumber) &&
+        Input.AccountType == string.Empty ? (u.UserType.Equals("Administrator") || u.UserType.Equals("Viewer")) : u.UserType.Equals(Input.AccountType)
+        ).ToListAsync();
 
         return Page();
     }
@@ -49,5 +73,20 @@ public class IndexModel : PageModel
         }
         await _userManager.DeleteAsync(user);
         return RedirectToPage("/Member/Accounts/Index");
+    }
+
+    private void cleanModel()
+    {
+        Input.Username ??= string.Empty;
+        Input.FirstName ??= string.Empty;
+        Input.LastName ??= string.Empty;
+        Input.Email ??= string.Empty;
+        Input.PhoneNumber ??= string.Empty;
+        Input.AccountType ??= string.Empty;
+        if (Input.AccountType != "Administrator" && Input.AccountType != "Viewer")
+        {
+            Input.AccountType = string.Empty;
+        }
+
     }
 }

@@ -23,6 +23,10 @@ builder.Services.AddDbContext<EntitiesContext>(options =>
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedEmail = false;
+    options.Lockout.MaxFailedAccessAttempts = 4;
+    options.Lockout.AllowedForNewUsers = true;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(1);
+    options.Password.RequireUppercase = false;
 })
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<EntitiesContext>();

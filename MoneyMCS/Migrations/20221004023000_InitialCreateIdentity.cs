@@ -59,7 +59,7 @@ namespace MoneyMCS.Migrations
                         column: x => x.ReferrerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(

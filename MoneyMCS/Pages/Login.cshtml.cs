@@ -54,13 +54,23 @@ namespace MoneyMCS.Pages
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, true);
                 if (result.Succeeded)
                 {
                     return RedirectToPage("/Index");
                 }
                 
-                ModelState.AddModelError(String.Empty, "Invalid username or password");
+                if (result.IsLockedOut)
+                {
+                    var user = await _userManager.FindByNameAsync(Input.UserName);
+                    ModelState.AddModelError(string.Empty, $"Your account has been locked. You can login again at {user.LockoutEnd.ToString()}");
+                }
+                else
+                {
+                    ModelState.AddModelError(String.Empty, "Invalid username or password");
+
+                }
+
             }
 
             

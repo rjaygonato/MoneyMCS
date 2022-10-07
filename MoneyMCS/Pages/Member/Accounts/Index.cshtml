@@ -14,64 +14,60 @@
 <main class="w-full flex-grow p-6">
     <div class="w-full mt-12">
         <p class="text-xl pb-3 flex items-center">
-            <i class="fas fa-list mr-3"></i> Agents
+            <i class="fas fa-list mr-3"></i> Accounts
         </p>
-        <div class="w-full my-6 pr-0">
+        <form class="w-full my-6 pr-0">
             <div class="w-100 bg-green-600">
                 <p class="text-white text-center font-bold">Search Filter</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4">
                 <div>
                     <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">Email:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
-                            aria-label="Name" />
-                    </div>
-                    <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">Phone:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
+                        <label asp-for="Input.Username" class="text-gray-700"></label>
+                        <input asp-for="Input.Username" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md"
                              />
                     </div>
                     <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">First Name:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
+                        <label asp-for="Input.FirstName" class="text-gray-700"></label>
+                        <input asp-for="Input.FirstName" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md"
                              />
                     </div>
                     <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">Last Name:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
+                        <label asp-for="Input.LastName" class="text-gray-700"></label>
+                        <input asp-for="Input.LastName" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" />
+                    </div>
+                    <div class="flex justify-between my-1">
+                        <label asp-for="Input.Email" class="text-gray-700"></label>
+                        <input asp-for="Input.Email" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md"
                              />
                     </div>
                     <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">User ID:</label>
-                        <input class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" id="cus_name" name="cus_name" type="text" required=""
-                             />
+                        <label asp-for="Input.PhoneNumber" class="text-gray-700"></label>
+                        <input asp-for="Input.PhoneNumber" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" />
                     </div>
+
                 </div>
                 <div>
                     <div class="flex justify-between my-1">
-                        <label class="text-gray-700" for="cus_name">User Type:</label>
-                        <select 
+                        <label asp-for="Input.AccountType" class="text-gray-700"></label>
+                        <select asp-for="Input.AccountType"
                             class="bg-gray-100 border py-1 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 ">
-                            <option selected>Choose account type</option>
-                            <option>Viewer</option>
-                            <option>Administrator</option>
+                            <option value="" selected>All</option>
+                            <option value="Viewer">Viewer</option>
+                            <option value="Administrator">Administrator</option>
                         </select>
                     </div>
-                    
-                    
-                    
                 </div>
             </div>
             <div class="w-100 flex justify-center p-1">
-                <button type="button" class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm mr-1">
+                <button type="submit" class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm mr-1">
                     <i class="fas fa-search"></i> Search
                 </button>
-                <button type="button" class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm">
+                <button id="clearBtn" type="button" class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm">
                     <i class="fas fa-undo"></i> Reset
                 </button>
             </div>
-        </div>
+        </form>
         <div class="flex justify-end my-3 md:my-2">
             <a asp-page="/Member/Accounts/Add" role="button"
                 class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm font-medium"><i
@@ -267,6 +263,18 @@
         $("#deleteForm").submit(function () {
             $("#confirmDeleteBtn").prop("disabled", true);
         })
+    </script>
+
+    <script>
+        $("#clearBtn").click(function () {
+            console.log("clicked");
+            $('form input[type="text"]').each(function (i, e) {
+                $(e).val("");
+            })
+
+            $('form select').val("")
+        })
+        
     </script>
 }
 

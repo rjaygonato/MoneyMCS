@@ -39,7 +39,9 @@ namespace MoneyMCS.Policies
             var redirectContext = context.Resource as HttpContext;
             if (userType == null)
             {
+                redirectContext.Response.Clear();
                 redirectContext.Response.Redirect("/Login");
+
                 context.Succeed(requirement);
                 return Task.CompletedTask;
             }
