@@ -268,5 +268,17 @@
             $("#confirmDeleteBtn").prop("disabled", true);
         })
     </script>
+
+    <script>
+        $("#clearBtn").click(function () {
+            console.log("clicked");
+            $('form input[type="text"]').each(function (i, e) {
+                $(e).val("");
+            })
+
+            $('form select').val("")
+        })
+
+    </script>
 }
 

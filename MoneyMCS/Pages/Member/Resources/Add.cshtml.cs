@@ -57,8 +57,15 @@ namespace MoneyMCS.Pages.Member.Resources
         {
             if (!ModelState.IsValid)
             {
+                return Page(); 
+            }
+
+            if (!checkFileType(Path.GetExtension(Input.ResourceFile.FileName)))
+            {
+                ModelState.AddModelError(string.Empty, "The file type is not supported, please upload only (pdf or mp4) for now.");
                 return Page();
             }
+
             string fileName = $"{Path.GetRandomFileName()}{Path.GetExtension(Input.ResourceFile.FileName)}";
             string filePath = Path.Combine("Resources", fileName);
             string urlPath = $"\\Resource\\{fileName}";
@@ -80,6 +87,11 @@ namespace MoneyMCS.Pages.Member.Resources
 
             return RedirectToPage("/Member/Resources/Index");
 
+        }
+
+        private bool checkFileType(string extension)
+        {
+            return extension.Equals(".pdf") || extension.Equals(".mp4");
         }
     }
 }

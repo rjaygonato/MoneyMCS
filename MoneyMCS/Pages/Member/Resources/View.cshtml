@@ -27,7 +27,14 @@
                                                 <button data-id="@Model.ResourceInfo.ResourceId" type="button" class="deleteBtn py-2 px-3 bg-red-500 hover:bg-red-600 rounded"><i class="fa fa-trash"></i> Delete</button>
 
                                             </div>
-                                            <embed src="@Model.ResourceInfo.FilePath" width="800px" height="2100px" />
+                                            @if(System.IO.Path.GetExtension(Model.ResourceInfo.FilePath) == ".pdf") {
+                                                <embed src="@Model.ResourceInfo.FilePath" width="800px" height="2100px" />
+                                            }
+                                            else if(System.IO.Path.GetExtension(Model.ResourceInfo.FilePath) == ".mp4") {
+                                                <video width="800px", height="480px" controls>
+                                                    <source src="@Model.ResourceInfo.FilePath" type="video/mp4" />
+                                                </video>
+                                            }
 
                                         </div>
                                     </div>

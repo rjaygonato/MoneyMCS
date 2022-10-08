@@ -27,6 +27,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     options.Lockout.AllowedForNewUsers = true;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(1);
     options.Password.RequireUppercase = false;
+    
 })
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<EntitiesContext>();

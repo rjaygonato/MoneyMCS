@@ -64,7 +64,7 @@ namespace MoneyMCS.Pages.Member.Agents
         public async Task<IActionResult> OnGet()
         {
             cleanModel();
-            Agents = await _userManager.Users
+            IQueryable<ApplicationUser> query = _userManager.Users
                 .Where(u => u.UserType.Equals("Agent"))
                 .Where(u =>
                 u.UserName.Contains(Input.Username) &&
@@ -72,10 +72,16 @@ namespace MoneyMCS.Pages.Member.Agents
                 u.LastName.Contains(Input.LastName) &&
                 u.Email.Contains(Input.Email) &&
                 u.PhoneNumber.Contains(Input.PhoneNumber) &&
-                Input.AgentType == string.Empty ? (u.AgentType.Equals("BASIC") || u.AgentType.Equals("DIY") || u.AgentType.Equals("VIP")) : u.AgentType.Equals(Input.AgentType) &&
-                Input.ReferrerId == string.Empty ? u.Id.Contains(string.Empty) : u.Id.Contains(Input.ReferrerId)
-                ).ToListAsync();
-            await _userManager.Users.ForEachAsync(a =>
+                Input.AgentType == string.Empty ? (u.AgentType.Equals("BASIC") || u.AgentType.Equals("DIY") || u.AgentType.Equals("VIP")) : u.AgentType.Equals(Input.AgentType));
+            if (!string.IsNullOrWhiteSpace(Input.ReferrerId))
+            {
+                query = query.Where(u => u.ReferrerId.Equals(Input.ReferrerId));
+            }
+
+            Agents = await query.ToListAsync();
+
+
+            await _userManager.Users.Where(u => u.UserType == "Agent").ForEachAsync(a =>
             {
                 AgentsSelect.Add(new SelectListItem
                 {
