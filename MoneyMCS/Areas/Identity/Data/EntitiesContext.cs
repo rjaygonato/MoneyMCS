@@ -34,13 +34,14 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
             .HasOne(au => au.Referrer)
             .WithMany(au => au.Referrals)
             .HasForeignKey(au => au.ReferrerId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
         builder.Entity<ApplicationUser>()
             .HasMany(au => au.Clients)
             .WithOne(c => c.Referrer)
-            .HasForeignKey(c => c.ReferrerId);
-            
+            .HasForeignKey(c => c.ReferrerId)
+            .OnDelete(DeleteBehavior.ClientSetNull);
+
 
         builder.Entity<ApplicationUser>()
             .HasIndex(au => au.ReferralCode)

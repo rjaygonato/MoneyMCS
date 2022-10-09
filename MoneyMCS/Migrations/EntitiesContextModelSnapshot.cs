@@ -364,8 +364,7 @@ namespace MoneyMCS.Migrations
                 {
                     b.HasOne("MoneyMCS.Areas.Identity.Data.ApplicationUser", "Referrer")
                         .WithMany("Referrals")
-                        .HasForeignKey("ReferrerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ReferrerId");
 
                     b.Navigation("Referrer");
                 });

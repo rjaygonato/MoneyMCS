@@ -22,7 +22,7 @@ public class ApplicationUser : IdentityUser
     public ApplicationUser Referrer { get; set; }
     public List<ApplicationUser> Referrals { get; set; }
     public List<Client> Clients { get; set; }
-    public DateTime? CreationDate { get; set; }
+    public DateTime CreationDate { get; set; }
     public string UserType { get; set; }
 
 

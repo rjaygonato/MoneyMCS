@@ -50,6 +50,9 @@ namespace MoneyMCS.Pages
             return Page();
         }
 
+        [BindProperty(SupportsGet = true)]
+        public string? email { get; set; }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
@@ -59,11 +62,18 @@ namespace MoneyMCS.Pages
                 {
                     return RedirectToPage("/Index");
                 }
-                
+                var user = await _userManager.FindByNameAsync(Input.UserName);
+
                 if (result.IsLockedOut)
                 {
-                    var user = await _userManager.FindByNameAsync(Input.UserName);
                     ModelState.AddModelError(string.Empty, $"Your account has been locked. You can login again at {user.LockoutEnd.ToString()}");
+                }
+                if (result.IsNotAllowed)
+                {
+
+                    HttpContext.Session.SetString("EmailConfirmationMessage", $"We have sent an email to {user.Email}. Please check your email to verify your account.");
+                    return RedirectToPage("/Login");
+
                 }
                 else
                 {

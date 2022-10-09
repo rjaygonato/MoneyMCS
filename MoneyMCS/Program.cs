@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using MoneyMCS.Areas.Identity.Data;
 using MoneyMCS.Services;
 using MoneyMCS.Policies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Build.Execution;
 using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,12 +48,27 @@ builder.Services.AddAuthorization(options =>
 
 });
 
+//Policy
 builder.Services.AddSingleton<IAuthorizationHandler, AgentTypeHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, MemberTypeHandler>();
 
-
+//Email
+builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 builder.Services.AddRazorPages();
+
+
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 
 if (!Directory.Exists(Path.Combine(builder.Environment.ContentRootPath, "Resources")))
 {
@@ -76,6 +91,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 
 app.UseStaticFiles(new StaticFileOptions
 {

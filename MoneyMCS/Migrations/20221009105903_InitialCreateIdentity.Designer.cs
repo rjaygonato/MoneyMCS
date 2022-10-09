@@ -12,7 +12,7 @@ using MoneyMCS.Areas.Identity.Data;
 namespace MoneyMCS.Migrations
 {
     [DbContext(typeof(EntitiesContext))]
-    [Migration("20221004023000_InitialCreateIdentity")]
+    [Migration("20221009105903_InitialCreateIdentity")]
     partial class InitialCreateIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -366,8 +366,7 @@ namespace MoneyMCS.Migrations
                 {
                     b.HasOne("MoneyMCS.Areas.Identity.Data.ApplicationUser", "Referrer")
                         .WithMany("Referrals")
-                        .HasForeignKey("ReferrerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ReferrerId");
 
                     b.Navigation("Referrer");
                 });

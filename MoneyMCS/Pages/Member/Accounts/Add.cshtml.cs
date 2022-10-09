@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace MoneyMCS.Pages.Member.Accounts
 {
-    //[Authorize(Policy = "MemberAccessPolicy")]
+    [Authorize(Policy = "MemberAccessPolicy")]
     public class AddModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -98,7 +98,7 @@ namespace MoneyMCS.Pages.Member.Accounts
                 await _userStore.SetUserNameAsync(newUser, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(newUser, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(newUser, Input.Password);
-
+                
                 if (result.Succeeded)
                 {
                     List<Claim> claims = new List<Claim>
@@ -111,6 +111,8 @@ namespace MoneyMCS.Pages.Member.Accounts
                     };
 
                     await _userManager.AddClaimsAsync(newUser, claims);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                    await _userManager.ConfirmEmailAsync(newUser, token);
                     return RedirectToPage("/Member/Accounts/Index");
                 }
 

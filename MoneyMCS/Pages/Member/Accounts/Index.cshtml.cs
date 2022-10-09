@@ -13,13 +13,15 @@ namespace MoneyMCS.Pages.Member.Accounts;
 public class IndexModel : PageModel
 {
 
-    public IndexModel(UserManager<ApplicationUser> userManager, ILogger<IndexModel> logger)
+    public IndexModel(UserManager<ApplicationUser> userManager, EntitiesContext context ,ILogger<IndexModel> logger)
     {
         _userManager = userManager;
+        _context = context;
         _logger = logger;
     }
 
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly EntitiesContext _context;
     private readonly ILogger<IndexModel> _logger;
 
     [BindProperty(SupportsGet = true)]
@@ -71,6 +73,18 @@ public class IndexModel : PageModel
         {
             return BadRequest();
         }
+
+        List<Client> clients = await _context.Clients.Where(c => c.ReferrerId == user.Id).ToListAsync();
+        if (clients != null)
+        {
+            foreach (var client in clients)
+            {
+                client.ReferrerId = null;
+                _context.Entry(client).State = EntityState.Modified;
+            }
+            await _context.SaveChangesAsync();
+        }
+
         await _userManager.DeleteAsync(user);
         return RedirectToPage("/Member/Accounts/Index");
     }

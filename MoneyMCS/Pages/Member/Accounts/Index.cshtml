@@ -124,7 +124,7 @@
                             <td class="py-4 px-6 border-b border-grey-light">@account.LastName</td>
                             <td class="py-4 px-6 border-b border-grey-light">@account.PhoneNumber</td>
                             <td class="py-4 px-6 border-b border-grey-light">@account.Email</td>
-                            <td class="py-4 px-6 border-b border-grey-light">@account.CreationDate.ToString()</td>
+                            <td class="py-4 px-6 border-b border-grey-light">@account.CreationDate.ToShortDateString()</td>
                             <td class="p-0 text-center px-6 border-b border-grey-light">
                                 <a asp-page="/Member/Accounts/EditProfile" asp-route-id="@account.Id"><i class="fas fa-pencil-alt"></i></a>
                             </td>

@@ -14,7 +14,16 @@ namespace MoneyMCS.Pages.Member.Agents
     [Authorize(Policy = "MemberAccessPolicy")]
     public class IndexModel : PageModel
     {
+
+        public IndexModel(UserManager<ApplicationUser> userManager, EntitiesContext context, ILogger<IndexModel> logger)
+        {
+            _userManager = userManager;
+            _context = context;
+            _logger = logger;
+        }
+
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly EntitiesContext _context;
         private readonly ILogger<IndexModel> _logger;
 
         [BindProperty(SupportsGet = true)]
@@ -53,13 +62,6 @@ namespace MoneyMCS.Pages.Member.Agents
 
         }
         public List<ApplicationUser> Agents { get; set; } = new();
-
-
-        public IndexModel(UserManager<ApplicationUser> userManager, EntitiesContext context, ILogger<IndexModel> logger)
-        {
-            _userManager = userManager;
-            _logger = logger;
-        }
 
         public async Task<IActionResult> OnGet()
         {
@@ -109,6 +111,30 @@ namespace MoneyMCS.Pages.Member.Agents
             {
                 return BadRequest();
             }
+
+            List<ApplicationUser> referredAgents = await _userManager.Users.Where(au => au.ReferrerId == user.Id).ToListAsync();
+            List<Client> referredClients = await _context.Clients.Where(c => c.ReferrerId == user.Id).ToListAsync();
+            
+            if (referredAgents != null)
+            {
+                foreach (var agent in referredAgents)
+                {
+                    agent.ReferrerId = null;
+                    _context.Entry(agent).State = EntityState.Modified;
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            if (referredClients != null)
+            {
+                foreach (var client in referredClients)
+                {
+                    client.ReferrerId = null;
+                    _context.Entry(client).State = EntityState.Modified;
+                }
+                await _context.SaveChangesAsync();
+            }
+
             await _userManager.DeleteAsync(user);
             return RedirectToPage("/Member/Agents/Index");
         }

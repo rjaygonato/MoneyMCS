@@ -20,6 +20,13 @@
                             Agent Login
                         </h1>
                         <div asp-validation-summary="All" class="text-red-500"></div>
+                         @if (HttpContext.Session.GetString("EmailConfirmationMessage") != null) {
+                             <div class="m-2">
+                            <p class="font-medium text-green-600">@HttpContext.Session.GetString("EmailConfirmationMessage")</p>
+                            @{HttpContext.Session.Remove("EmailConfirmationMessage");}
+
+                             </div>
+                        }
                         <div class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Email</span>
                             <input asp-for="Input.UserName"
