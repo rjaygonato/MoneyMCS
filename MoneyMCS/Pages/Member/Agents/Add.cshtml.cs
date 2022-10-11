@@ -103,12 +103,11 @@ namespace MoneyMCS.Pages.Member.Agents
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.UserName = Input.UserName;
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
-                user.AgentType = Input.AgentType;
                 user.CreationDate = DateTime.Now;
                 user.UserType = "Agent";
+                user.AgentType = Input.AgentType;
 
                 if (Input.ReferrerId != null)
                 {
