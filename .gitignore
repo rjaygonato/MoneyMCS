@@ -366,3 +366,7 @@ FodyWeavers.xsd
 #Resources
 
 **/Resources/*.pdf
+
+#Keys
+
+**/Keys
