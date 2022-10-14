@@ -14,16 +14,19 @@ namespace MoneyMCS.Pages.Member.Agents
     public class AddModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly EntitiesContext _context;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<AddModel> _logger;
 
         public AddModel(
             UserManager<ApplicationUser> userManager,
+            EntitiesContext context,
             IUserStore<ApplicationUser> userStore,
             ILogger<AddModel> logger)
         {
             _userManager = userManager;
+            _context = context;
             _userStore = userStore;
             _logger = logger;
             _emailStore = GetEmailStore();
@@ -125,6 +128,7 @@ namespace MoneyMCS.Pages.Member.Agents
                 }
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.Wallet = new Wallet();
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

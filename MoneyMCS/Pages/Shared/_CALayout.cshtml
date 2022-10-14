@@ -18,7 +18,7 @@
                 <a role="button" class="px-3 py-2 pl-5 hover:bg-lime-500">Email Templates</a>
                 <h2 class="containerHeader p-3  text-white">Reports</h2>
                 <a role="button" class="px-3 py-2 pl-5 hover:bg-lime-500">Link Tracking Stats</a>
-                <a role="button" class="px-3 py-2 pl-5 hover:bg-lime-500">Commissions Generated</a>
+                <a asp-page="/CA/CommissionsGenerated" class="px-3 py-2 pl-5 hover:bg-lime-500 @(ViewData["caPageName"] == "CommissionsGenerated" ? "bg-lime-500" : "")">Commissions Generated</a>
 
             </div>
             <div class="md:col-span-6 p-4 bg-gray-200 rounded-md">

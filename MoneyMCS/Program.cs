@@ -7,6 +7,7 @@ using MoneyMCS.Services;
 using MoneyMCS.Policies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AffiliateEntitiesConnection");
@@ -69,6 +70,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe").GetValue<string>("ApiKey");
 
 if (!Directory.Exists(Path.Combine(builder.Environment.ContentRootPath, "Resources")))
 {

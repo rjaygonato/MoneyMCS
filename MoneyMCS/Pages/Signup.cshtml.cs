@@ -130,8 +130,8 @@ namespace MoneyMCS.Pages
                     user.ReferralCode = GenerateReferralCode(6);
                     try
                     {
+                        user.Wallet = new Wallet();
                         result = await _userManager.CreateAsync(user, Input.Password);
-                        await _userManager.AddClaimsAsync(user, claims);
                         break;
                     }
                     catch(DbUpdateException ex)
@@ -151,6 +151,8 @@ namespace MoneyMCS.Pages
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddClaimsAsync(user, claims);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     //var userId = await _userManager.GetUserIdAsync(user);

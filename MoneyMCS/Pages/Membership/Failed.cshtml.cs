@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MoneyMCS.Pages
+namespace MoneyMCS.Pages.Membership
 {
-    public class MembershipModel : PageModel
+    public class FailedModel : PageModel
     {
         public void OnGet()
         {

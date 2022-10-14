@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
+using Stripe.Issuing;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Xml.Linq;
@@ -114,7 +115,10 @@ namespace MoneyMCS.Pages.Member.Agents
 
             List<ApplicationUser> referredAgents = await _userManager.Users.Where(au => au.ReferrerId == user.Id).ToListAsync();
             List<Client> referredClients = await _context.Clients.Where(c => c.ReferrerId == user.Id).ToListAsync();
-            
+            List<AppTransaction> appTransactions = await _context.AppTransactions.Where(at => at.ApplicationUserId == user.Id).ToListAsync();
+            List<StripeTransaction> stripeTransactions = await _context.StripeTransactions.Where(st => st.ApplicationUserId == user.Id).ToListAsync();
+            Wallet wallet = await _context.Wallets.FirstOrDefaultAsync(w => w.ApplicationUserId == user.Id);
+
             if (referredAgents != null)
             {
                 foreach (var agent in referredAgents)
@@ -132,6 +136,33 @@ namespace MoneyMCS.Pages.Member.Agents
                     client.ReferrerId = null;
                     _context.Entry(client).State = EntityState.Modified;
                 }
+                await _context.SaveChangesAsync();
+            }
+
+            if (appTransactions != null)
+            {
+                foreach (var appTransaction in appTransactions)
+                {
+                    appTransaction.ApplicationUserId = null;
+                    _context.Entry(appTransaction).State = EntityState.Modified;
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            if (stripeTransactions != null)
+            {
+                foreach (var stripeTransaction in stripeTransactions)
+                {
+                    stripeTransaction.ApplicationUserId = null;
+                    _context.Entry(stripeTransaction).State = EntityState.Modified;
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            if (wallet == null)
+            {
+                wallet.ApplicationUserId = null;
+                _context.Entry(wallet).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
 

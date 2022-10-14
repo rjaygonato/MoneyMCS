@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyMCS.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using MoneyMCS.Areas.Identity.Data;
 namespace MoneyMCS.Migrations
 {
     [DbContext(typeof(EntitiesContext))]
-    partial class EntitiesContextModelSnapshot : ModelSnapshot
+    [Migration("20221014005432_AddedWalletToContext")]
+    partial class AddedWalletToContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,18 +278,14 @@ namespace MoneyMCS.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AppTransactionId");
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("AppTransactions");
+                    b.ToTable("AppTransaction");
                 });
 
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.Client", b =>
@@ -343,6 +341,30 @@ namespace MoneyMCS.Migrations
                     b.HasIndex("ReferrerId");
 
                     b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.Commission", b =>
+                {
+                    b.Property<int>("CommissionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommissionId"), 1L, 1);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Money");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommissionId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Commissions");
                 });
 
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.StripeTransaction", b =>
@@ -478,6 +500,15 @@ namespace MoneyMCS.Migrations
                     b.Navigation("Referrer");
                 });
 
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.Commission", b =>
+                {
+                    b.HasOne("MoneyMCS.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Commissions")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.StripeTransaction", b =>
                 {
                     b.HasOne("MoneyMCS.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
@@ -499,6 +530,8 @@ namespace MoneyMCS.Migrations
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.ApplicationUser", b =>
                 {
                     b.Navigation("Clients");
+
+                    b.Navigation("Commissions");
 
                     b.Navigation("Referrals");
 

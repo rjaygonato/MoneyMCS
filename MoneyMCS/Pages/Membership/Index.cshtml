@@ -1,0 +1,30 @@
+﻿@page
+@model MoneyMCS.Pages.Membership.IndexModel
+@{
+    Layout = "_AgentLayoutHero";
+}
+
+
+<section class="bg-green-700 h-full">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+        <div class="flex justify-center">
+            <div class="rounded-full bg-white p-3">
+                <img src="~/img/logolarge.png" class="h-64 w-64" />
+
+            </div>
+        </div>
+        
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Become a referral agent today!</h1>
+        <p class="mb-8 text-lg font-normal text-gray-200 lg:text-xl sm:px-16 xl:px-48">Start receiving commissions by inviting other agents to become a part of the affiliate program and by delivering potential clients to us! </p>
+        <form method="post" class="flex flex-col mb-4 lg:mb-8 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+            
+            <button type="submit" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-semibold rounded-lg text-normal px-5 py-4 text-center mr-2 mb-2">
+                Subscribe now!
+            </button>
+        </form>
+        <div class="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36">
+            <a role="button" asp-page="/Index" class="font-semibold text-gray-300 hover:underline uppercase">I'll subscribe later</a>
+            
+        </div>
+    </div>
+</section>

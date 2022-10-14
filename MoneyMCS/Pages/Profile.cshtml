@@ -5,71 +5,98 @@
     ViewData["Title"] = "Profile";
 }
 
-<div>
-    <div class="banner flex flex-col w-full max-w-fit min-w-full grow p-10 justify-center items-center opacity-100  to-gray-700 h-1/4 bg-gray-400" style="background-color: rgba(20, 20, 20, 0.75); background: url(img/2h-media-3q4V539j_bw-unsplash.jpg), linear-gradient(rgba(22, 22, 22, 0.5),rgba(0,0,0,0.75)); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
-        <h6 class="text-4xl text-white">Profile</h6>
-    </div>
-    <div class="overflow-hidden bg-white shadow rounded-lg m-8">
-        <div class="px-4 py-5 sm:px-6 bg-gray-50">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Account Information</h3>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500">Your personal details</p>
-        </div>
-        <div class="border-t border-gray-200">
-            <dl>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Full name</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">@($"{Model.UserInfo.FirstName} {Model.UserInfo.LastName}")</dd>
-                </div>
-                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Agent Type</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">@Model.UserInfo.AgentType</dd>
-                </div>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Email address</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">@Model.UserInfo.Email</dd>
-                </div>
+<div class="max-w-7xl mx-auto py-12 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg my-4">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900"><i class="fa fa-user"></i> Information</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details </p>
+            </div>
+            <div class="border-t border-gray-200">
+                <dl>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Full name</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">@($"{Model.UserInfo.FirstName} {Model.UserInfo.FirstName}")</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Agent Type</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">@(Model.UserInfo.AgentType)</dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Email address</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">@Model.UserInfo.Email 
+                            @if(Model.UserInfo.EmailConfirmed) {
+                                <a class="semi-bold text-indigo-500 hover:text-indigo-400" href="#">Activate</a>
 
-                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Phone number</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">@Model.UserInfo.PhoneNumber</dd>
-                </div>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Date Created</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">@Model.UserInfo.CreationDate.ToString()</dd>
-                </div>
-                @*<div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Attachments</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        <ul role="list" class="divide-y divide-gray-200 rounded-md border border-gray-200">
-                            <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
-                                <div class="flex w-0 flex-1 items-center">
-                                    <!-- Heroicon name: mini/paper-clip -->
-                                    <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span class="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>
-                                </div>
-                                <div class="ml-4 flex-shrink-0">
-                                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
-                                </div>
-                            </li>
-                            <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
-                                <div class="flex w-0 flex-1 items-center">
-                                    <!-- Heroicon name: mini/paper-clip -->
-                                    <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span class="ml-2 w-0 flex-1 truncate">coverletter_back_end_developer.pdf</span>
-                                </div>
-                                <div class="ml-4 flex-shrink-0">
-                                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </dd>
-                </div>*@
-            </dl>
-        </div>
-    </div>
+                            }
+                            
+                        </dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Date joined</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">@Model.UserInfo.CreationDate.ToString()</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Subscription Status</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">@(Model.UserInfo.Subscribed ? "Active" : "Expired")
+                            @if (!Model.UserInfo.Subscribed)
+                            {
+                                <a class="semi-bold text-indigo-500 hover:text-indigo-400" href="/Membership/Index">Activate</a>
 
+                            }
+
+                        </dd>
+                    </div>
+
+                    @*<div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Subscription Status</dt>
+                        <dd class="mt-1 text-sm  sm:mt-0 sm:col-span-2"><a role="button" href="{% url 'account:password_change' %}" class="text-indigo-500 hover:text-indigo-400 hover:underline">Change password</a></dd>
+                    </div>*@
+
+                </dl>
+            </div>
+        </div>
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg my-4">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900"><i class="fas fa-history"></i> Transaction history</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Purchased products</p>
+            </div>
+            <div class="border-t border-gray-200">
+                @foreach (var transaction in Model.SubscriptionHistory)
+                {
+                    <div class="odd:bg-gray-50 px-4 py-5 sm:gap-4 sm:px-6 border border-transparent border-b-gray-300">
+                        <div class="grid grid-cols-3 py-2">
+                            <div class="col-span-2">
+                                <p class="text-md font-medium text-gray-500">Order ID: <span class="font-normal">@transaction.AppTransactionId</span></p>
+                                <p class="text-md font-medium text-gray-500 mb-3">Date: <span class="font-normal">@transaction.Date.ToString()</span></p>
+
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="grid grid-cols-3 my-3">
+                            <div class="col-span-3 md:col-span-1 border border-transparent border-r-gray-300 p-2">
+                                <p class="font-medium text-slate-600"><i class="fa fa-address-book"></i> Contact</p>
+                                <p class="text-md font-medium text-slate-700">@($"{Model.UserInfo.FirstName} {Model.UserInfo.FirstName}")</p>
+                                <p class="font-medium text-gray-500">Email: <span class="font-normal">@Model.UserInfo.Email</span></p>
+                            </div>
+                            <div class="col-span-3 md:col-span-1 border border-transparent border-r-gray-300 p-2">
+                                <p class="font-medium text-slate-600"> <i class="fa fa-scroll"></i> Product</p>
+                                <p class="font-medium text-gray-500">Price: <span class="font-normal ">99.00$</span></p>
+                                <p class="font-medium text-gray-500">Expiry Date: <span class="font-normal">@transaction.ExpirationDate.ToString()</span> </p>
+                            </div>
+                            <div class="col-span-3 md:col-span-1 p-3">
+                                <p class="font-medium text-slate-600"><i class="fab fa-stripe"></i> Payment</p>
+                                <p class="font-medium text-gray-500">Payment ID: <span class="font-normal">@transaction.AppTransactionId</span> </p>
+                                <p class="font-medium text-gray-500">Total Paid: <span class="font-normal">99.00</span> </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+              
+            </div>
+        </div>
+
+    </div>
 </div>

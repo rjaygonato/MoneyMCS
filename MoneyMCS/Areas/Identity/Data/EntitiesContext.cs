@@ -15,6 +15,9 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
     }
 
     public DbSet<Client> Clients { get; set; }
+    public DbSet<StripeTransaction> StripeTransactions { get; set; }
+    public DbSet<AppTransaction> AppTransactions { get; set; }
+    public DbSet<Wallet> Wallets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -42,9 +45,49 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(c => c.ReferrerId)
             .OnDelete(DeleteBehavior.ClientSetNull);
 
+        builder.Entity<ApplicationUser>()
+            .HasMany(au => au.StripeTransactions)
+            .WithOne(st => st.ApplicationUser)
+            .HasForeignKey(st => st.ApplicationUserId)
+            .OnDelete(DeleteBehavior.ClientSetNull);
+
+
+
+        builder.Entity<ApplicationUser>()
+            .HasMany(au => au.Transactions)
+            .WithOne(t => t.ApplicationUser)
+            .HasForeignKey(t => t.ApplicationUserId)
+            .OnDelete(DeleteBehavior.ClientSetNull);
+
+        builder.Entity<AppTransaction>()
+            .Property(at => at.Type)
+            .HasConversion(
+                v => v.ToString(),
+                v => (TransactionType)Enum.Parse(typeof(TransactionType), v)
+            );
+
+        builder.Entity<ApplicationUser>()
+            .HasOne(au => au.Wallet)
+            .WithOne(w => w.ApplicationUser)
+            .HasForeignKey<Wallet>(w => w.ApplicationUserId)
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
         builder.Entity<ApplicationUser>()
             .HasIndex(au => au.ReferralCode)
             .IsUnique();
+
+        builder.Entity<ApplicationUser>()
+            .Property(au => au.Subscribed)
+            .HasDefaultValue(false);
+
+        builder.Entity<StripeTransaction>()
+            .HasIndex(st => st.UserId)
+            .IsUnique();
+
+        builder.Entity<StripeTransaction>()
+            .HasIndex(st => st.SubscriptionId)
+            .IsUnique();
+
+
     }
 }
