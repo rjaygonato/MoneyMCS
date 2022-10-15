@@ -38,7 +38,11 @@ namespace MoneyMCS.Pages.Membership
             Session session;
             try
             {
-                 session = await sessionService.GetAsync(session_id);
+                var options = new SessionGetOptions();
+                options.AddExpand("customer");
+                options.AddExpand("subscription");
+                options.AddExpand("line_items");
+                 session = await sessionService.GetAsync(session_id, options);
 
             }catch(StripeException ex)
             {
@@ -53,14 +57,27 @@ namespace MoneyMCS.Pages.Membership
                 return BadRequest();
             }
 
-            SubscriptionService subscriptionService = new SubscriptionService();
-            var subscription = await subscriptionService.GetAsync(session.SubscriptionId);
-
+            //Get User
             string agentId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "AgentId").Value;
             ApplicationUser user = await _userManager.FindByIdAsync(agentId);
+
+
+            //Check all subscrptions to check wether its their first to subscribe or not
             int subscriptions = await _context.StripeTransactions.CountAsync(st => st.ApplicationUserId == user.Id);
 
-            user.Subscribed = true;
+            //Change soon if there is new subscription plan START
+            var subscriptionItem = session.LineItems.First();
+            
+            string priceId = subscriptionItem.Price.Id;
+
+
+            PriceService priceService = new PriceService();
+            var price = await priceService.GetAsync(priceId);
+
+            //Change soon if there is new subscription plan END
+
+
+            //Save Stripe transaction details
             StripeTransaction newStripeTransaction = new StripeTransaction()
             {
                 ApplicationUserId = agentId,
@@ -69,17 +86,41 @@ namespace MoneyMCS.Pages.Membership
             };
             await _context.StripeTransactions.AddAsync(newStripeTransaction);
 
+
+            //Save app transaction
             AppTransaction newAppTransaction = new AppTransaction()
             {
                 ApplicationUserId = agentId,
                 Type = TransactionType.SUBSCRIPTION,
-                Amount = Convert.ToDecimal(session.AmountSubtotal),
                 Date = DateTime.Now,
-                ExpirationDate = subscription.CurrentPeriodEnd
+                Amount = price.UnitAmountDecimal.Value
             };
 
             await _context.AppTransactions.AddAsync(newAppTransaction);
             await _context.SaveChangesAsync();
+
+            
+            //Save subscription details
+            SubscriptionDetails subscriptionDetails = new SubscriptionDetails()
+            {
+                StartDate = session.Subscription.CurrentPeriodStart,
+                EndDate = session.Subscription.CurrentPeriodEnd,
+                Price = price.UnitAmountDecimal.Value,
+                AppTransactionId = newAppTransaction.AppTransactionId,
+                Payer = new Payer()
+                {
+                    FullName = session.Customer.Name,
+                    Email = session.Customer.Email,
+                    Phone = session.Customer.Phone
+                }
+
+            };
+
+            await _context.Subscriptions.AddAsync(subscriptionDetails);
+            await _context.SaveChangesAsync();
+
+            user.Subscribed = true;
+
             await _userManager.UpdateAsync(user);
 
             if (subscriptions == 0)

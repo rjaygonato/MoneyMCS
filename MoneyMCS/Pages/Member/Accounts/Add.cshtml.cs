@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using System.Xml.Linq;
 
 namespace MoneyMCS.Pages.Member.Accounts
 {

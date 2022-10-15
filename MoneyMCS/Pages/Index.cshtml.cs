@@ -20,7 +20,7 @@ namespace MoneyMCS.Pages
 
         public void OnGet()
         {
-
+            
         }
     }
 }

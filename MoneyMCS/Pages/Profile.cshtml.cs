@@ -31,7 +31,12 @@ namespace MoneyMCS.Pages
         {
             string id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "AgentId").Value;
             UserInfo = await _userManager.FindByIdAsync(id);
-            SubscriptionHistory = await _context.AppTransactions.Where(at => at.Type == TransactionType.SUBSCRIPTION).OrderByDescending(at => at.ExpirationDate).ToListAsync();
+            SubscriptionHistory = await _context.AppTransactions
+                .Where(at => at.Type == TransactionType.SUBSCRIPTION && at.ApplicationUserId == id)
+                .Include(at => at.Subscription)
+                .ThenInclude(s => s.Payer)
+                .OrderByDescending(at => at.Subscription.EndDate)
+                .ToListAsync();
             return Page();
         }
     }

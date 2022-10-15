@@ -268,7 +268,8 @@ namespace MoneyMCS.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppTransactionId"), 1L, 1);
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("Money");
+                        .HasPrecision(7, 2)
+                        .HasColumnType("decimal(7,2)");
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
@@ -276,8 +277,8 @@ namespace MoneyMCS.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ExpirationDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("SubscriptionId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -345,6 +346,34 @@ namespace MoneyMCS.Migrations
                     b.ToTable("Clients");
                 });
 
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.Payer", b =>
+                {
+                    b.Property<int>("PayerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PayerId"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubscriptionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PayerId");
+
+                    b.HasIndex("SubscriptionId")
+                        .IsUnique();
+
+                    b.ToTable("Payers");
+                });
+
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.StripeTransaction", b =>
                 {
                     b.Property<int>("StripeTransactionId")
@@ -377,6 +406,38 @@ namespace MoneyMCS.Migrations
                     b.ToTable("StripeTransactions");
                 });
 
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.SubscriptionDetails", b =>
+                {
+                    b.Property<int>("SubscriptionDetailsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubscriptionDetailsId"), 1L, 1);
+
+                    b.Property<int>("AppTransactionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PayerId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(7, 2)
+                        .HasColumnType("decimal(7,2)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("SubscriptionDetailsId");
+
+                    b.HasIndex("AppTransactionId")
+                        .IsUnique();
+
+                    b.ToTable("Subscriptions");
+                });
+
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.Wallet", b =>
                 {
                     b.Property<int>("WalletId")
@@ -389,7 +450,8 @@ namespace MoneyMCS.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Balance")
-                        .HasColumnType("Money");
+                        .HasPrecision(7, 2)
+                        .HasColumnType("decimal(7,2)");
 
                     b.HasKey("WalletId");
 
@@ -464,7 +526,8 @@ namespace MoneyMCS.Migrations
                 {
                     b.HasOne("MoneyMCS.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
                         .WithMany("Transactions")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("ApplicationUser");
                 });
@@ -478,6 +541,17 @@ namespace MoneyMCS.Migrations
                     b.Navigation("Referrer");
                 });
 
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.Payer", b =>
+                {
+                    b.HasOne("MoneyMCS.Areas.Identity.Data.SubscriptionDetails", "Subscription")
+                        .WithOne("Payer")
+                        .HasForeignKey("MoneyMCS.Areas.Identity.Data.Payer", "SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subscription");
+                });
+
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.StripeTransaction", b =>
                 {
                     b.HasOne("MoneyMCS.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
@@ -487,11 +561,23 @@ namespace MoneyMCS.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.SubscriptionDetails", b =>
+                {
+                    b.HasOne("MoneyMCS.Areas.Identity.Data.AppTransaction", "AppTransaction")
+                        .WithOne("Subscription")
+                        .HasForeignKey("MoneyMCS.Areas.Identity.Data.SubscriptionDetails", "AppTransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppTransaction");
+                });
+
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.Wallet", b =>
                 {
                     b.HasOne("MoneyMCS.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
                         .WithOne("Wallet")
-                        .HasForeignKey("MoneyMCS.Areas.Identity.Data.Wallet", "ApplicationUserId");
+                        .HasForeignKey("MoneyMCS.Areas.Identity.Data.Wallet", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("ApplicationUser");
                 });
@@ -507,6 +593,16 @@ namespace MoneyMCS.Migrations
                     b.Navigation("Transactions");
 
                     b.Navigation("Wallet");
+                });
+
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.AppTransaction", b =>
+                {
+                    b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.SubscriptionDetails", b =>
+                {
+                    b.Navigation("Payer");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 using System.Security.Cryptography.X509Certificates;
 
 namespace MoneyMCS.Areas.Identity.Data;
@@ -17,6 +18,8 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
     public DbSet<Client> Clients { get; set; }
     public DbSet<StripeTransaction> StripeTransactions { get; set; }
     public DbSet<AppTransaction> AppTransactions { get; set; }
+    public DbSet<SubscriptionDetails> Subscriptions { get; set; }
+    public DbSet<Payer> Payers { get; set; }
     public DbSet<Wallet> Wallets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -52,12 +55,17 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
             .OnDelete(DeleteBehavior.ClientSetNull);
 
 
-
         builder.Entity<ApplicationUser>()
             .HasMany(au => au.Transactions)
             .WithOne(t => t.ApplicationUser)
             .HasForeignKey(t => t.ApplicationUserId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<ApplicationUser>()
+            .HasOne(au => au.Wallet)
+            .WithOne(w => w.ApplicationUser)
+            .HasForeignKey<Wallet>(w => w.ApplicationUserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<AppTransaction>()
             .Property(at => at.Type)
@@ -67,18 +75,25 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
             );
 
         builder.Entity<ApplicationUser>()
-            .HasOne(au => au.Wallet)
-            .WithOne(w => w.ApplicationUser)
-            .HasForeignKey<Wallet>(w => w.ApplicationUserId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
-
-        builder.Entity<ApplicationUser>()
             .HasIndex(au => au.ReferralCode)
             .IsUnique();
 
         builder.Entity<ApplicationUser>()
             .Property(au => au.Subscribed)
             .HasDefaultValue(false);
+
+
+        builder.Entity<AppTransaction>()
+            .HasOne(at => at.Subscription)
+            .WithOne(s => s.AppTransaction)
+            .HasForeignKey<SubscriptionDetails>(s => s.AppTransactionId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<SubscriptionDetails>()
+            .HasOne(s => s.Payer)
+            .WithOne(p => p.Subscription)
+            .HasForeignKey<Payer>(p => p.SubscriptionId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<StripeTransaction>()
             .HasIndex(st => st.UserId)
@@ -89,5 +104,12 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
             .IsUnique();
 
 
+    }
+
+    protected override void ConfigureConventions(
+    ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<decimal>()
+            .HavePrecision(7, 2);
     }
 }

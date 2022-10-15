@@ -2,7 +2,8 @@
 @model List<Resource>
 
 
-@if(Model.Count == 0) {
+@if (Model.Count == 0)
+{
     <p id="resourcesWelcome" class="col-span-4">
         The Partner Resource Library is a wealth of resources at your fingertips to help you with many aspects of growing your business!
         Within each of the Categories on the left hand side you will find many flyers, emails, PowerPoints, videos, guides, and much more that will help you to market and sell this amazing program to your clients.
@@ -11,7 +12,8 @@
         We are here to help!
     </p>
 }
-else {
+else
+{
     foreach (var resource in Model)
     {
         <div class="bg-gray-200 h-fit w-full p-5 m-1 items-center rounded-md">
@@ -24,4 +26,3 @@ else {
     }
 
 }
-

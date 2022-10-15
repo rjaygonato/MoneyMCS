@@ -85,12 +85,17 @@ namespace MoneyMCS.Pages
 
         }
 
-        public void OnGet([FromQuery] string? referrerCode)
+        public async Task<IActionResult> OnGet([FromQuery] string? referrerCode)
         {
             if (referrerCode != null)
             {
                 ReferrerCode = referrerCode;
             }
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToPage("/Index");
+            }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -166,7 +171,7 @@ namespace MoneyMCS.Pages
 
                     //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                     //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                    HttpContext.Session.SetString("newuser", "true");
                     if (_userManager.Options.SignIn.RequireConfirmedEmail)
                     {
                         HttpContext.Session.SetString("EmailConfirmationMessage", $"We have sent an email to {Input.Email}. Please check your email to verify your account.");

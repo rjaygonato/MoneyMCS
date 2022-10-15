@@ -7,7 +7,6 @@
 
 <div class="max-w-7xl mx-auto py-12 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
-        <!-- This example requires Tailwind CSS v2.0+ -->
         <div class="bg-white shadow overflow-hidden sm:rounded-lg my-4">
             <div class="px-4 py-5 sm:px-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900"><i class="fa fa-user"></i> Information</h3>
@@ -35,7 +34,7 @@
                     </div>
                     <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">Date joined</dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">@Model.UserInfo.CreationDate.ToString()</dd>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">@Model.UserInfo.CreationDate.Date.ToShortDateString()</dd>
                     </div>
                     <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">Subscription Status</dt>
@@ -69,7 +68,7 @@
                         <div class="grid grid-cols-3 py-2">
                             <div class="col-span-2">
                                 <p class="text-md font-medium text-gray-500">Order ID: <span class="font-normal">@transaction.AppTransactionId</span></p>
-                                <p class="text-md font-medium text-gray-500 mb-3">Date: <span class="font-normal">@transaction.Date.ToString()</span></p>
+                                <p class="text-md font-medium text-gray-500 mb-3">Date: <span class="font-normal">@transaction.Date.Date.ToShortDateString()</span></p>
 
                             </div>
 
@@ -83,13 +82,14 @@
                             </div>
                             <div class="col-span-3 md:col-span-1 border border-transparent border-r-gray-300 p-2">
                                 <p class="font-medium text-slate-600"> <i class="fa fa-scroll"></i> Product</p>
-                                <p class="font-medium text-gray-500">Price: <span class="font-normal ">99.00$</span></p>
-                                <p class="font-medium text-gray-500">Expiry Date: <span class="font-normal">@transaction.ExpirationDate.ToString()</span> </p>
+                                <p class="font-medium text-gray-500">Price: <span class="font-normal ">$99.00</span></p>
+                                <p class="font-medium text-gray-500">Expiry Date: <span class="font-normal">@transaction.Subscription.EndDate.ToString()</span> </p>
                             </div>
                             <div class="col-span-3 md:col-span-1 p-3">
                                 <p class="font-medium text-slate-600"><i class="fab fa-stripe"></i> Payment</p>
                                 <p class="font-medium text-gray-500">Payment ID: <span class="font-normal">@transaction.AppTransactionId</span> </p>
-                                <p class="font-medium text-gray-500">Total Paid: <span class="font-normal">99.00</span> </p>
+                                <p class="font-medium text-gray-500">Full Name: <span class="font-normal">@transaction.Subscription.Payer.FullName</span> </p>
+                                <p class="font-medium text-gray-500">Total Paid: <span class="font-normal">$99.00</span> </p>
                             </div>
                         </div>
                     </div>
