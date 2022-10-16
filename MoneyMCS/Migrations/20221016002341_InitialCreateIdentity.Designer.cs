@@ -12,7 +12,7 @@ using MoneyMCS.Areas.Identity.Data;
 namespace MoneyMCS.Migrations
 {
     [DbContext(typeof(EntitiesContext))]
-    [Migration("20221015123751_InitialCreateIdentity")]
+    [Migration("20221016002341_InitialCreateIdentity")]
     partial class InitialCreateIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -240,6 +240,7 @@ namespace MoneyMCS.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("UserType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -374,6 +375,31 @@ namespace MoneyMCS.Migrations
                         .IsUnique();
 
                     b.ToTable("Payers");
+                });
+
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.Resource", b =>
+                {
+                    b.Property<int>("ResourceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResourceId"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResourceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ResourceId");
+
+                    b.ToTable("Resources");
                 });
 
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.StripeTransaction", b =>

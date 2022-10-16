@@ -62,6 +62,10 @@ namespace MoneyMCS.Pages
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Phone]
+            [Display(Name = "PhoneNumber")]
+            public string? PhoneNumber { get; set; }
+
             [Required]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
@@ -106,7 +110,7 @@ namespace MoneyMCS.Pages
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.CreationDate = DateTime.Now;
-                user.UserType = "Agent";
+                user.UserType = UserType.AGENT;
                 user.AgentType = "BASIC";
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
@@ -120,9 +124,14 @@ namespace MoneyMCS.Pages
                     }
                 }
 
+                if (Input.PhoneNumber != null)
+                {
+                    user.PhoneNumber = Input.PhoneNumber;
+                }
+
                 List<Claim> claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Role, "Agent"),
+                    new Claim(ClaimTypes.Role, UserType.AGENT.ToString()),
                     new Claim("AgentId", user.Id),
                     new Claim("FullName", $"{user.FirstName} {user.LastName}"),
                     new Claim(ClaimTypes.Email, user.Email),
@@ -157,7 +166,6 @@ namespace MoneyMCS.Pages
                 if (result.Succeeded)
                 {
                     await _userManager.AddClaimsAsync(user, claims);
-
                     _logger.LogInformation("User created a new account with password.");
 
                     //var userId = await _userManager.GetUserIdAsync(user);

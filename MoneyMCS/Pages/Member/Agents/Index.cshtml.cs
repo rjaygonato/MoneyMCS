@@ -68,7 +68,7 @@ namespace MoneyMCS.Pages.Member.Agents
         {
             cleanModel();
             IQueryable<ApplicationUser> query = _userManager.Users
-                .Where(u => u.UserType.Equals("Agent"))
+                .Where(u => u.UserType == UserType.AGENT)
                 .Where(u =>
                 u.UserName.Contains(Input.Username) &&
                 u.FirstName.Contains(Input.FirstName) &&
@@ -84,7 +84,7 @@ namespace MoneyMCS.Pages.Member.Agents
             Agents = await query.ToListAsync();
 
 
-            await _userManager.Users.Where(u => u.UserType == "Agent").ForEachAsync(a =>
+            await _userManager.Users.Where(u => u.UserType == UserType.AGENT).ForEachAsync(a =>
             {
                 AgentsSelect.Add(new SelectListItem
                 {

@@ -102,15 +102,10 @@ namespace MoneyMCS.Pages.Member.Clients
 
             if (ModelState.IsValid)
             {
-                toEditClient.Company = Input.Company;
                 toEditClient.FirstName = Input.FirstName;
                 toEditClient.LastName = Input.LastName;
                 toEditClient.Email = Input.Email;
                 toEditClient.PhoneNumber = Input.PhoneNumber;
-                toEditClient.Address = Input.Address;
-                toEditClient.City = Input.City;
-                toEditClient.State = Input.State;
-                toEditClient.ZipCode = Input.ZipCode;
                 _context.Clients.Update(toEditClient);
                 await _context.SaveChangesAsync();
                 if (Input.ReferrerId != null)

@@ -10,25 +10,8 @@
 <main x-data="{ open: false }" class="w-full flex-grow p-6">
     <h1 class="text-3xl text-black pb-6">Dashboard</h1>
 
-    <div class="flex flex-wrap mt-6">
-        <div class="w-full lg:w-1/2 pl-0 lg:pl-2 mt-12 lg:mt-0">
-            <p class="text-xl pb-3 flex items-center">
-                <i class="fas fa-check mr-3"></i> Monthly Site Traffic
-            </p>
-            <div class="p-6 bg-white">
-                <canvas id="chartTwo" width="400" height="200"></canvas>
-            </div>
-        </div>
-        <div class="w-full lg:w-1/2 pr-0 lg:pr-2">
-            <p class="text-xl pb-3 flex items-center">
-                <i class="fas fa-plus mr-3"></i> Monthly Agents Recruited
-            </p>
-            <div class="p-6 bg-white">
-                <canvas id="chartOne" width="400" height="200"></canvas>
-            </div>
-        </div>
-
-
+    <div class="shadow-lg rounded-lg overflow-hidden">
+        <canvas class="p-10" width="500" height="180" id="chartLine"></canvas>
     </div>
 
     <div class="w-full mt-12">
@@ -39,70 +22,29 @@
             <table class="min-w-full bg-white">
                 <thead class="bg-gray-800 text-white">
                     <tr>
+                        <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Username</th>
                         <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">First Name</th>
                         <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Last name</th>
-                        <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Username</th>
                         <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Phone number</th>
                         <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Email</th>
                         <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Agent Type</th>
+                        <th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Created Date</th>
                         <!--<th class="text-left bg-green-600 py-3 px-4 uppercase font-semibold text-sm">Action</th>-->
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
-                    <tr>
-                        <td class="text-left py-3 px-4">Lian</td>
-                        <td class="text-left py-3 px-4">Smith</td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">lian123</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">+1582512</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">jonsmith@mail.com</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">VIP</a></td>
-                        <!--<td class="text-left py-3 px-4"><button x-on:click="open = ! open" type="button"
-                                class="py-2 px-3 bg-green-400 hover:bg-green-500 text-black rounded">Accept</button>
-                        </td>-->
-                    </tr>
-                    <tr class="bg-gray-200">
-                        <td class="text-left py-3 px-4">Emma</td>
-                        <td class="text-left py-3 px-4">Johnson</td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">emmajohnson24</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">639251223</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">emmajohnson@mail.com</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">BASIC</a></td>
-                        <!--
-                        <td class="text-left py-3 px-4"><button type="button"
-                                class="py-2 px-3 bg-green-400 hover:bg-green-500 text-black rounded">Accept</button>
-                        </td>-->
-
-
-                    </tr>
-                    <tr>
-                        <td class="text-left py-3 px-4">Oliver</td>
-                        <td class="text-left py-3 px-4">Williams</td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">oliver42</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">639211256</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">oliver@mail.com</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">BASIC</a></td>
-                        <!--                        <td class="text-left py-3 px-4"><button type="button"
-                                class="py-2 px-3 bg-green-400 hover:bg-green-500 text-black rounded">Accept</button>
-                        </td>
-                        -->
-
-
-                    </tr>
-                    <tr>
-                        <td class="text-left py-3 px-4">Bronny</td>
-                        <td class="text-left py-3 px-4">James</td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">bronny23</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">+422312232</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">james.bronny@mail.com</a></td>
-                        <td class="text-left py-3 px-4"><a class="hover:text-blue-500">DIY</a></td>
-                        <!--
-                        <td class="text-left py-3 px-4"><button type="button"
-                                class="py-2 px-3 bg-green-400 hover:bg-green-500 text-black rounded">Accept</button>
-                        </td>
-                        -->
-
-                    </tr>
-
+                    @foreach (var agent in Model.NotSubscribedAgents)
+                    {
+                        <tr>
+                            <td class="text-left py-3 px-4">@agent.UserName</td>
+                            <td class="text-left py-3 px-4">@agent.FirstName</td>
+                            <td class="text-left py-3 px-4">@agent.LastName</td>
+                            <td class="text-left py-3 px-4">@agent.Email</td>
+                            <td class="text-left py-3 px-4">@agent.PhoneNumber</td>
+                            <td class="text-left py-3 px-4">@agent.AgentType</td>
+                            <td class="text-left py-3 px-4">@agent.CreationDate.Date.ToShortDateString()</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -142,83 +84,32 @@
 
 
 @section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chart line -->
     <script>
+        const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Agents Registered and Subscribed",
+                    backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                    borderColor: "hsl(252, 82.9%, 67.8%)",
+                    data: [0, 10, 5, 2, 20, 30, 45, 15, 23, 8, 3, 23],
+                },
+            ],
+        };
 
-        var chartTwo = document.getElementById('chartOne');
-        var myLineChart = new Chart(chartTwo, {
-            type: 'line',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
+        const configLineChart = {
+            type: "line",
+            data,
+            options: {},
+        };
 
-        var chartTwo = document.getElementById('chartTwo');
-        var myLineChart = new Chart(chartTwo, {
-            type: 'line',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
+        var chartLine = new Chart(
+            document.getElementById("chartLine"),
+            configLineChart
+        );
     </script>
 }

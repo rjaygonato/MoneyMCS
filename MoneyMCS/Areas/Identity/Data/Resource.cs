@@ -1,4 +1,4 @@
-﻿namespace MoneyMCS.Models
+﻿namespace MoneyMCS.Areas.Identity.Data
 {
     public class Resource
     {

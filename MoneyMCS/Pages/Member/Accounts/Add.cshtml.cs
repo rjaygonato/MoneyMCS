@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace MoneyMCS.Pages.Member.Accounts
 {
-    [Authorize(Policy = "MemberAccessPolicy")]
+    //[Authorize(Policy = "MemberAccessPolicy")]
     public class AddModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -70,7 +70,7 @@ namespace MoneyMCS.Pages.Member.Accounts
 
             [Required]
             [Display(Name = "User Type")]
-            public string UserType { get; set; }
+            public UserType UserType { get; set; }
         }
 
         public void OnGet()
@@ -81,7 +81,7 @@ namespace MoneyMCS.Pages.Member.Accounts
         {
             if (ModelState.IsValid)
             {
-                if (Input.UserType != "Viewer" && Input.UserType != "Administrator")
+                if (Input.UserType != UserType.VIEWER && Input.UserType != UserType.ADMINISTRATOR)
                 {
                     ModelState.AddModelError(string.Empty, "Please select a valid user type");
                     return Page();
@@ -102,7 +102,7 @@ namespace MoneyMCS.Pages.Member.Accounts
                 {
                     List<Claim> claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Role, Input.UserType),
+                        new Claim(ClaimTypes.Role, Input.UserType.ToString()),
                         new Claim("MemberId", newUser.Id),
                         new Claim("FullName", $"{newUser.FirstName} {newUser.LastName}"),
                         new Claim(ClaimTypes.Email, newUser.Email),

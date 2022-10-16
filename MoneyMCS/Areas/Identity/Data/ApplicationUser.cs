@@ -27,7 +27,7 @@ public class ApplicationUser : IdentityUser
     public List<AppTransaction> Transactions { get; set; }
     public Wallet Wallet { get; set; }
     public DateTime CreationDate { get; set; }
-    public string UserType { get; set; }
+    public UserType UserType { get; set; }
     public bool Subscribed { get; set; }
 
 
@@ -96,6 +96,13 @@ public enum TransactionType
     SUBSCRIPTION,
     COMMISSION,
     WITHDRAWAL
+}
+
+public enum UserType
+{
+    AGENT,
+    ADMINISTRATOR,
+    VIEWER
 }
 
 

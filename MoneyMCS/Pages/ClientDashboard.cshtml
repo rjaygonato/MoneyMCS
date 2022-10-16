@@ -12,7 +12,7 @@
     </div>
 	<div class="p-5">
 
-		<div class="relative overflow-x-auto sm:rounded-lg">
+		<div class="overflow-x-auto relative shadow-md sm:rounded-lg">
 			<div class="p-4 flex justify-between">
 				<label for="table-search" class="sr-only">Search</label>
 				<div class="relative mt-1">
@@ -31,61 +31,51 @@
 				</div>
 			</div>
 			<table class="w-full text-sm text-left text-gray-500">
-				<thead class="text-xs text-gray-700 uppercase" style="background-color: #D9D9D9">
-					<tr>
-						<th scope="col" class="px-6 py-3">
-							Company
-						</th>
-						<th scope="col" class="px-6 py-3">
-							First Name
-						</th>
-						<th scope="col" class="px-6 py-3">
-							Last Name
-						</th>
-						<th scope="col" class="px-6 py-3">
-							Email
-						</th>
-						<th scope="col" class="px-6 py-3">
-							Phone
-						</th>
-						<th scope="col" class="px-6 py-3">
-							Date added
-						</th>
-						<th scope="col" class="px-6 py-3">
-							<span class="sr-only">View</span>
-						</th>
-					</tr>
-				</thead>
-				<tbody class="text-black">
-					@foreach(var client in Model.Clients) {
-						<tr class="bg-white border-b" style="background-color: #38B56A">
-						
-						<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-							@client.Company
-						</th>
-						<td class="px-6 py-4">
-							@client.FirstName
-						</td>
-						<td class="px-6 py-4">
-							@client.LastName
-						</td>
-						<td class="px-6 py-4">
-							@client.Email
-						</td>
-						<td class="px-6 py-4">
-								@client.PhoneNumber
-						</td>
-						<td>@client.DateAdded</td>
-						<td class="px-6 py-4 text-right">
-								<a href="#" class="font-medium hover:bg-gray-200 rounded-full p-1"><i class="fas fa-eye"></i></a>
-						</td>
-					</tr>
-					}
-					
-					
-					
-				</tbody>
-			</table>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="py-3 px-6">
+                    First Name
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Last Name
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Email
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Date Added
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var client in Model.Clients)
+            {
+
+                        <tr class="bg-white border-b">
+                            <th class="py-4 px-6">
+                                @client.FirstName
+                            </th>
+                            <td class="py-4 px-6">
+                                @client.LastName
+                            </td>
+                            <td class="py-4 px-6">
+                                @client.Email
+                            </td>
+                            <td class="py-4 px-6">
+                                @client.DateAdded.Date.ToShortDateString()
+                            </td>
+                            <td class="py-4 px-6">
+                                <a href="#" class="font-medium text-indigo-600 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+            }
+            
+            
+        </tbody>
+    </table>
 		</div>
 	</div>
 </div>

@@ -17,10 +17,6 @@
             <div class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4">
                 <div>
                     <div class="flex justify-between my-1">
-                        <label asp-for="Input.Company" class="text-gray-700"></label>
-                        <input asp-for="Input.Company" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" />
-                    </div>
-                    <div class="flex justify-between my-1">
                         <label asp-for="Input.Email" class="text-gray-700"></label>
                         <input asp-for="Input.Email" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" />
                     </div>
@@ -100,7 +96,6 @@
                     @foreach (var client in Model.Clients)
                     {
                         <tr class="hover:bg-grey-lighter">
-                            <td class="py-4 px-6 border-b border-grey-light">@client.Company</td>
                             <td class="py-4 px-6 border-b border-grey-light">@client.FirstName</td>
                             <td class="py-4 px-6 border-b border-grey-light">@client.LastName</td>
                             <td class="py-4 px-6 border-b border-grey-light">@client.PhoneNumber</td>

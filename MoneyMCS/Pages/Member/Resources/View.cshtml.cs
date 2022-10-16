@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MoneyMCS.Models;
+using MoneyMCS.Areas.Identity.Data;
 using MoneyMCS.Services;
 
 namespace MoneyMCS.Pages.Member.Resources
@@ -9,13 +9,13 @@ namespace MoneyMCS.Pages.Member.Resources
     [Authorize(Policy = "MemberAccessPolicy")]
     public class ViewModel : PageModel
     {
-        public ViewModel(ResourceContext context, ILogger<ViewModel> logger)
+        public ViewModel(EntitiesContext context, ILogger<ViewModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        private readonly ResourceContext _context;
+        private readonly EntitiesContext _context;
         private readonly ILogger<ViewModel> _logger;
 
         public Resource ResourceInfo { get; set; }

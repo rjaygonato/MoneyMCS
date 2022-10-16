@@ -55,7 +55,7 @@ public class IndexModel : PageModel
         u.LastName.Contains(Input.LastName) &&
         u.Email.Contains(Input.Email) &&
         u.PhoneNumber.Contains(Input.PhoneNumber) &&
-        Input.AccountType == string.Empty ? (u.UserType.Equals("Administrator") || u.UserType.Equals("Viewer")) : u.UserType.Equals(Input.AccountType)
+        Input.AccountType == string.Empty ? (u.UserType == UserType.ADMINISTRATOR || u.UserType == UserType.VIEWER) : u.UserType.Equals(Input.AccountType)
         ).ToListAsync();
 
         return Page();

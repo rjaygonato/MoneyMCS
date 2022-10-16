@@ -11,22 +11,22 @@ namespace MoneyMCS.Policies
 
     public class AgentTypeRequirement : IAuthorizationRequirement  
     {
-        public AgentTypeRequirement(string userType)
+        public AgentTypeRequirement(UserType userType)
         {
             UserType = userType;
         }
 
-        public string UserType { get; set; }
+        public UserType UserType { get; set; }
     }
 
     public class MemberTypeRequirement : IAuthorizationRequirement
     {
-        public MemberTypeRequirement(List<string> userTypes)
+        public MemberTypeRequirement(List<UserType> userTypes)
         {
             UserTypes = userTypes;
         }
 
-        public List<string> UserTypes { get; set; }
+        public List<UserType> UserTypes { get; set; }
     }
 
 
@@ -39,6 +39,7 @@ namespace MoneyMCS.Policies
             var redirectContext = context.Resource as HttpContext;
             if (userType == null)
             {
+
                 redirectContext.Response.Clear();
                 redirectContext.Response.Redirect("/Login");
 
@@ -47,7 +48,7 @@ namespace MoneyMCS.Policies
             }
             else
             {
-                if (userType != requirement.UserType)
+                if ((UserType) Enum.Parse(typeof(UserType), userType) != requirement.UserType)
                 {
                     redirectContext.Response.Redirect("/Member/Index");
                     context.Succeed(requirement);
@@ -75,7 +76,7 @@ namespace MoneyMCS.Policies
             }
             else
             {
-                if (!requirement.UserTypes.Contains(userType))
+                if (!requirement.UserTypes.Contains((UserType) Enum.Parse(typeof(UserType), userType)))
                 {
                     redirectContext.Response.Redirect("/Index");
                     context.Succeed(requirement);

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Stripe;
+using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
 
 namespace MoneyMCS.Areas.Identity.Data;
@@ -21,6 +23,7 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
     public DbSet<SubscriptionDetails> Subscriptions { get; set; }
     public DbSet<Payer> Payers { get; set; }
     public DbSet<Wallet> Wallets { get; set; }
+    public DbSet<Resource> Resources { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -62,10 +65,18 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<ApplicationUser>()
+            .Property(au => au.UserType)
+            .HasConversion(
+                v => v.ToString(),
+                v => (UserType)Enum.Parse(typeof(UserType), v)
+            );
+
+        builder.Entity<ApplicationUser>()
             .HasOne(au => au.Wallet)
             .WithOne(w => w.ApplicationUser)
             .HasForeignKey<Wallet>(w => w.ApplicationUserId)
             .OnDelete(DeleteBehavior.Cascade);
+    
 
         builder.Entity<AppTransaction>()
             .Property(at => at.Type)
@@ -73,6 +84,7 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
                 v => v.ToString(),
                 v => (TransactionType)Enum.Parse(typeof(TransactionType), v)
             );
+
 
         builder.Entity<ApplicationUser>()
             .HasIndex(au => au.ReferralCode)
@@ -102,7 +114,7 @@ public class EntitiesContext : IdentityDbContext<ApplicationUser>
         builder.Entity<StripeTransaction>()
             .HasIndex(st => st.SubscriptionId)
             .IsUnique();
-
+        
 
     }
 

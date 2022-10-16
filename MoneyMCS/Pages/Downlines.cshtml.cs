@@ -18,6 +18,7 @@ namespace MoneyMCS.Pages
         }
 
         public ApplicationUser Agent { get; set; }
+        public ApplicationUser Referrer { get; set; }
         public List<ApplicationUser> DirectAgents { get; set; }
 
         public Dictionary<string, List<ApplicationUser>> LevelTwoAReferredAgents { get; set; } = new();
@@ -35,6 +36,10 @@ namespace MoneyMCS.Pages
             if (Agent == null)
             {
                 return NotFound();
+            }
+            if (Agent.ReferrerId != null)
+            {
+                Referrer = await _userManager.FindByIdAsync(Agent.ReferrerId);
             }
 
             DirectAgents = await _userManager.Users.Where(au => au.ReferrerId == Agent.Id).ToListAsync();

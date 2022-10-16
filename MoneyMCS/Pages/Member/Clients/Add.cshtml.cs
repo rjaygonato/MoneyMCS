@@ -34,9 +34,6 @@ namespace MoneyMCS.Pages.Member.Clients
         {
 
 
-            [Required]
-            [Display(Name = "Company")]
-            public string Company { get; set; }
 
             [Required]
             [Display(Name = "First Name")]
@@ -54,12 +51,6 @@ namespace MoneyMCS.Pages.Member.Clients
             [Display(Name = "Phone Number")]
             public string? PhoneNumber { get; set; }
 
-            public string? Address { get; set; }
-
-            public string? City { get; set; }
-            public string? State { get; set; }
-
-            public string? ZipCode { get; set; }
 
             [Display(Name = "Referer")]
             public string? ReferrerId { get; set; }
@@ -79,15 +70,10 @@ namespace MoneyMCS.Pages.Member.Clients
             {
                 Client newClient = new Client()
                 {
-                    Company = Input.Company,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     Email = Input.Email,
                     PhoneNumber = Input.PhoneNumber,
-                    Address = Input.Address,
-                    City = Input.City,
-                    State = Input.State,
-                    ZipCode = Input.ZipCode,
                     DateAdded = DateTime.UtcNow.Date
                 };
 

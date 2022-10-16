@@ -2,21 +2,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using MoneyMCS.Models;
-using MoneyMCS.Services;
+using MoneyMCS.Areas.Identity.Data;
 
 namespace MoneyMCS.Pages.Member.Resources
 {
     [Authorize(Policy = "MemberAccessPolicy")]
     public class IndexModel : PageModel
     {
-        public IndexModel(ResourceContext context, ILogger<IndexModel> logger)
+        public IndexModel(EntitiesContext context, ILogger<IndexModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        private readonly ResourceContext _context;
+        private readonly EntitiesContext _context;
         private readonly ILogger<IndexModel> _logger;
 
         public List<Resource> Resources { get; set; } = new();

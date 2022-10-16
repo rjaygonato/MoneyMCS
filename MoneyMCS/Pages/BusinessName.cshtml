@@ -1,0 +1,30 @@
+﻿@page
+@model MoneyMCS.Pages.BusinessNameModel
+@{
+    Layout = "_AgentLayout";
+}
+
+<div>
+    <div class="banner flex flex-col w-full max-w-fit min-w-full grow p-10 justify-center items-center opacity-100  to-gray-700 h-1/4 bg-gray-400" style="background-color: rgba(20, 20, 20, 0.75); background: url(img/2h-media-3q4V539j_bw-unsplash.jpg), linear-gradient(rgba(22, 22, 22, 0.5),rgba(0,0,0,0.75)); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
+        <h6 class="text-4xl text-white">Business Name</h6>
+    </div>
+    <div class="flex justify-center mt-5">
+        <div class="block p-6 w-3/4 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">CLIENT BUSINESS NAME</h5>
+            <hr />
+            <p class="font-normal text-gray-700 dark:text-gray-400 my-5">There is a lot that goes into a name! Make sure your business name can be trademarked, doesn’t include any high-risk industries and can be or is filed with the state before you build your business further.</p>
+            <form>
+                <div>
+                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Company name..." required>
+
+                </div>
+                <div class="flex justify-end mt-3">
+                    <button type="submit" class="px-5 py-3 bg-green-400 hover:bg-green-500 rounded-md">SAVE</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    
+
+</div>

@@ -2,21 +2,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using MoneyMCS.Models;
-using MoneyMCS.Services;
+using MoneyMCS.Areas.Identity.Data;
 
 namespace MoneyMCS.Pages
 {
     [Authorize(Policy = "AgentAccessPolicy")]
     public class ResourcesModel : PageModel
     {
-        public ResourcesModel(ResourceContext context, ILogger<ResourcesModel> logger)
+        public ResourcesModel(EntitiesContext context, ILogger<ResourcesModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        private readonly ResourceContext _context;
+        private readonly EntitiesContext _context;
         private readonly ILogger<ResourcesModel> _logger;
 
         public void OnGet()

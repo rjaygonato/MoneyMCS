@@ -33,9 +33,6 @@ namespace MoneyMCS.Pages
         public class InputModel
         {
             [Required]
-            public string Company { get; set; }
-
-            [Required]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
@@ -48,23 +45,20 @@ namespace MoneyMCS.Pages
             [EmailAddress]
             public string Email { get; set; }
 
+
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Confirm Email")]
+            public string ConfirmEmail { get; set; }
+
             [Required]
             [Phone]
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
 
-            [Required]
-            public string Address { get; set; }
-
-            [Required]
-            public string City { get; set; }
 
             [Required]
             public string State { get; set; }
-
-            [Required]
-            [Display(Name = "Zip Code")]
-            public string ZipCode { get; set; }
 
         }
 
@@ -76,16 +70,16 @@ namespace MoneyMCS.Pages
         {
             if (ModelState.IsValid)
             {
+                if (Input.Email != Input.ConfirmEmail)
+                {
+                    ModelState.AddModelError("Input.ConfirmEmail", "Email does not match");
+                    return Page();
+                }
                 Client newClient = new Client();
-                newClient.Company = Input.Company;
                 newClient.FirstName = Input.FirstName;
                 newClient.LastName = Input.LastName;
                 newClient.Email = Input.Email;
                 newClient.PhoneNumber = Input.PhoneNumber;
-                newClient.Address = Input.Address;
-                newClient.City = Input.City;
-                newClient.State = Input.State;
-                newClient.ZipCode = Input.ZipCode;
                 newClient.DateAdded = DateTime.Now;
 
                 string agentId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "AgentId")?.Value;

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
@@ -109,8 +110,12 @@ namespace MoneyMCS.Pages.Member.Agents
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.CreationDate = DateTime.Now;
-                user.UserType = "Agent";
+                user.UserType = UserType.AGENT;
                 user.AgentType = Input.AgentType;
+
+
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 if (Input.ReferrerId != null)
                 {
@@ -126,14 +131,8 @@ namespace MoneyMCS.Pages.Member.Agents
                 {
                     user.PhoneNumber = Input.PhoneNumber;
                 }
-                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                user.Wallet = new Wallet();
-                var result = await _userManager.CreateAsync(user, Input.Password);
 
-                if (result.Succeeded)
-                {
-                    List<Claim> claims = new List<Claim>
+                List<Claim> claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Role, "Agent"),
                     new Claim("AgentId", user.Id),
@@ -141,12 +140,39 @@ namespace MoneyMCS.Pages.Member.Agents
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim("Username", user.UserName)
                 };
+
+                IdentityResult result;
+
+                while (true)
+
+                {
+                    user.ReferralCode = GenerateReferralCode(6);
+                    try
+                    {
+                        user.Wallet = new Wallet();
+                        result = await _userManager.CreateAsync(user, Input.Password);
+                        break;
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        if (ex.InnerException != null)
+                        {
+                            var sqlException = (SqlException)ex.InnerException;
+                            if (sqlException.Number == 2601)
+                            {
+                                continue;
+                            }
+                            return BadRequest("There was a problem in registring your info");
+                        }
+                    }
+
+                }
+
+                if (result.Succeeded)
+                {
+                    
                     await _userManager.AddClaimsAsync(user, claims);
                     _logger.LogInformation("User created a new account with password.");
-
-
-
-
                     return RedirectToPage(returnUrl);
                 }
                 foreach (var error in result.Errors)
@@ -184,7 +210,9 @@ namespace MoneyMCS.Pages.Member.Agents
 
         private async Task LoadFormDefaultData()
         {
-            await _userManager.Users.ForEachAsync(agent =>
+            await _userManager.Users
+                .Where(au => au.UserType == UserType.AGENT)
+                .ForEachAsync(agent =>
             {
                 SelectAgents.Add(new SelectListItem()
                 {
@@ -192,6 +220,17 @@ namespace MoneyMCS.Pages.Member.Agents
                     Value = agent.Id
                 });
             });
+        }
+
+        private string GenerateReferralCode(int sample)
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            var result = new string(
+                Enumerable.Repeat(chars, sample)
+                          .Select(s => s[random.Next(s.Length)])
+                          .ToArray());
+            return result;
         }
 
 

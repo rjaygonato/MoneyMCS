@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MoneyMCS.Models;
-using MoneyMCS.Services;
+using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace MoneyMCS.Pages.Member.Resources
@@ -13,13 +12,13 @@ namespace MoneyMCS.Pages.Member.Resources
     public class AddModel : PageModel
     {
 
-        public AddModel(ResourceContext context, ILogger<AddModel> logger)
+        public AddModel(EntitiesContext context, ILogger<AddModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        private readonly ResourceContext _context;
+        private readonly EntitiesContext _context;
         private readonly ILogger<AddModel> _logger;
 
         public class InputModel

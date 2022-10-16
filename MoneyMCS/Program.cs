@@ -12,10 +12,6 @@ using Stripe;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AffiliateEntitiesConnection");
 
-builder.Services.AddDbContext<ResourceContext>(options =>
-    options.UseSqlServer(connectionString));
-
-
 builder.Services.AddDbContext<EntitiesContext>(options =>
 {
     options.UseSqlServer(connectionString);
@@ -40,11 +36,11 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AgentAccessPolicy", policyBuilder =>
     {
-        policyBuilder.AddRequirements(new AgentTypeRequirement("Agent"));
+        policyBuilder.AddRequirements(new AgentTypeRequirement(UserType.AGENT));
     });
     options.AddPolicy("MemberAccessPolicy", policyBuilder =>
     {
-        policyBuilder.AddRequirements(new MemberTypeRequirement(new List<string> { "Viewer", "Administrator" }));
+        policyBuilder.AddRequirements(new MemberTypeRequirement(new List<UserType> { UserType.VIEWER, UserType.ADMINISTRATOR }));
     });
 
 });
@@ -58,7 +54,6 @@ builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 builder.Services.AddRazorPages();
-
 
 
 builder.Services.AddDistributedMemoryCache();

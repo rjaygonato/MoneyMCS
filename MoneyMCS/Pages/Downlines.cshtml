@@ -12,33 +12,34 @@
     <main class="w-full flex-grow p-6 ">
         <div class="w-full p-4 bg-white rounded-lg ">
             <div class="tf-tree tf-gap-lg tf-custom flex justify-center">
-                <ul>
-                    <li>
-                        <span class="tf-nc">
-                            <img class="downlineImagePos" src="~/img/agent.png" />
-                            <p class="text-center mx-auto">@Model.Agent.UserName</p>
-                        </span>
-                        @if (Model.DirectAgents.Count > 0)
-                        {
-                            <ul>
-                                @foreach (var directAgent in Model.DirectAgents)
-                                {
-                                    <li>
-                                        <span class="tf-nc">
+                @if(Model.Referrer == null) {
+                    <ul>
+                        <li>
+                            <span class="tf-nc">
+                                <img class="downlineImagePos" src="~/img/agent.png" />
+                                <p class="text-center mx-auto">@Model.Agent.UserName (You)</p>
+                            </span>
+                            @if (Model.DirectAgents.Count > 0)
+                            {
+                                <ul>
+                                    @foreach (var directAgent in Model.DirectAgents)
+                                    {
+                                        <li>
+                                            <span class="tf-nc">
 
                                                 <div style="flex flex-col justify-center">
                                                     <img class="downlineImagePos" src="~/img/agent.png" />
                                                     <span class="display:block">@directAgent.UserName</span>
                                                 </div>
 
-                                        </span>
-                                        @if (Model.LevelTwoAReferredAgents.ContainsKey(directAgent.Id) && Model.LevelTwoAReferredAgents[directAgent.Id].Count > 0)
-                                        {
-                                            <ul>
-                                                @foreach (var levelTwoAgent in Model.LevelTwoAReferredAgents[directAgent.Id])
-                                                {
-                                                    <li>
-                                                        <span class="tf-nc">
+                                            </span>
+                                            @if (Model.LevelTwoAReferredAgents.ContainsKey(directAgent.Id) && Model.LevelTwoAReferredAgents[directAgent.Id].Count > 0)
+                                            {
+                                                <ul>
+                                                    @foreach (var levelTwoAgent in Model.LevelTwoAReferredAgents[directAgent.Id])
+                                                    {
+                                                        <li>
+                                                            <span class="tf-nc">
 
                                                                 <div style="flex flex-col justify-center">
                                                                     <img class="downlineImagePos" src="~/img/agent.png" />
@@ -46,38 +47,116 @@
                                                                 </div>
 
 
-                                                        </span>
-                                                        @if (Model.LevelThreeReferredAgents.ContainsKey(levelTwoAgent.Id) && Model.LevelThreeReferredAgents[levelTwoAgent.Id].Count > 0)
-                                                        {
-                                                            <ul>
+                                                            </span>
+                                                            @if (Model.LevelThreeReferredAgents.ContainsKey(levelTwoAgent.Id) && Model.LevelThreeReferredAgents[levelTwoAgent.Id].Count > 0)
+                                                            {
+                                                                <ul>
 
-                                                                @foreach (var levelThreeAgent in Model.LevelThreeReferredAgents[levelTwoAgent.Id])
-                                                                {
-                                                                    <li>
+                                                                    @foreach (var levelThreeAgent in Model.LevelThreeReferredAgents[levelTwoAgent.Id])
+                                                                    {
+                                                                        <li>
 
                                                                             <div style="flex flex-col justify-center">
                                                                                 <img class="downlineImagePos" src="~/img/agent.png" />
                                                                                 <span class="display:block">@levelThreeAgent.UserName</span>
-                                                                               </div>
+                                                                            </div>
 
-                                                                    </li>
-                                                                }
-                                                            </ul>
+                                                                        </li>
+                                                                    }
+                                                                </ul>
 
-                                                        }
-                                                    </li>
-                                                }
-                                            </ul>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
 
-                                        }
-                                    </li>
+                                            }
+                                        </li>
 
-                                }
+                                    }
+                                </ul>
+                            }
+
+                        </li>
+                    </ul>
+                }
+                else {
+                    <ul>
+                        <li>
+                            <span class="tf-nc">
+                                <img class="downlineImagePos" src="~/img/agent.png" />
+                                <p class="text-center mx-auto">@Model.Referrer.UserName (Referrer)</p>
+                            </span>
+                            <ul>
+                                <li>
+                                    <span class="tf-nc">
+                                        <img class="downlineImagePos" src="~/img/agent.png" />
+                                        <p class="text-center mx-auto">@Model.Agent.UserName (You)</p>
+                                    </span>
+                                    @if (Model.DirectAgents.Count > 0)
+                                    {
+                                        <ul>
+                                            @foreach (var directAgent in Model.DirectAgents)
+                                            {
+                                                <li>
+                                                    <span class="tf-nc">
+
+                                                        <div style="flex flex-col justify-center">
+                                                            <img class="downlineImagePos" src="~/img/agent.png" />
+                                                            <span class="display:block">@directAgent.UserName</span>
+                                                        </div>
+
+                                                    </span>
+                                                    @if (Model.LevelTwoAReferredAgents.ContainsKey(directAgent.Id) && Model.LevelTwoAReferredAgents[directAgent.Id].Count > 0)
+                                                    {
+                                                        <ul>
+                                                            @foreach (var levelTwoAgent in Model.LevelTwoAReferredAgents[directAgent.Id])
+                                                            {
+                                                                <li>
+                                                                    <span class="tf-nc">
+
+                                                                        <div style="flex flex-col justify-center">
+                                                                            <img class="downlineImagePos" src="~/img/agent.png" />
+                                                                            <span class="display:block">@levelTwoAgent.UserName</span>
+                                                                        </div>
+
+
+                                                                    </span>
+                                                                    @if (Model.LevelThreeReferredAgents.ContainsKey(levelTwoAgent.Id) && Model.LevelThreeReferredAgents[levelTwoAgent.Id].Count > 0)
+                                                                    {
+                                                                        <ul>
+
+                                                                            @foreach (var levelThreeAgent in Model.LevelThreeReferredAgents[levelTwoAgent.Id])
+                                                                            {
+                                                                                <li>
+
+                                                                                    <div style="flex flex-col justify-center">
+                                                                                        <img class="downlineImagePos" src="~/img/agent.png" />
+                                                                                        <span class="display:block">@levelThreeAgent.UserName</span>
+                                                                                    </div>
+
+                                                                                </li>
+                                                                            }
+                                                                        </ul>
+
+                                                                    }
+                                                                </li>
+                                                            }
+                                                        </ul>
+
+                                                    }
+                                                </li>
+
+                                            }
+                                        </ul>
+                                    }
+
+                                </li>
                             </ul>
-                        }
-
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+                }
+                
             </div>
         </div>
     </main>

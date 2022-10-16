@@ -39,7 +39,6 @@ namespace MoneyMCS.Pages.Member.Clients
 
         public class InputModel
         {
-            public string? Company { get; set; } = string.Empty;
             public string? Email { get; set; } = string.Empty;
             [Display(Name = "Phone")]
             public string? Phone { get; set; } = string.Empty;
@@ -60,7 +59,6 @@ namespace MoneyMCS.Pages.Member.Clients
 
             IQueryable<Client> query = _context.Clients
                 .Where(u =>
-                u.Company.Contains(Input.Company) &&
                 u.Email.Contains(Input.Email) &&
                 u.PhoneNumber.Contains(Input.Phone) &&
                 u.FirstName.Contains(Input.FirstName) &&
@@ -73,7 +71,7 @@ namespace MoneyMCS.Pages.Member.Clients
 
             Clients = await query.ToListAsync();
 
-            await _userManager.Users.Where(u => u.UserType == "Agent").ForEachAsync(a =>
+            await _userManager.Users.Where(u => u.UserType == UserType.AGENT).ForEachAsync(a =>
             {
                 AgentsSelect.Add(new SelectListItem
                 {
@@ -105,7 +103,6 @@ namespace MoneyMCS.Pages.Member.Clients
 
         private void cleanModel()
         {
-            Input.Company ??= string.Empty;
             Input.Email ??= string.Empty;
             Input.Phone ??= string.Empty;
             Input.FirstName ??= string.Empty;
