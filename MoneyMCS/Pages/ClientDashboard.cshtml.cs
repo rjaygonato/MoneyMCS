@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
-using MoneyMCS.Services;
 
 namespace MoneyMCS.Pages
 {

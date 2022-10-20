@@ -1,0 +1,98 @@
+﻿@page
+@model MoneyMCS.Pages.BusinessEntityModel
+@{
+    Layout = "_AgentLayout";
+}
+
+<div>
+    <div class="banner flex flex-col w-full max-w-fit min-w-full grow p-10 justify-center items-center opacity-100  to-gray-700 h-1/4 bg-gray-400" style="background-color: rgba(20, 20, 20, 0.75); background: url(img/2h-media-3q4V539j_bw-unsplash.jpg), linear-gradient(rgba(22, 22, 22, 0.5),rgba(0,0,0,0.75)); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
+        <h6 class="text-4xl text-white">Business Entity</h6>
+    </div>
+    <div class="flex justify-center mt-5">
+        <div class="block p-6 w-3/4 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">CLIENT BUSINESS ENTITY</h5>
+            <hr />
+            <p class="font-normal text-gray-700 my-5">There is a lot that goes into a name! Make sure your business name can be trademarked, doesn’t include any high-risk industries and can be or is filed with the state before you build your business further.</p>
+
+            <form method="post">
+                <input type="hidden"  />
+                <div class="relative z-0 mb-6 w-full group">
+                    <select class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                        <option selected="">Choose an entity</option>
+                        <option value="Corporation (S or C)">Corporation (S or C)</option>
+                        <option value="LLC / LLP">LLC / LLP</option>
+                        <option value="Partnership">Partnership</option>
+                        <option value="Sole Proprietor">Sole Proprietor</option>
+                        <option value="Non Profit">Non Profit</option>
+                     </select>
+                     <label  class="sr-only">Underline select</label>
+                </div>
+                <div class="relative z-0 mb-6 w-full group">
+                    <select class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                        <option disabled>Choose an industry</option>
+                        <option value="Accounting/Finance">Accounting/Finance</option>
+                        <option value="Advertising/Public Relations">Advertising/Public Relations</option>
+                        <option value="Aerospace/Aviation">Aerospace/Aviation</option>
+                        <option value="Arts/Entertainment/Publishing">Arts/Entertainment/Publishing</option>
+                        <option value="Automotive">Automotive</option>
+                        <option value="Banking/Mortgage">Banking/Mortgage</option>
+                        <option value="Business Development">Business Development</option>
+                        <option value="Business Opportunity">Business Opportunity</option>
+                        <option value="Clerical/Administrative">Clerical/Administrative</option>
+                        <option value="Construction/Facilities">Construction/Facilities</option>
+                        <option value="Consumer Goods">Consumer Goods</option>
+                        <option value="Customer Service">Customer Service</option>
+                        <option value="Education/Training">Education/Training</option>
+                        <option value="Energy/Utilities">Energy/Utilities</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Government/Military">Government/Military</option>
+                        <option value="Green">Green</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Hospitality/Travel">Hospitality/Travel</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Installation/Maintenance">Installation/Maintenance</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Internet">Internet</option>
+                        <option value="Job Search Aids">Job Search Aids</option>
+                        <option value="Law Enforcement/Security">Law Enforcement/Security</option>
+                        <option value="Legal">Legal</option>
+                        <option value="Management/Executive">Management/Executive</option>
+                        <option value="Manufacturing/Operations">Manufacturing/Operations</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Non-Profit/Volunteer">Non-Profit/Volunteer</option>
+                        <option value="Pharmaceutical/Biotech">Pharmaceutical/Biotech</option>
+                        <option value="Professional Services">Professional Services</option>
+                        <option value="QA/Quality Control">QA/Quality Control</option>
+                        <option value="Real Estate">Real Estate</option>
+                        <option value="Restaurant/Food Service">Restaurant/Food Service</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Salon">Salon</option>
+                        <option value="Science/Research">Science/Research</option>
+                        <option value="Skilled Labor">Skilled Labor</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Telecommunications">Telecommunications</option>
+                        <option value="Uber/Lyft Driver">Uber/Lyft Driver</option>
+                        <option value="Trucking">Trucking</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <label class="sr-only">Underline select</label>
+                </div>
+                <div class="relative z-0 mb-6 w-full group">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+  </div>
+  <input datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Date Incorporated">
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+</div>

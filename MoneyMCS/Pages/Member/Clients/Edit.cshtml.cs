@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
-using MoneyMCS.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace MoneyMCS.Pages.Member.Clients

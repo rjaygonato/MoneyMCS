@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using MoneyMCS.Areas.Identity.Data;
 using Stripe;
 using Stripe.Checkout;
@@ -42,12 +40,13 @@ namespace MoneyMCS.Pages.Membership
                 options.AddExpand("customer");
                 options.AddExpand("subscription");
                 options.AddExpand("line_items");
-                 session = await sessionService.GetAsync(session_id, options);
+                session = await sessionService.GetAsync(session_id, options);
 
-            }catch(StripeException ex)
+            }
+            catch (StripeException ex)
             {
                 _logger.LogInformation($"Stripe session id not found: {session_id}");
-                
+
                 return BadRequest();
             }
             bool subscriptionExists = await _context.StripeTransactions.AnyAsync(st => st.SubscriptionId == session.SubscriptionId);
@@ -67,7 +66,7 @@ namespace MoneyMCS.Pages.Membership
 
             //Change soon if there is new subscription plan START
             var subscriptionItem = session.LineItems.First();
-            
+
             string priceId = subscriptionItem.Price.Id;
 
 
@@ -99,7 +98,7 @@ namespace MoneyMCS.Pages.Membership
             await _context.AppTransactions.AddAsync(newAppTransaction);
             await _context.SaveChangesAsync();
 
-            
+
             //Save subscription details
             SubscriptionDetails subscriptionDetails = new SubscriptionDetails()
             {
@@ -149,7 +148,7 @@ namespace MoneyMCS.Pages.Membership
                     if (levelOneReferrer.ReferrerId != null)
                     {
                         //Commission for level two referrer
-                        var levelTwoReferrer =  await _userManager.Users.Where(au => au.Id == levelOneReferrer.ReferrerId)
+                        var levelTwoReferrer = await _userManager.Users.Where(au => au.Id == levelOneReferrer.ReferrerId)
                             .Include(au => au.Wallet)
                             .FirstAsync();
 
@@ -157,7 +156,7 @@ namespace MoneyMCS.Pages.Membership
                         {
                             return Page();
                         }
-                    
+
                         levelTwoReferrer.Wallet.Balance += 9.00M;
                         await _userManager.UpdateAsync(levelTwoReferrer);
                         await _context.AppTransactions.AddAsync(new AppTransaction()
@@ -190,7 +189,7 @@ namespace MoneyMCS.Pages.Membership
                             });
                             await _context.SaveChangesAsync();
                         }
-                        
+
                     }
                 }
             }

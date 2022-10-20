@@ -1,12 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using MoneyMCS.Areas.Identity.Data;
-using MoneyMCS.Services;
 using MoneyMCS.Policies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.DataProtection;
+using MoneyMCS.Services;
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +24,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     options.Lockout.AllowedForNewUsers = true;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(1);
     options.Password.RequireUppercase = false;
-    
+
 })
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<EntitiesContext>();

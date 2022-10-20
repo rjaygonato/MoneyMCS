@@ -68,7 +68,7 @@
                                 @client.DateAdded.Date.ToShortDateString()
                             </td>
                             <td class="py-4 px-6">
-                                <a href="#" class="font-medium text-indigo-600 hover:underline">Edit</a>
+                                <a asp-page="/ClientInfo" asp-route-clientid="@client.ClientId" class="font-medium text-indigo-600 hover:underline">View</a>
                             </td>
                         </tr>
             }

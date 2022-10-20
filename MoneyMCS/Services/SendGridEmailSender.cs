@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System.Text.Encodings.Web;
 
 namespace MoneyMCS.Services
 {
@@ -28,16 +27,16 @@ namespace MoneyMCS.Services
             await Execute(Options.SendGridKey, subject, htmlMessage, email);
         }
 
-        public async Task Execute(string apiKey, string subject, string message, string toEmail) 
+        public async Task Execute(string apiKey, string subject, string message, string toEmail)
         {
             var client = new SendGridClient(apiKey);
-     
+
             var from = new EmailAddress("ziegfred@moneymcs.com");
             var to = new EmailAddress(toEmail);
-            var msg =  MailHelper.CreateSingleEmail(from, to, subject, message, message);
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, message, message);
 
             var response = await client.SendEmailAsync(msg);
-            
+
             _logger.LogInformation(response.IsSuccessStatusCode
                                ? $"Email to {toEmail} queued successfully!"
                                : $"Failure Email to {toEmail}");

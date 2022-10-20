@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 
 namespace MoneyMCS.Pages.Member.Accounts;
 
@@ -13,7 +12,7 @@ namespace MoneyMCS.Pages.Member.Accounts;
 public class IndexModel : PageModel
 {
 
-    public IndexModel(UserManager<ApplicationUser> userManager, EntitiesContext context ,ILogger<IndexModel> logger)
+    public IndexModel(UserManager<ApplicationUser> userManager, EntitiesContext context, ILogger<IndexModel> logger)
     {
         _userManager = userManager;
         _context = context;
@@ -49,7 +48,7 @@ public class IndexModel : PageModel
 
         cleanModel();
 
-        Accounts = await _userManager.Users.Where(u => 
+        Accounts = await _userManager.Users.Where(u =>
         u.UserName.Contains(Input.Username) &&
         u.FirstName.Contains(Input.FirstName) &&
         u.LastName.Contains(Input.LastName) &&

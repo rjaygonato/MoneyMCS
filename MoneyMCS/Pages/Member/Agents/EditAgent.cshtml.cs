@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
@@ -30,11 +28,6 @@ namespace MoneyMCS.Pages.Member.Agents
             _emailStore = GetEmailStore();
         }
 
-        public List<SelectListItem> SelectAgentType = new List<SelectListItem>() {
-            new SelectListItem() { Value = "BASIC", Text = "BASIC" },
-            new SelectListItem() { Value = "VIP", Text = "VIP"},
-            new SelectListItem() { Value = "DIY", Text = "DIY" },
-        };
 
         public List<SelectListItem> SelectAgents = new List<SelectListItem>();
 
@@ -47,19 +40,17 @@ namespace MoneyMCS.Pages.Member.Agents
         public class InputModel
         {
 
-            [Required]
-            [Display(Name = "Agent Type")]
-            public string AgentType { get; set; }
+
 
             [Display(Name = "Referrer")]
             public string ReferrerId { get; set; }
 
 
-            
+
 
         }
 
-       
+
 
 
         public async Task<IActionResult> OnGet([FromRoute] string? id)
@@ -89,14 +80,6 @@ namespace MoneyMCS.Pages.Member.Agents
                 }
             }
 
-            SelectAgentType.ForEach(at =>
-            {
-                if (ToEditAgent.AgentType == at.Value)
-                {
-                    at.Selected = true;
-                }
-            });
-        
             return Page();
         }
         public async Task<IActionResult> OnPostAsync([FromRoute] string? id)
@@ -112,21 +95,11 @@ namespace MoneyMCS.Pages.Member.Agents
                 return NotFound($"User with the id: {id} is not found.");
             }
 
-            List<string> agentTypes = new List<string>
-            {
-                "BASIC",
-                "DIY",
-                "VIP"
-            };
+
 
 
             if (ModelState.IsValid)
             {
-                if (!agentTypes.Contains(Input.AgentType))
-                {
-                    ModelState.AddModelError(string.Empty, "Please select a valid agent type.");
-                    return Page();
-                }
 
                 ApplicationUser referrer = null;
                 if (Input.ReferrerId != null)
@@ -137,10 +110,9 @@ namespace MoneyMCS.Pages.Member.Agents
                         ModelState.AddModelError(string.Empty, $"User with the id: {Input.ReferrerId} was not found.");
                         return Page();
                     }
-                    
+
                 }
 
-                ToEditAgent.AgentType = Input.AgentType;
                 if (referrer != null)
                 {
                     ToEditAgent.Referrer = referrer;
@@ -153,17 +125,17 @@ namespace MoneyMCS.Pages.Member.Agents
 
                 }
 
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
             return Page();
-            
+
 
 
         }
-       
+
 
         private IUserEmailStore<ApplicationUser> GetEmailStore()
         {

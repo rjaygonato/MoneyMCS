@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using MoneyMCS.Areas.Identity.Data;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
 
 namespace MoneyMCS.Policies
 {
 
-    public class AgentTypeRequirement : IAuthorizationRequirement  
+    public class AgentTypeRequirement : IAuthorizationRequirement
     {
         public AgentTypeRequirement(UserType userType)
         {
@@ -32,7 +28,7 @@ namespace MoneyMCS.Policies
 
     public class AgentTypeHandler : AuthorizationHandler<AgentTypeRequirement>
     {
-      
+
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AgentTypeRequirement requirement)
         {
             string userType = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -48,7 +44,7 @@ namespace MoneyMCS.Policies
             }
             else
             {
-                if ((UserType) Enum.Parse(typeof(UserType), userType) != requirement.UserType)
+                if ((UserType)Enum.Parse(typeof(UserType), userType) != requirement.UserType)
                 {
                     redirectContext.Response.Redirect("/Member/Index");
                     context.Succeed(requirement);
@@ -76,7 +72,7 @@ namespace MoneyMCS.Policies
             }
             else
             {
-                if (!requirement.UserTypes.Contains((UserType) Enum.Parse(typeof(UserType), userType)))
+                if (!requirement.UserTypes.Contains((UserType)Enum.Parse(typeof(UserType), userType)))
                 {
                     redirectContext.Response.Redirect("/Index");
                     context.Succeed(requirement);

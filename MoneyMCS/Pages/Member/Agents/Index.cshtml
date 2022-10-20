@@ -10,217 +10,221 @@
         <p class="text-xl pb-3 flex items-center">
             <i class="fas fa-list mr-3"></i> Agents
         </p>
-        <form class="w-full my-6 pr-0">
-            <div class="w-100 bg-green-600">
-                <p class="text-white text-center font-bold">Search Filter</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4">
-                <div>
-                    <div class="flex justify-between my-1">
-                        <label asp-for="Input.Username" class="text-gray-700"></label>
-                        <input asp-for="Input.Username" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" />
-                    </div>
-                    <div class="flex justify-between my-1">
-                        <label asp-for="Input.FirstName" class="text-gray-700"></label>
-                        <input asp-for="Input.FirstName" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" />
-                    </div>
-                    <div class="flex justify-between my-1">
-                        <label asp-for="Input.LastName" class="text-gray-700"></label>
-                        <input asp-for="Input.LastName" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" />
-                    </div>
-                    <div class="flex justify-between my-1">
-                        <label asp-for="Input.Email" class="text-gray-700"></label>
-                        <input asp-for="Input.Email" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" />
-                    </div>
-                    <div class="flex justify-between my-1">
-                        <label asp-for="Input.PhoneNumber" class="text-gray-700"></label>
-                        <input asp-for="Input.PhoneNumber" class="px-3 py-1 bg-gray-200 text-gray-900 rounded-md" />
-                    </div>
-
-                </div>
-                <div>
-                    <div class="flex justify-between my-1">
-                        <label asp-for="Input.AgentType" class="text-gray-700"></label>
-                        <select asp-for="Input.AgentType" asp-items="Model.AgentTypeSelect"
-                                class="bg-gray-100 border py-1 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 ">
-                        </select>
-                    </div>
-                    <div class="flex justify-between my-1">
-                        <label asp-for="Input.ReferrerId" class="text-gray-700"></label>
-                        <select asp-for="Input.ReferrerId" asp-items="Model.AgentsSelect"
-                                class="bg-gray-100 border py-1 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 ">
-                        </select>
-                    </div>
-
-                </div>
-            </div>
-            <div class="w-100 flex justify-center p-1">
-                <button type="submit" class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm mr-1">
-                    <i class="fas fa-search"></i> Search
-                </button>
-                <button id="clearBtn" type="button" class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm">
-                    <i class="fas fa-undo"></i> Reset
-                </button>
-            </div>
-        </form>
-        <div class="flex justify-end my-3 md:my-2">
-            <a asp-page="/Member/Agents/Add" role="button"
-                class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm font-medium"><i
-                    class="fas fa-user-plus"></i> Add new agent</a>
+        <div class="w-100 bg-green-600">
+            <p class="text-white text-center font-bold">Referral Agents</p>
         </div>
-        <div class="bg-white overflow-auto rounded-md">
-            <table id="agentsList" class="text-left w-full border-collapse ">
-                <thead>
+        
+        <div class="flex justify-end my-3 md:my-2">
+            <button type="button" data-modal-toggle="addAgentModal"
+                class="bg-gray-300 rounded-md hover:bg-gray-400 px-2 py-1 text-sm font-medium"><i
+                    class="fas fa-user-plus"></i> Add new agent</button>
+        </div>
+
+        <div class="overflow-x-auto relative rounded-lg shadow-md bg-gray-200">
+            <div class="flex justify-between items-center py-4 px-3 bg-white dark:bg-gray-800">
+                <div>
+                    <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+                        <span class="sr-only">Action button</span>
+                        Action
+                        <svg class="ml-2 w-3 h-3" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div id="dropdownAction" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
+                            <li>
+                                <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate account</a>
+                            </li>
+                        </ul>
+                        <div class="py-1">
+                            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete User</a>
+                        </div>
+                    </div>
+                </div>
+                <label for="table-search" class="sr-only">Search</label>
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    <input type="text" id="table-search-users" class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users">
+                </div>
+            </div>
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th
-                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            Username
+                        <th scope="col" class="py-3 px-6">
+                            Name
                         </th>
-                        <th
-                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            Agent Type
-                        </th>
-                        <th
-                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            First Name
-                        </th>
-                        <th
-                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            Last Name
-                        </th>
-                        <th
-                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            Phone
-                        </th>
-                        <th
-                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
+                        <th scope="col" class="py-3 px-6">
                             Email
                         </th>
-                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            Referrer
+                        <th scope="col" class="py-3 px-6">
+                            Membership
                         </th>
 
-                        <th
-                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            Created Date
+                        <th scope="col" class="py-3 px-6">
+                            Clients
                         </th>
-                        <th class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            Downlines
+                      
+                        <th scope="col" class="py-3 px-6">
+                            Paid
                         </th>
-                        <th
-                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            Edit
+                        <th scope="col" class="py-3 px-6">
+                            Commission
                         </th>
-                        <th
-                            class="py-4 px-6 bg-green-600 font-bold uppercase text-sm text-white border-b border-grey-light">
-                            Delete
+                        <th scope="col" class="py-3 px-6">
+                            Joined Date
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Action
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var user in Model.Agents) {
-                        <tr class="hover:bg-grey-lighter">
-                            <td class="py-4 px-6 border-b border-grey-light">@user.UserName</td>
-                            <td class="py-4 px-6 border-b border-grey-light">@user.AgentType</td>
-                            <td class="py-4 px-6 border-b border-grey-light">@user.FirstName</td>
-                            <td class="py-4 px-6 border-b border-grey-light">@user.LastName</td>
-                            <td class="py-4 px-6 border-b border-grey-light">@user.PhoneNumber</td>
-                            <td class="py-4 px-6 border-b border-grey-light">@user.Email</td>
-                            <td class="py-4 px-6 border-b border-grey-light">@(user.Referrer != null ? user.Referrer.UserName : "") </td>
-
-                            <td class="py-4 px-6 border-b border-grey-light">@user.CreationDate.ToShortDateString()</td>
-                            <td class="p-0 text-center px-6 border-b border-grey-light">
-                                <a asp-page="/Member/Agents/Downline" asp-route-id="@user.Id"><i class="fas fa-eye"></i></a>
+                    @foreach (var agent in Model.Agents)
+                    {
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="py-4 px-6">
+                                @($"{agent.FirstName} {agent.LastName}")
                             </td>
-                            <td class="p-0 text-center px-6 border-b border-grey-light">
-                                <a asp-page="/Member/Agents/EditProfile" asp-route-id="@user.Id"><i class="fas fa-pencil-alt"></i></a>
+                            <td class="py-4 px-6">
+                                @agent.Email
                             </td>
-                            <td class="p-0 text-center py-4 px-6 border-b border-grey-light">
-                                <button data-id="@user.Id" class="deleteBtn" aria-hidden="true"><i class="fa fa-trash"></i></button>
+                            <td class="py-4 px-6">
+                                <div class="flex items-center">
+                                    <div class="h-2.5 w-2.5 rounded-full  @(agent.Subscribed ? "bg-green-400" : "bg-red-500") mr-2"></div> @(agent.Subscribed ? "Subscribed" : "Not Subscribed")
+                                </div>
+                            </td>
+                            <td class="py-4 px-6">
+                                @agent.Clients.Count
+                            </td>
+                            <td class="py-4 px-6">
+                                $0
+                            </td>
+                            <td class="py-4 px-6">
+                                $0
+                            </td>
+                            <td class="py-4 px-6">
+                                @agent.CreationDate.Date.ToShortDateString()
+                            </td>
+                            <td class="py-4 px-6">
+                                <!-- Modal toggle -->
+                                <a type="button" data-modal-toggle="editAgentModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
                             </td>
                         </tr>
                     }
-                   
+                    
+                    
                 </tbody>
             </table>
-            <!--<div class="bg-white px-4 py-3 flex items-center justify-between sm:px-6">
-                <div class="flex-1 flex justify-between sm:hidden">
-                    <a href="#"
-                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                        Previous
-                    </a>
-                    <a href="#"
-                        class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                        Next
-                    </a>
+            <!-- Edit user modal -->
+            <div id="editAgentModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center p-4 w-full md:inset-0 h-modal md:h-full">
+                <div class="relative w-full max-w-2xl h-full md:h-auto">
+                    <!-- Modal content -->
+                    <form method="post" asp-page-handler="Edit" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                Edit Agent
+                            </h3>
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="editAgentModal">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-6 space-y-6">
+                            <input type="hidden" asp-for="Input.ActionType" value="edit" />
+                            <div class="grid grid-cols-6 gap-6">
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.FirstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                                    <input asp-for="Input.FirstName" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bonnie" required="">
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.LastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                                    <input asp-for="Input.LastName" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Green" required="">
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.Email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                    <input asp-for="Input.Email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@company.com" required="">
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.PhoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+                                    <input asp-for="Input.PhoneNumber" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. +(12)3456 789" required="">
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.Password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Password</label>
+                                    <input asp-for="Input.Password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••" required="">
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.ConfirmPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+                                    <input asp-for="Input.ConfirmPassword" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••" required="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save all</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                    <div>
-                        <p class="text-sm text-gray-700">
-                            Showing
-                            <span class="font-medium">1</span>
-                            to
-                            <span class="font-medium">10</span>
-                            of
-                            <span class="font-medium">97</span>
-                            results
-                        </p>
-                    </div>
-                    <div>
-                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                            <a href="#"
-                                class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Previous</span>
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                    fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                            <a href="#" aria-current="page"
-                                class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                1
-                            </a>
-                            <a href="#"
-                                class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                2
-                            </a>
-                            <a href="#"
-                                class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
-                                3
-                            </a>
-                            <span
-                                class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-                                ...
-                            </span>
-                            <a href="#"
-                                class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
-                                8
-                            </a>
-                            <a href="#"
-                                class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                9
-                            </a>
-                            <a href="#"
-                                class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                10
-                            </a>
-                            <a href="#"
-                                class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Next</span>
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                    fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                        </nav>
-                    </div>
+            </div>
+            <div id="addAgentModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center p-4 w-full md:inset-0 h-modal md:h-full">
+                <div class="relative w-full max-w-2xl h-full md:h-auto">
+                    <!-- Modal content -->
+                    <form method="post" asp-page-handler="Add" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                Add agent
+                            </h3>
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="addAgentModal">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-6 space-y-6">
+                            <input type="hidden" asp-for="Input.ActionType" value="add" />
+                            <div class="grid grid-cols-6 gap-6">
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.FirstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                                    <input asp-for="Input.FirstName" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.LastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                                    <input asp-for="Input.LastName" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.Email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                    <input asp-for="Input.Email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.PhoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+                                    <input asp-for="Input.PhoneNumber" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.Password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Password</label>
+                                    <input asp-for="Input.Password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label asp-for="Input.ConfirmPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+                                    <input asp-for="Input.ConfirmPassword" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                        </div>
+                    </form>
                 </div>
-            </div>-->
+            </div>
         </div>
+
     </div>
 </main>
 <div style=" background-color: rgba(0, 0, 0, 0.8)" x-data="{ open: false }" class="fixed  z-40 top-0 right-0 left-0 bottom-0 h-full w-full"

@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography;
-using System.Xml.Linq;
 
 namespace MoneyMCS.Pages.Member.Accounts
 {
@@ -52,7 +50,7 @@ namespace MoneyMCS.Pages.Member.Accounts
             public string ConfirmPassword { get; set; }
         }
 
-       
+
         public ApplicationUser ToEditAccount { get; set; }
 
         public async Task<IActionResult> OnGet([FromRoute] string? id)
@@ -99,7 +97,7 @@ namespace MoneyMCS.Pages.Member.Accounts
                     return RedirectToPage("/Member/Accounts/EditPassword", new { id = user.Id });
                 }
 
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
@@ -109,7 +107,7 @@ namespace MoneyMCS.Pages.Member.Accounts
 
         }
 
-     
+
         private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)

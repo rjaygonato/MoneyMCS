@@ -31,7 +31,7 @@ namespace MoneyMCS.Pages.Member.Resources
         public async Task<IActionResult> OnGetResourcesPartial(List<string>? category, string? search)
         {
 
-            
+
 
             if (category == null && search == null)
             {

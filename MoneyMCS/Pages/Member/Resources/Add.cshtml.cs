@@ -56,7 +56,7 @@ namespace MoneyMCS.Pages.Member.Resources
         {
             if (!ModelState.IsValid)
             {
-                return Page(); 
+                return Page();
             }
 
             if (!checkFileType(Path.GetExtension(Input.ResourceFile.FileName)))

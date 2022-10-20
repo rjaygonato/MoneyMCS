@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
 
 namespace MoneyMCS.Areas.Identity.Data;
 
@@ -15,10 +13,6 @@ public class ApplicationUser : IdentityUser
 
     [MaxLength(100)]
     public string LastName { get; set; }
-
-    [MaxLength(100)]
-    public string? AgentType { get; set; }
-
     public string? ReferrerId { get; set; }
     public ApplicationUser Referrer { get; set; }
     public List<ApplicationUser> Referrals { get; set; }
@@ -52,6 +46,8 @@ public class Wallet
     public ApplicationUser ApplicationUser { get; set; }
 }
 
+
+
 public class AppTransaction
 {
     public int AppTransactionId { get; set; }
@@ -84,7 +80,7 @@ public class Payer
     public int PayerId { get; set; }
     public string FullName { get; set; }
     public string Email { get; set; }
-    
+
     public string? Phone { get; set; }
 
     public int SubscriptionId { get; set; }

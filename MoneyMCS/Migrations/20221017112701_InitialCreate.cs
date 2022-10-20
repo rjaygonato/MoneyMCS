@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MoneyMCS.Migrations
 {
-    public partial class InitialCreateIdentity : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -212,16 +211,14 @@ namespace MoneyMCS.Migrations
                 {
                     ClientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Company = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    State = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ZipCode = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsContacted = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Services = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReferrerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -298,6 +295,56 @@ namespace MoneyMCS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Businesses",
+                columns: table => new
+                {
+                    BusinessId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntityType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Industry = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    License = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Website = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Merchant = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressId = table.Column<int>(type: "int", nullable: false),
+                    BusinesssPhoneId = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Businesses", x => x.BusinessId);
+                    table.ForeignKey(
+                        name: "FK_Businesses_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "ClientId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClientNote",
+                columns: table => new
+                {
+                    ClientNoteId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientNote", x => x.ClientNoteId);
+                    table.ForeignKey(
+                        name: "FK_ClientNote_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "ClientId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Payers",
                 columns: table => new
                 {
@@ -318,6 +365,58 @@ namespace MoneyMCS.Migrations
                         principalColumn: "SubscriptionDetailsId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    AddressId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BusinessId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Businesses_BusinessId",
+                        column: x => x.BusinessId,
+                        principalTable: "Businesses",
+                        principalColumn: "BusinessId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BusinessPhones",
+                columns: table => new
+                {
+                    BusinessPhoneId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Provider = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Fax = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BusinessId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BusinessPhones", x => x.BusinessPhoneId);
+                    table.ForeignKey(
+                        name: "FK_BusinessPhones_Businesses_BusinessId",
+                        column: x => x.BusinessId,
+                        principalTable: "Businesses",
+                        principalColumn: "BusinessId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_BusinessId",
+                table: "Addresses",
+                column: "BusinessId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AppTransactions_ApplicationUserId",
@@ -376,6 +475,23 @@ namespace MoneyMCS.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Businesses_ClientId",
+                table: "Businesses",
+                column: "ClientId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BusinessPhones_BusinessId",
+                table: "BusinessPhones",
+                column: "BusinessId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClientNote_ClientId",
+                table: "ClientNote",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Clients_ReferrerId",
                 table: "Clients",
                 column: "ReferrerId");
@@ -422,6 +538,9 @@ namespace MoneyMCS.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Addresses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -437,7 +556,10 @@ namespace MoneyMCS.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "BusinessPhones");
+
+            migrationBuilder.DropTable(
+                name: "ClientNote");
 
             migrationBuilder.DropTable(
                 name: "Payers");
@@ -455,7 +577,13 @@ namespace MoneyMCS.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Businesses");
+
+            migrationBuilder.DropTable(
                 name: "Subscriptions");
+
+            migrationBuilder.DropTable(
+                name: "Clients");
 
             migrationBuilder.DropTable(
                 name: "AppTransactions");

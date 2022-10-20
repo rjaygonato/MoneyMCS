@@ -36,11 +36,6 @@ namespace MoneyMCS.Pages.Member.Agents
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public List<SelectListItem> SelectAgentType = new List<SelectListItem>() {
-            new SelectListItem() { Value = "BASIC", Text = "BASIC" , Selected = true},
-            new SelectListItem() { Value = "VIP", Text = "VIP"},
-            new SelectListItem() { Value = "DIY", Text = "DIY" },
-        };
 
         public List<SelectListItem> SelectAgents = new List<SelectListItem>();
 
@@ -75,12 +70,6 @@ namespace MoneyMCS.Pages.Member.Agents
             [Display(Name = "Referer")]
             public string? ReferrerId { get; set; }
 
-            [Required]
-            [Display(Name = "Agent Type")]
-            public string AgentType { get; set; }
-
-
-
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -111,7 +100,6 @@ namespace MoneyMCS.Pages.Member.Agents
                 user.LastName = Input.LastName;
                 user.CreationDate = DateTime.Now;
                 user.UserType = UserType.AGENT;
-                user.AgentType = Input.AgentType;
 
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
@@ -170,7 +158,7 @@ namespace MoneyMCS.Pages.Member.Agents
 
                 if (result.Succeeded)
                 {
-                    
+
                     await _userManager.AddClaimsAsync(user, claims);
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToPage(returnUrl);

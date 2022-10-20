@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
-using System.Security.Claims;
 
 namespace MoneyMCS.Pages
 {
@@ -22,7 +21,7 @@ namespace MoneyMCS.Pages
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly EntitiesContext _context;
         private readonly ILogger<ProfileModel> _logger;
-        
+
 
         public ApplicationUser UserInfo { get; set; }
         public List<AppTransaction> SubscriptionHistory { get; set; }

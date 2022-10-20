@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MoneyMCS.Areas.Identity.Data;
-using MoneyMCS.Services;
 
 namespace MoneyMCS.Pages.Member.Resources
 {

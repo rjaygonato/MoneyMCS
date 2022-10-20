@@ -1,13 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MoneyMCS.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Data.SqlTypes;
 
 namespace MoneyMCS.Pages
 {
@@ -26,6 +23,16 @@ namespace MoneyMCS.Pages
         private readonly EntitiesContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<AddClientModel> _logger;
+
+        public List<string> CompanyServices = new List<string>()
+        {
+            "Bookeeping",
+            "Business Credit Consulting",
+            "Tax Planning & Preparation",
+            "Financial Planning",
+            "Employee's Benefit",
+            "Compensation"
+        };
         public List<SelectListItem> StateSelect { get; set; } = new();
 
         [BindProperty]
@@ -45,20 +52,13 @@ namespace MoneyMCS.Pages
             [EmailAddress]
             public string Email { get; set; }
 
-
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Confirm Email")]
-            public string ConfirmEmail { get; set; }
-
             [Required]
             [Phone]
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
 
-
             [Required]
-            public string State { get; set; }
+            public List<string> Services { get; set; } = new();
 
         }
 
@@ -70,27 +70,40 @@ namespace MoneyMCS.Pages
         {
             if (ModelState.IsValid)
             {
-                if (Input.Email != Input.ConfirmEmail)
+                if (Input.Services.Count == 0)
                 {
-                    ModelState.AddModelError("Input.ConfirmEmail", "Email does not match");
+                    ModelState.AddModelError("Input.Services", "Select at least one service(s)");
                     return Page();
                 }
+
                 Client newClient = new Client();
                 newClient.FirstName = Input.FirstName;
                 newClient.LastName = Input.LastName;
                 newClient.Email = Input.Email;
                 newClient.PhoneNumber = Input.PhoneNumber;
+                newClient.Services = Input.Services;
                 newClient.DateAdded = DateTime.Now;
 
-                string agentId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "AgentId")?.Value;
-                if (agentId == null)
-                {
-                    return NotFound();
-                }
-
+                string agentId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "AgentId").Value;
                 newClient.ReferrerId = agentId;
+
                 await _context.Clients.AddAsync(newClient);
                 await _context.SaveChangesAsync();
+
+                Business newBusiness = new Business()
+                {
+                    ClientId = newClient.ClientId,
+                    Address = new Address(),
+                    BusinessPhone = new BusinessPhone()
+
+                };
+
+                await _context.Businesses.AddAsync(newBusiness);
+                await _context.SaveChangesAsync();
+
+
+
+
 
                 return RedirectToPage("/ClientDashboard");
             }

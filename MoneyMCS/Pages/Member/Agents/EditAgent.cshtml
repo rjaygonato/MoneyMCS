@@ -36,11 +36,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 my-2 gap-4" x-show="openTab === 1">
                     <form method="post">
                         <div asp-validation-summary="All" class="text-red-500"></div>
-                        <div class="flex justify-between my-1">
-                            <label class="text-gray-700" for="cus_name">Agent Type:</label>
-                            <select asp-for="Input.AgentType" asp-items="Model.SelectAgentType" class="block py-1 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            </select>
-                        </div>
+
                         <div class="flex justify-between my-1">
                             <label class="text-gray-700" for="cus_name">Referrer</label>
                             <select asp-for="Input.ReferrerId" asp-items="Model.SelectAgents" class=px-3 py-1">

@@ -24,8 +24,8 @@ namespace MoneyMCS.Pages.CA
         public async Task<IActionResult> OnGet()
         {
             string userId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "AgentId").Value;
-             TotalCommission = await _context.AppTransactions.Where(at => at.ApplicationUserId == userId && at.Type == TransactionType.COMMISSION).SumAsync(at => at.Amount);
-            
+            TotalCommission = await _context.AppTransactions.Where(at => at.ApplicationUserId == userId && at.Type == TransactionType.COMMISSION).SumAsync(at => at.Amount);
+
 
             return Page();
 

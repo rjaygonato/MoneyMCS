@@ -3,17 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
-using MoneyMCS.Services;
-using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using System.Text;
-using System.Text.Encodings.Web;
 
 namespace MoneyMCS.Pages
 {
@@ -54,24 +49,20 @@ namespace MoneyMCS.Pages
             public string? ReferrerCode { get; set; }
 
             [Required]
-            [Display(Name = "Username")]
-            public string UserName { get; set; }
-
-            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Phone]
-            [Display(Name = "PhoneNumber")]
+            [Display(Name = "Phone number")]
             public string? PhoneNumber { get; set; }
 
             [Required]
-            [Display(Name = "First Name")]
+            [Display(Name = "First name")]
             public string FirstName { get; set; }
 
             [Required]
-            [Display(Name = "Last Name")]
+            [Display(Name = "Last name")]
             public string LastName { get; set; }
 
 
@@ -95,7 +86,7 @@ namespace MoneyMCS.Pages
             {
                 ReferrerCode = referrerCode;
             }
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 return RedirectToPage("/Index");
             }
@@ -111,9 +102,8 @@ namespace MoneyMCS.Pages
                 user.LastName = Input.LastName;
                 user.CreationDate = DateTime.Now;
                 user.UserType = UserType.AGENT;
-                user.AgentType = "BASIC";
 
-                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 if (Input.ReferrerCode != null)
                 {
@@ -139,7 +129,7 @@ namespace MoneyMCS.Pages
                 };
                 IdentityResult result;
 
-                while(true)
+                while (true)
                 {
                     user.ReferralCode = GenerateReferralCode(6);
                     try
@@ -148,7 +138,7 @@ namespace MoneyMCS.Pages
                         result = await _userManager.CreateAsync(user, Input.Password);
                         break;
                     }
-                    catch(DbUpdateException ex)
+                    catch (DbUpdateException ex)
                     {
                         if (ex.InnerException != null)
                         {
@@ -183,7 +173,7 @@ namespace MoneyMCS.Pages
                     if (_userManager.Options.SignIn.RequireConfirmedEmail)
                     {
                         HttpContext.Session.SetString("EmailConfirmationMessage", $"We have sent an email to {Input.Email}. Please check your email to verify your account.");
-                        return RedirectToPage("/Login", new { email = Input.Email});
+                        return RedirectToPage("/Login", new { email = Input.Email });
                     }
                     else
                     {

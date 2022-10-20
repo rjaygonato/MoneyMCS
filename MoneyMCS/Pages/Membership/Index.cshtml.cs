@@ -15,7 +15,7 @@ namespace MoneyMCS.Pages.Membership
 
         public void OnGet()
         {
-            
+
         }
 
         public async Task<IActionResult> OnPost()

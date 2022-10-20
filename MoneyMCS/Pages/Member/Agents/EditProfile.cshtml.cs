@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 
@@ -28,7 +26,7 @@ namespace MoneyMCS.Pages.Member.Agents
             _emailStore = GetEmailStore();
         }
 
-  
+
 
 
         public string ReturnUrl { get; set; }
@@ -62,7 +60,7 @@ namespace MoneyMCS.Pages.Member.Agents
 
         }
 
-       
+
 
 
         public async Task<IActionResult> OnGet([FromRoute] string? id)
@@ -77,7 +75,7 @@ namespace MoneyMCS.Pages.Member.Agents
             {
                 return NotFound();
             }
-           
+
             return Page();
         }
         public async Task<IActionResult> OnPostAsync([FromRoute] string? id)
@@ -106,7 +104,7 @@ namespace MoneyMCS.Pages.Member.Agents
 
             await _userManager.UpdateAsync(ToEditAgent);
 
-            return RedirectToPage("/Member/Agents/EditProfile", new { id=ToEditAgent.Id });
+            return RedirectToPage("/Member/Agents/EditProfile", new { id = ToEditAgent.Id });
 
         }
 

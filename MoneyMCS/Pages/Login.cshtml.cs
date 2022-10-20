@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
 
 namespace MoneyMCS.Pages
@@ -13,7 +12,7 @@ namespace MoneyMCS.Pages
     public class LoginModel : PageModel
     {
 
-        public LoginModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager ,ILogger<LoginModel> logger, IWebHostEnvironment webHostEnvironment)
+        public LoginModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -83,7 +82,7 @@ namespace MoneyMCS.Pages
 
             }
 
-            
+
             return Page();
         }
     }

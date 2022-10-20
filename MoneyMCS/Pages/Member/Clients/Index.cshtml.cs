@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoneyMCS.Areas.Identity.Data;
-using MoneyMCS.Services;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
 namespace MoneyMCS.Pages.Member.Clients
 {
@@ -34,7 +32,7 @@ namespace MoneyMCS.Pages.Member.Clients
         {
             new SelectListItem() { Text = "None", Value = "", Selected = true }
         };
-        
+
 
 
         public class InputModel
@@ -64,10 +62,10 @@ namespace MoneyMCS.Pages.Member.Clients
                 u.FirstName.Contains(Input.FirstName) &&
                 u.LastName.Contains(Input.LastName));
 
-                if (!string.IsNullOrWhiteSpace(Input.ReferrerId))
-                {
-                    query = query.Where(u => u.ReferrerId.Equals(Input.ReferrerId));
-                }
+            if (!string.IsNullOrWhiteSpace(Input.ReferrerId))
+            {
+                query = query.Where(u => u.ReferrerId.Equals(Input.ReferrerId));
+            }
 
             Clients = await query.ToListAsync();
 

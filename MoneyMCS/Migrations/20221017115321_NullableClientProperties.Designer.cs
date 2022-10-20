@@ -12,8 +12,8 @@ using MoneyMCS.Areas.Identity.Data;
 namespace MoneyMCS.Migrations
 {
     [DbContext(typeof(EntitiesContext))]
-    [Migration("20221016002341_InitialCreateIdentity")]
-    partial class InitialCreateIdentity
+    [Migration("20221017115321_NullableClientProperties")]
+    partial class NullableClientProperties
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,141 @@ namespace MoneyMCS.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Address", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"), 1L, 1);
+
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("BusinessId")
+                        .IsUnique();
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Business", b =>
+                {
+                    b.Property<int>("BusinessId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BusinessId"), 1L, 1);
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BIN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BusinesssPhoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EIN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Industry")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("License")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Merchant")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BusinessId");
+
+                    b.HasIndex("ClientId")
+                        .IsUnique();
+
+                    b.ToTable("Businesses");
+                });
+
+            modelBuilder.Entity("BusinessPhone", b =>
+                {
+                    b.Property<int>("BusinessPhoneId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BusinessPhoneId"), 1L, 1);
+
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Fax")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Provider")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BusinessPhoneId");
+
+                    b.HasIndex("BusinessId")
+                        .IsUnique();
+
+                    b.ToTable("BusinessPhones");
+                });
+
+            modelBuilder.Entity("ClientNote", b =>
+                {
+                    b.Property<int>("ClientNoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientNoteId"), 1L, 1);
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClientNoteId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("ClientNote");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -302,18 +437,6 @@ namespace MoneyMCS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"), 1L, 1);
 
-                    b.Property<string>("Address")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("City")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Company")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
@@ -323,6 +446,9 @@ namespace MoneyMCS.Migrations
                     b.Property<string>("FirstName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsContacted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(100)
@@ -334,13 +460,12 @@ namespace MoneyMCS.Migrations
                     b.Property<string>("ReferrerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("State")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<string>("Services")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ZipCode")
-                        .HasMaxLength(6)
-                        .HasColumnType("nvarchar(6)");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ClientId");
 
@@ -490,6 +615,50 @@ namespace MoneyMCS.Migrations
                     b.ToTable("Wallets");
                 });
 
+            modelBuilder.Entity("Address", b =>
+                {
+                    b.HasOne("Business", "Business")
+                        .WithOne("Address")
+                        .HasForeignKey("Address", "BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("Business", b =>
+                {
+                    b.HasOne("MoneyMCS.Areas.Identity.Data.Client", "Client")
+                        .WithOne("Business")
+                        .HasForeignKey("Business", "ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("BusinessPhone", b =>
+                {
+                    b.HasOne("Business", "Business")
+                        .WithOne("BusinessPhone")
+                        .HasForeignKey("BusinessPhone", "BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ClientNote", b =>
+                {
+                    b.HasOne("MoneyMCS.Areas.Identity.Data.Client", "Client")
+                        .WithMany("Notes")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -610,6 +779,13 @@ namespace MoneyMCS.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("Business", b =>
+                {
+                    b.Navigation("Address");
+
+                    b.Navigation("BusinessPhone");
+                });
+
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.ApplicationUser", b =>
                 {
                     b.Navigation("Clients");
@@ -626,6 +802,13 @@ namespace MoneyMCS.Migrations
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.AppTransaction", b =>
                 {
                     b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.Client", b =>
+                {
+                    b.Navigation("Business");
+
+                    b.Navigation("Notes");
                 });
 
             modelBuilder.Entity("MoneyMCS.Areas.Identity.Data.SubscriptionDetails", b =>

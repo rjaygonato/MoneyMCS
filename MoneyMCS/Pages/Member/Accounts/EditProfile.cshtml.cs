@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MoneyMCS.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography;
-using System.Xml.Linq;
 
 namespace MoneyMCS.Pages.Member.Accounts
 {
@@ -62,7 +60,7 @@ namespace MoneyMCS.Pages.Member.Accounts
             public string? PhoneNumber { get; set; }
         }
 
-       
+
         public ApplicationUser ToEditAccount { get; set; }
 
         public async Task<IActionResult> OnGet([FromRoute] string? id)
@@ -100,7 +98,7 @@ namespace MoneyMCS.Pages.Member.Accounts
                 user.LastName = Input.LastName;
                 user.PhoneNumber = Input.PhoneNumber;
 
-                
+
                 if (user.UserName != Input.UserName)
                 {
                     await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
@@ -125,7 +123,7 @@ namespace MoneyMCS.Pages.Member.Accounts
 
         }
 
-     
+
         private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)

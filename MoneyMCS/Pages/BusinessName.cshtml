@@ -9,17 +9,17 @@
         <h6 class="text-4xl text-white">Business Name</h6>
     </div>
     <div class="flex justify-center mt-5">
-        <div class="block p-6 w-3/4 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">CLIENT BUSINESS NAME</h5>
+        <div class="block p-6 w-3/4 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">CLIENT BUSINESS NAME</h5>
             <hr />
-            <p class="font-normal text-gray-700 dark:text-gray-400 my-5">There is a lot that goes into a name! Make sure your business name can be trademarked, doesn’t include any high-risk industries and can be or is filed with the state before you build your business further.</p>
-            <form>
+            <p class="font-normal text-gray-700 my-5">There is a lot that goes into a name! Make sure your business name can be trademarked, doesn’t include any high-risk industries and can be or is filed with the state before you build your business further.</p>
+            <form method="post">
                 <div>
-                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Company name..." required>
-
+                    <input type="hidden" asp-for="Input.clientId" value="@Model.Client.ClientId" />
+                    <input asp-for="Input.BusinessName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Company name..." value="@Model.Client.Business.Name" />
                 </div>
                 <div class="flex justify-end mt-3">
-                    <button type="submit" class="px-5 py-3 bg-green-400 hover:bg-green-500 rounded-md">SAVE</button>
+                    <button type="submit" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">SAVE</button>
 
                 </div>
             </form>

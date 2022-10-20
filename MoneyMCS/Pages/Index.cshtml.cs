@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MoneyMCS.Areas.Identity.Data;
 
 namespace MoneyMCS.Pages
 {
@@ -20,7 +17,7 @@ namespace MoneyMCS.Pages
 
         public void OnGet()
         {
-            
+
         }
     }
 }

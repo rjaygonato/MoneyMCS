@@ -28,12 +28,6 @@ namespace MoneyMCS.Pages.Member.Agents
             _emailStore = GetEmailStore();
         }
 
-        public List<SelectListItem> SelectAgentType = new List<SelectListItem>() {
-            new SelectListItem() { Value = "BASIC", Text = "BASIC" , Selected = true},
-            new SelectListItem() { Value = "VIP", Text = "VIP"},
-            new SelectListItem() { Value = "DIY", Text = "DIY" },
-        };
-
         public List<SelectListItem> SelectAgents = new List<SelectListItem>();
 
         public string ReturnUrl { get; set; }
@@ -84,8 +78,6 @@ namespace MoneyMCS.Pages.Member.Agents
 
         public class AgentTypeInput
         {
-            [Required]
-            public string AgentType { get; set; }
 
             [Required]
             public string ReferrerId { get; set; }

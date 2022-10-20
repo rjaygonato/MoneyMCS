@@ -36,7 +36,7 @@ namespace MoneyMCS.Pages
                 Resources = await _context.Resources.Where(r => category.Contains(r.Category) && r.ResourceName.Contains(search)).ToListAsync();
             }
 
-            
+
             return Partial("_ResourcesResultPartial2", Resources);
         }
     }
