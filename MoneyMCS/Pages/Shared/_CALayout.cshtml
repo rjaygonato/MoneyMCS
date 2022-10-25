@@ -15,9 +15,10 @@
                 <a role="button" class="px-3 py-2 pl-5 hover:bg-lime-500">My Programs</a>
                 <h2 class="containerHeader p-3  text-white">Resources</h2>
                 <a asp-page="/CA/LinkGenerator" role="button" class="px-3 py-2 pl-5 hover:bg-lime-500 @(ViewData["caPageName"] == "LinkGenerator" ? "bg-lime-500" : "")">Link Generator</a>
-                <a role="button" class="px-3 py-2 pl-5 hover:bg-lime-500">Email Templates</a>
+                <a asp-page="/CA/EmailTemplates" role="button" class="px-3 py-2 pl-5 hover:bg-lime-500 @(ViewData["caPageName"] == "EmailTemplates" ? "bg-lime-500" : "")">Email Templates</a>
                 <h2 class="containerHeader p-3  text-white">Reports</h2>
-                <a role="button" class="px-3 py-2 pl-5 hover:bg-lime-500">Link Tracking Stats</a>
+                <a asp-page="/CA/Ledger" role="button" class="px-3 py-2 pl-5 hover:bg-lime-500 @(ViewData["caPageName"] == "Ledger" ? "bg-lime-500" : "")">Ledger</a>
+                <a asp-page="/CA/LinkStats" role="button" class="px-3 py-2 pl-5 hover:bg-lime-500 @(ViewData["caPageName"] == "LinkStats" ? "bg-lime-500" : "")">Link Tracking Stats</a>
                 <a asp-page="/CA/CommissionsGenerated" class="px-3 py-2 pl-5 hover:bg-lime-500 @(ViewData["caPageName"] == "CommissionsGenerated" ? "bg-lime-500" : "")">Commissions Generated</a>
 
             </div>
