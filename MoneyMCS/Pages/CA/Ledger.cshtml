@@ -31,10 +31,53 @@
     </div>
     <div class="mt-5">
         <div class="grid grid-cols-2">
-            <h3 class="font-semibold ml-0">Net Commissions Earned (In Date Range):</h3>
-            <h3 class="font-bold">$@Model.TotalCommission</h3>
+            <h3 class="font-semibold ml-0">Commissions Earned For Date Range:</h3>
         </div>
     </div>
 
-
+    <div class="overflow-x-auto relative">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="py-3 px-6">
+                        Inv #
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Date
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Contact
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        SoldBy
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Item
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Amount
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                
+                </tr>
+                <tr class="bg-white dark:bg-gray-800">
+                
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-2">
+            <h3 class="font-semibold ml-0">TOTAL</h3>
+        </div>
+        <div>
+            <h3 class="font-bold">$@Model.TotalCommission</h3>
+        </div>
+    </div>
 </div>
